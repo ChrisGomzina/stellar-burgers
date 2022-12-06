@@ -1,12 +1,22 @@
 import React from 'react';
 
-import './App.module.css';
+import styles from './App.module.css';
 
+import data from '../../utils/data.js';
 import AppHeader from '../AppHeader/AppHeader.jsx';
+import BurgerIngredients from '../BurgerIngredients/BurgerIngredients.jsx';
 
 const App = () => {
   return (
-    <AppHeader />
+    <main>
+
+      <AppHeader />
+
+      <section className={styles.constructor}>
+        <BurgerIngredients data={data} />
+      </section>
+      
+    </main>
   );
 }
 
