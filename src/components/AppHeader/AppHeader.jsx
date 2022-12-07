@@ -29,9 +29,9 @@ const AppHeader = () => {
 
         <Logo />
 
-        <Button extraClass={`${styles.profileButton} pt-4 pr-5 pb-4 pl-5`} htmlType="button" type="secondary" size="medium">
+        <Button extraClass={`${styles.profileButton} pt-4 pb-4 pl-5`} htmlType="button" type="secondary" size="medium">
           <a className={styles.link} href="#">
-          <ProfileIcon type="secondary" /> Личный кабинет
+            <ProfileIcon type="secondary" /> Личный кабинет
           </a>
         </Button>
 
