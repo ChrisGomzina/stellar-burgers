@@ -25,7 +25,7 @@ const Modal = ({ handleClose, children }) => {
   }, [handleClose]);
   
   return createPortal (
-    <ModalOverlay onClose={handleClose}>
+    <ModalOverlay handleClose={handleClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <button className={styles.button} onClick={handleClose} >
           <CloseIcon type="primary" />

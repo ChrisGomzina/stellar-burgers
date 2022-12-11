@@ -7,6 +7,7 @@ import CurrencyIcon from '../../images/CurrencyIcon.svg';
 
 import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal.jsx';
+import OrderDetails from '../OrderDetails/OrderDetails';
 
 const BurgerConstructor = ({ data }) => {
   const bun = data.find(function (item) {return item.type === 'bun'});
@@ -34,8 +35,8 @@ const BurgerConstructor = ({ data }) => {
         <Button htmlType="button" type="primary" size="large" onClick={() => setIsModalOpen(true)}>Оформить заказ</Button>
       </div>
       {isModelOpen && 
-        (<Modal>
-        
+        (<Modal handleClose={() => setIsModalOpen(false)}>
+          <OrderDetails />
         </Modal>
       )}
     </section>
