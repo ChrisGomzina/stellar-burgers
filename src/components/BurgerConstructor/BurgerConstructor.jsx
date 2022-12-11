@@ -12,7 +12,7 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 const BurgerConstructor = ({ data }) => {
   const bun = data.find(function (item) {return item.type === 'bun'});
   const ingredients = data.filter(function (item) {return item.type !== 'bun'});
-  const [isModelOpen, setIsModalOpen] = React.useState(false);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
   
   return (
     <section className={`${styles.container} mt-20 pt-5 pb-5 pl-4`}>
@@ -34,7 +34,7 @@ const BurgerConstructor = ({ data }) => {
         <img className={`mr-10`} src={CurrencyIcon} alt='Межгалактическая валюта.'/>
         <Button htmlType="button" type="primary" size="large" onClick={() => setIsModalOpen(true)}>Оформить заказ</Button>
       </div>
-      {isModelOpen && 
+      {isModalOpen && 
         (<Modal handleClose={() => setIsModalOpen(false)}>
           <OrderDetails />
         </Modal>

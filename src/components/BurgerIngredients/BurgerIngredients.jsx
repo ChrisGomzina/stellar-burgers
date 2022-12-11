@@ -6,9 +6,13 @@ import styles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import Ingredient from '../Ingredient/Ingredient.jsx';
+import Modal from '../Modal/Modal.jsx';
+import IngredientDetails from '../IngredientDetails/IngredientDetails.jsx';
 
 const BurgerIngredients = ({ data }) => {
   const [current, setCurrent] = React.useState('bun');
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [ingredient, setIngredient] = React.useState();
 
   const refBun = React.useRef(null);
   const refSauce = React.useRef(null);
@@ -45,8 +49,8 @@ const BurgerIngredients = ({ data }) => {
 
           {/* Сортировка по булочкам */}
           {data.map((item) => ( item.type === 'bun' &&
-          <li key={item._id}>
-            <Ingredient key={item._id} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
+          <li key={item._id} onClick={() => {setIngredient(item); setIsModalOpen(true)}}>
+            <Ingredient data={item} key={item._id} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
           </li>))}
 
         </ul>
@@ -56,8 +60,8 @@ const BurgerIngredients = ({ data }) => {
 
           {/* Сортировка по соусам */}
           {data.map((item) => ( item.type === 'sauce' &&
-          <li key={item._id}>
-            <Ingredient key={item._id} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
+          <li key={item._id} onClick={() => {setIngredient(item); setIsModalOpen(true)}}>
+            <Ingredient data={item} key={item._id} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
           </li>))}
 
         </ul>
@@ -67,12 +71,18 @@ const BurgerIngredients = ({ data }) => {
 
           {/* Сортировка по начинкам */}
           {data.map((item) => ( item.type === 'main' &&
-          <li key={item._id}>
-            <Ingredient key={item._id} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
+          <li key={item._id} onClick={() => {setIngredient(item); setIsModalOpen(true)}}>
+            <Ingredient data={item} key={item._id} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
           </li>))}
 
         </ul>
       </div>
+
+      {ingredient && isModalOpen && 
+        (<Modal handleClose={() => setIsModalOpen(false)}>
+          <IngredientDetails data={ingredient} />
+        </Modal>
+      )}
       
     </section>
   )
