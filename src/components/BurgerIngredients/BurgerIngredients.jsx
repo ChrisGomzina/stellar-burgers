@@ -38,9 +38,9 @@ const BurgerIngredients = ({ data }) => {
       <h1 className={`text text_type_main-large mt-10 mb-5`}>Соберите бургер</h1>
 
       <div className={styles.tabs}>
-        {/* <Tab value='bun' active={current === 'bun'} onClick={() => handleClickTab('bun')}>Булки</Tab>
+        <Tab value='bun' active={current === 'bun'} onClick={() => handleClickTab('bun')}>Булки</Tab>
         <Tab value='sauce' active={current === 'sauce'} onClick={() => handleClickTab('sauce')}>Соусы</Tab>
-        <Tab value='main' active={current === 'main'} onClick={() => handleClickTab('main')}>Начинки</Tab> */}
+        <Tab value='main' active={current === 'main'} onClick={() => handleClickTab('main')}>Начинки</Tab>
       </div>
 
       <div className={styles.scrollbar}>
