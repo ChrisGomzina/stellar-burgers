@@ -21,19 +21,19 @@ const App = () => {
 
 
   return (
-    <main>
+    <>
       <AppHeader />
 
-      {state.isLoading && 'Бургеры готовятся...'}
-      {state.hasError && 'Ошибка загрузки :('}
+      {state.loading && 'Бургеры готовятся...'}
+      {state.error && 'Ошибка загрузки :('}
       {!state.loading && (
-        <section className={styles.constructor}>
+        <main className={styles.constructor}>
           <BurgerIngredients data={state.data} />
           <BurgerConstructor data={state.data} />
-        </section>
+        </main>
       )}
 
-    </main>
+    </>
   );
 }
 

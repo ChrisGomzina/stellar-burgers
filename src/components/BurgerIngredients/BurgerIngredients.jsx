@@ -8,6 +8,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from '../Ingredient/Ingredient.jsx';
 import Modal from '../Modal/Modal.jsx';
 import IngredientDetails from '../IngredientDetails/IngredientDetails.jsx';
+import ingredientType from '../../utils/types.js';
 
 const BurgerIngredients = ({ data }) => {
   const [current, setCurrent] = React.useState('bun');
@@ -50,7 +51,7 @@ const BurgerIngredients = ({ data }) => {
           {/* Сортировка по булочкам */}
           {data.map((item) => ( item.type === 'bun' &&
           <li key={item._id} onClick={() => {setIngredient(item); setIsModalOpen(true)}}>
-            <Ingredient data={item} key={item._id} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
+            <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
           </li>))}
 
         </ul>
@@ -61,7 +62,7 @@ const BurgerIngredients = ({ data }) => {
           {/* Сортировка по соусам */}
           {data.map((item) => ( item.type === 'sauce' &&
           <li key={item._id} onClick={() => {setIngredient(item); setIsModalOpen(true)}}>
-            <Ingredient data={item} key={item._id} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
+            <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
           </li>))}
 
         </ul>
@@ -72,7 +73,7 @@ const BurgerIngredients = ({ data }) => {
           {/* Сортировка по начинкам */}
           {data.map((item) => ( item.type === 'main' &&
           <li key={item._id} onClick={() => {setIngredient(item); setIsModalOpen(true)}}>
-            <Ingredient data={item} key={item._id} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
+            <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
           </li>))}
 
         </ul>
@@ -91,20 +92,5 @@ const BurgerIngredients = ({ data }) => {
 export default BurgerIngredients;
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      type: PropTypes.string,
-      proteins: PropTypes.number,
-      fat: PropTypes.number,
-      carbohydrates: PropTypes.number,
-      calories: PropTypes.number,
-      price: PropTypes.number,
-      image: PropTypes.string,
-      image_mobile: PropTypes.string,
-      image_large: PropTypes.string,
-      __v: PropTypes.number
-    }).isRequired
-  ).isRequired
+  data: PropTypes.arrayOf(ingredientType.isRequired).isRequired
 };

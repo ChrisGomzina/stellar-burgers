@@ -6,7 +6,7 @@ import { BurgerIcon, ListIcon, ProfileIcon, Logo, Button } from '@ya.praktikum/r
 
 const AppHeader = () => {
   return (
-    <section className={`${styles.header} p-4`}>
+    <header className={`${styles.header} p-4`}>
 
       <nav className={styles.menu}>
 
@@ -37,7 +37,7 @@ const AppHeader = () => {
 
       </nav>
       
-    </section>
+    </header>
   );
 };
 
