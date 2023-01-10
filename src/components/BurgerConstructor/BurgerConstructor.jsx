@@ -10,7 +10,11 @@ import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-develo
 import Modal from '../Modal/Modal.jsx';
 import OrderDetails from '../OrderDetails/OrderDetails';
 
-const BurgerConstructor = ({ data }) => {
+import { DataContext } from '../../services/dataContext.js';
+
+const BurgerConstructor = () => {
+  const { data } = React.useContext(DataContext);
+
   const bun = data.find(function (item) {return item.type === 'bun'});
   const ingredients = data.filter(function (item) {return item.type !== 'bun'});
   const [isModalOpen, setIsModalOpen] = React.useState(false);
