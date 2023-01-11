@@ -6,6 +6,7 @@ import AppHeader from '../AppHeader/AppHeader.jsx';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients.jsx';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor.jsx';
 import { getData } from '../../utils/getData.js';
+import { DataContext } from '../../services/dataContext';
 
 const App = () => {
   const [state, setState] = React.useState({ data: [], loading: true, error: false });
@@ -28,8 +29,10 @@ const App = () => {
       {state.error && 'Ошибка загрузки :('}
       {!state.loading && (
         <main className={styles.constructor}>
-          <BurgerIngredients data={state.data} />
-          <BurgerConstructor data={state.data} />
+          <DataContext.Provider value={state}>
+            <BurgerIngredients data={state.data} />
+            <BurgerConstructor data={state.data} />
+          </DataContext.Provider>
         </main>
       )}
 
