@@ -10,6 +10,7 @@ import { DataContext } from '../../services/dataContext';
 
 const App = () => {
   const [state, setState] = React.useState({ data: [], loading: true, error: false });
+  const [totalPrice, setTotalPrice] = React.useState(0);
 
     useEffect(() => {
       setState({ ...state, loading: true, error: false });

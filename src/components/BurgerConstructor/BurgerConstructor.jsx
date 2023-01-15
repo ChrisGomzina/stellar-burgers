@@ -30,26 +30,26 @@ const BurgerConstructor = () => {
   };
 
   //Реализация подсчёта стоимости бургера
-  const initialPrice = { price: 0 };
+  const totalInitialPrice = { price: 0 };
 
   function priceReducer(state, action) {
     switch (action.type) {
         case 'set':
           return { price: state.price + action.payload };
         case 'reset':
-          return initialPrice;
+          return totalInitialPrice;
         default:
           throw new Error(`Wrong type of action: ${action.type}`);
     }
   }
 
-  const [state, dispatch] = React.useReducer(priceReducer, initialPrice);
+  const [state, dispatch] = React.useReducer(priceReducer, totalInitialPrice);
 
   React.useMemo(() => {
     dispatch({ type: 'reset' });
     dispatch({
       type: 'set',
-      payload: bun.price * 2 + ingredients.reduce((accumulator, currentValue) => accumulator + currentValue.price, 0),
+      payload: bun.price * 2 + ingredients.reduce((totalPrice, currentItemPrice) => totalPrice + currentItemPrice.price, 0),
     });
   }, [data]);
   
