@@ -10,7 +10,6 @@ import { DataContext } from '../../services/dataContext';
 
 const App = () => {
   const [state, setState] = React.useState({ data: [], loading: true, error: false });
-  const [totalPrice, setTotalPrice] = React.useState(0);
 
     useEffect(() => {
       setState({ ...state, loading: true, error: false });
@@ -31,8 +30,8 @@ const App = () => {
       {!state.loading && (
         <main className={styles.constructor}>
           <DataContext.Provider value={state}>
-            <BurgerIngredients data={state.data} />
-            <BurgerConstructor data={state.data} />
+            <BurgerIngredients />
+            <BurgerConstructor />
           </DataContext.Provider>
         </main>
       )}

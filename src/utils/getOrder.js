@@ -1,15 +1,8 @@
-const url = 'https://norma.nomoreparties.space/api/orders';
-
-const checkResponse = (res) => {
-  if (res.ok) {
-    return res.json();
-  } else {
-    return Promise.reject(`Ошибка: ${res.status}`);
-  }
-};
+import { BASE_URL } from './constans.js';
+import { checkResponse } from './utils.js';
 
 const getOrder = (ingredients) =>
-  fetch(url, {
+  fetch(`${BASE_URL}/orders`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
