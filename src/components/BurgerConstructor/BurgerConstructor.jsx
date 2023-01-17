@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import styles from './BurgerConstructor.module.css';
 
@@ -9,7 +10,7 @@ import Modal from '../Modal/Modal.jsx';
 import OrderDetails from '../OrderDetails/OrderDetails';
 
 import { DataContext } from '../../services/dataContext.js';
-import { getOrder } from '../../utils/getOrder.js';
+import { getOrderData, deleteOrder } from '../../services/actions/order.js';
 
 const BurgerConstructor = () => {
   const { data } = React.useContext(DataContext);
@@ -18,15 +19,10 @@ const BurgerConstructor = () => {
   const ingredients = data.filter(function (item) {return item.type !== 'bun'});
 
   //Реализация получения номера заказа
-  const [orderNumber, setOrderNumber] = React.useState(undefined);
+  const orderNumber = useSelector(store => store.orderReducer.orderDetails);
 
   const createOrder = () => {
-    getOrder([...ingredients.map((item) => item._id), bun._id])
-      .then((res) => setOrderNumber(res.order.number))
-      .catch((err) => {
-        console.log(err);
-        setOrderNumber('Ошибка');
-      });
+    dispatch(getOrderData([...ingredients.map((item) => item._id), bun._id]))
   };
 
   //Реализация подсчёта стоимости бургера
@@ -34,12 +30,12 @@ const BurgerConstructor = () => {
 
   function priceReducer(state, action) {
     switch (action.type) {
-        case 'set':
-          return { price: state.price + action.payload };
-        case 'reset':
-          return totalInitialPrice;
-        default:
-          throw new Error(`Wrong type of action: ${action.type}`);
+      case 'set':
+        return { price: state.price + action.payload };
+      case 'reset':
+        return totalInitialPrice;
+      default:
+        throw new Error(`Wrong type of action: ${action.type}`);
     }
   }
 
@@ -74,8 +70,8 @@ const BurgerConstructor = () => {
         <Button htmlType="button" type="primary" size="large" onClick={() => createOrder()}>Оформить заказ</Button>
       </div>
       {orderNumber && 
-        (<Modal handleClose={() => setOrderNumber(undefined)}>
-          <OrderDetails orderNumber={orderNumber} />
+        (<Modal handleClose={() => dispatch(deleteOrder())}>
+          <OrderDetails orderNumber={orderNumber.orderDetails} />
         </Modal>
       )}
     </section>
