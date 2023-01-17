@@ -10,7 +10,11 @@ import Modal from '../Modal/Modal.jsx';
 import IngredientDetails from '../IngredientDetails/IngredientDetails.jsx';
 import ingredientType from '../../utils/types.js';
 
-const BurgerIngredients = ({ data }) => {
+import { DataContext } from '../../services/dataContext.js';
+
+const BurgerIngredients = () => {
+  const { data } = React.useContext(DataContext);
+
   const [current, setCurrent] = React.useState('bun');
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [ingredient, setIngredient] = React.useState();
@@ -90,7 +94,3 @@ const BurgerIngredients = ({ data }) => {
 };
 
 export default BurgerIngredients;
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientType.isRequired).isRequired
-};
