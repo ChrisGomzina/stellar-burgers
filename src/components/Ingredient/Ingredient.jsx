@@ -28,7 +28,7 @@ const Ingredient = ({ data }) => {
 
   addedIngredients.forEach((data) =>
     data.name === name && 
-    (data.type === "bun" 
+    (data.type === 'bun' 
     ? (ingredientCounter += 2) 
     : (ingredientCounter += 1)));
 
