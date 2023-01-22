@@ -1,15 +1,17 @@
 import { GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
+  ADD_BUN,
   ADD_INGREDIENT,
-  DELETE_INGREDIENT } from '../actions/ingredients.js';
+  DELETE_INGREDIENT,
+  SORT_INGREDIENTS } from '../actions/ingredients.js';
 
 const initialState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
+  addedBun: [],
   addedIngredients: [],
-  selectedIngredient: null
 };
 
 export const ingredientReducer = (state = initialState, action) => {
@@ -38,13 +40,33 @@ export const ingredientReducer = (state = initialState, action) => {
     case ADD_INGREDIENT: {
       return {
         ...state,
-        selectedIngredient: action.payload
+        addedIngredients: [
+          ...state.addedIngredients,
+          {
+            ...state.ingredients.find((item) => item._id === action.payload.id),
+            uuidv4: action.newId,
+          },
+        ],
+      }
+    }
+    case ADD_BUN: {
+      return {
+        ...state,
+        addedBun: state.ingredients.find((item) => item._id === action.payload.id),
       }
     }
     case DELETE_INGREDIENT: {
       return {
-        ...state, 
-        selectedIngredient: null
+        ...state,
+        addedIngredients: [
+          ...state.addedIngredients.filter((item) => item.uuidv4 !== action.payload.uuidv4),
+        ],
+      }
+    }
+    case SORT_INGREDIENTS: {
+      return {
+        ...state,
+        addedIngredients: action.payload
       }
     }
     default: {

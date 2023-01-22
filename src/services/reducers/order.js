@@ -1,7 +1,7 @@
 import { GET_ORDER_REQUEST, 
   GET_ORDER_SUCCESS, 
   GET_ORDER_FAILED, 
-  DELETE_ORDER } from '../actions/order.js';
+  RESET_ORDER } from '../actions/order.js';
 
 const initialState = {
   orderDetails: null,
@@ -32,7 +32,7 @@ export const orderReducer = (state = initialState, action) => {
         orderDetails: action.payload
       }
     }
-    case DELETE_ORDER: {
+    case RESET_ORDER: {
       return {
         ...state,
         orderDetails: null

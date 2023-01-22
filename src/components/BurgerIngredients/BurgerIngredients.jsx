@@ -1,5 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { InView } from 'react-intersection-observer';
 
 import styles from './BurgerIngredients.module.css';
 
@@ -8,17 +9,15 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from '../Ingredient/Ingredient.jsx';
 import Modal from '../Modal/Modal.jsx';
 import IngredientDetails from '../IngredientDetails/IngredientDetails.jsx';
-import ingredientType from '../../utils/types.js';
-
-import { DataContext } from '../../services/dataContext.js';
+import { openIngredientDetailsPopup, closeIngredientDetailsPopup } from '../../services/actions/popup.js';
 
 const BurgerIngredients = () => {
-  const { data } = React.useContext(DataContext);
+  const data = useSelector((state) => state.ingredientReducer.ingredients);
+  const selectedIngrediend = useSelector((state) => state.popupReducer.selectedIngrediend);
+  const dispatch = useDispatch();
 
-  const [current, setCurrent] = React.useState('bun');
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [ingredient, setIngredient] = React.useState();
-
+  //Реализация скролла
+  const [current, setCurrent] = React.useState('');
   const refBun = React.useRef(null);
   const refSauce = React.useRef(null);
   const refMain = React.useRef(null);
@@ -49,43 +48,52 @@ const BurgerIngredients = () => {
       </div>
 
       <div className={styles.scrollbar}>
-        <h2 className={`text text_type_main-medium mt-10 mb-6`} ref={refBun}>Булки</h2>
+
+      <InView as="div" onChange={(inView, entry) => setCurrent('bun')}>
+      <h2 className={`text text_type_main-medium mt-10 mb-6`} ref={refBun}>Булки</h2>
         <ul className={`${styles.list} ml-4`}>
 
           {/* Сортировка по булочкам */}
           {data.map((item) => ( item.type === 'bun' &&
-          <li key={item._id} onClick={() => {setIngredient(item); setIsModalOpen(true)}}>
+          <li key={item._id} onClick={() => dispatch(openIngredientDetailsPopup(item))}>
             <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
           </li>))}
 
         </ul>
+        </InView>
 
+        <InView as="div" onChange={(inView, entry) => setCurrent('sauce')}>
         <h2 className={`text text_type_main-medium mt-10 mb-6`} ref={refSauce}>Соусы</h2>
         <ul className={`${styles.list} ml-4`}>
 
           {/* Сортировка по соусам */}
           {data.map((item) => ( item.type === 'sauce' &&
-          <li key={item._id} onClick={() => {setIngredient(item); setIsModalOpen(true)}}>
+          <li key={item._id} onClick={() => dispatch(openIngredientDetailsPopup(item))}>
             <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
           </li>))}
 
         </ul>
+        </InView>
 
+        <InView as="div" onChange={(inView, entry) => setCurrent('main')}>
         <h2 className={`text text_type_main-medium mt-10 mb-6`} ref={refMain}>Начинки</h2>
         <ul className={`${styles.list} ml-4`}>
 
           {/* Сортировка по начинкам */}
           {data.map((item) => ( item.type === 'main' &&
-          <li key={item._id} onClick={() => {setIngredient(item); setIsModalOpen(true)}}>
+          <li key={item._id} onClick={() => dispatch(openIngredientDetailsPopup(item))}>
             <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
           </li>))}
 
         </ul>
-      </div>
+        </InView>
 
-      {ingredient && isModalOpen && 
-        (<Modal handleClose={() => setIsModalOpen(false)}>
-          <IngredientDetails data={ingredient} />
+      </div>
+      
+
+      {selectedIngrediend && 
+        (<Modal handleClose={() => dispatch(closeIngredientDetailsPopup())}>
+          <IngredientDetails data={selectedIngrediend} />
         </Modal>
       )}
       

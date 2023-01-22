@@ -9,14 +9,16 @@ import { ConstructorElement, DragIcon, Button } from '@ya.praktikum/react-develo
 import Modal from '../Modal/Modal.jsx';
 import OrderDetails from '../OrderDetails/OrderDetails';
 
-import { DataContext } from '../../services/dataContext.js';
 import { getOrderData, deleteOrder } from '../../services/actions/order.js';
 
 const BurgerConstructor = () => {
-  const { data } = React.useContext(DataContext);
+  const dispatch = useDispatch();
+  const addedIngredients = useSelector((state) => state.ingredientReducer.addedIngredients);
 
-  const bun = data.find(function (item) {return item.type === 'bun'});
-  const ingredients = data.filter(function (item) {return item.type !== 'bun'});
+  //Реализация подсчёта стоимости бургера
+  const totalPrice = React.useMemo(() =>
+    addedIngredients.reduce((acc, cur) => cur.type === "bun" ? acc + cur.price * 2 : acc + cur.price, 0), [addedIngredients]
+  );
 
   //Реализация получения номера заказа
   const orderNumber = useSelector(store => store.orderReducer.orderDetails);
@@ -25,29 +27,13 @@ const BurgerConstructor = () => {
     dispatch(getOrderData([...ingredients.map((item) => item._id), bun._id]))
   };
 
-  //Реализация подсчёта стоимости бургера
-  const totalInitialPrice = { price: 0 };
+  
 
-  function priceReducer(state, action) {
-    switch (action.type) {
-      case 'set':
-        return { price: state.price + action.payload };
-      case 'reset':
-        return totalInitialPrice;
-      default:
-        throw new Error(`Wrong type of action: ${action.type}`);
-    }
-  }
 
-  const [state, dispatch] = React.useReducer(priceReducer, totalInitialPrice);
+  const bun = addedIngredients.find(function (item) {return item.type === 'bun'});
+  const ingredients = addedIngredients.filter(function (item) {return item.type !== 'bun'});
 
-  React.useMemo(() => {
-    dispatch({ type: 'reset' });
-    dispatch({
-      type: 'set',
-      payload: bun.price * 2 + ingredients.reduce((totalPrice, currentItemPrice) => totalPrice + currentItemPrice.price, 0),
-    });
-  }, [data]);
+  console.log(addedIngredients);
   
   return (
     <section className={`${styles.container} mt-20 pt-5 pb-5 pl-4`}>
@@ -65,7 +51,7 @@ const BurgerConstructor = () => {
       <ConstructorElement extraClass={`ml-8 pr-4`} type='bottom' isLocked={true} text={`${bun.name} (низ)`} price={bun.price} thumbnail={bun.image} />
       
       <div className={`${styles.price_container} mt-10 mr-4`}>
-        <span className={`text text_type_digits-medium mr-2`}>{state.price}</span>
+        <span className={`text text_type_digits-medium mr-2`}>{totalPrice}</span>
         <img className={`mr-10`} src={CurrencyIcon} alt='Межгалактическая валюта.'/>
         <Button htmlType="button" type="primary" size="large" onClick={() => createOrder()}>Оформить заказ</Button>
       </div>
