@@ -4,6 +4,7 @@ import { GET_INGREDIENTS_REQUEST,
   ADD_BUN,
   ADD_INGREDIENT,
   DELETE_INGREDIENT,
+  COUNT_TOTAL_PRICE,
   SORT_INGREDIENTS } from '../actions/ingredients.js';
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   ingredientsFailed: false,
   addedBun: [],
   addedIngredients: [],
+  totalPrice: 0,
 };
 
 export const ingredientReducer = (state = initialState, action) => {
@@ -61,6 +63,13 @@ export const ingredientReducer = (state = initialState, action) => {
         addedIngredients: [
           ...state.addedIngredients.filter((item) => item.uuidv4 !== action.payload.uuidv4),
         ],
+      }
+    }
+    case COUNT_TOTAL_PRICE: {
+      return {
+        ...state,
+        totalPrice:
+          state.addedIngredients.reduce((acc, curr) => acc + curr.price, 0) + state.addedBun.price * 2,
       }
     }
     case SORT_INGREDIENTS: {

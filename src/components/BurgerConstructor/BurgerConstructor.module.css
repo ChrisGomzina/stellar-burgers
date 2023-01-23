@@ -2,6 +2,8 @@
   max-width: 600px;
   width: 100%;
   box-sizing: border-box;
+  border: 2px dashed transparent;
+  border-radius: 8px;
 }
 
 .item {

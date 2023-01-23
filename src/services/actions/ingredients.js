@@ -7,6 +7,7 @@ export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 export const ADD_BUN = 'ADD_BUN';
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
+export const COUNT_TOTAL_PRICE = 'COUNT_TOTAL_PRICE';
 export const SORT_INGREDIENTS = 'SORT_INGREDIENTS';
 
 export const getIngredients = () => (dispatch) => {
@@ -35,6 +36,10 @@ export const addIngredient = (payload) => ({
 export const deleteIngredient = (payload) => ({
   type: DELETE_INGREDIENT,
   payload
+});
+
+export const countTotalPrice = () => ({
+  type: COUNT_TOTAL_PRICE,
 });
 
 export const sortIngredients = (payload) => ({

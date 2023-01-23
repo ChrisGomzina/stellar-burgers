@@ -11,24 +11,26 @@ import Modal from '../Modal/Modal.jsx';
 import OrderDetails from '../OrderDetails/OrderDetails';
 
 import { getOrderData, deleteOrder } from '../../services/actions/order.js';
-import { addBun, addIngredient } from '../../services/actions/ingredients.js';
+import { addBun, addIngredient, countTotalPrice, deleteIngredient } from '../../services/actions/ingredients.js';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const bun = useSelector((state) => state.ingredientReducer.addedBun);
   const ingredients = useSelector((state) => state.ingredientReducer.addedIngredients);
-
-  //Реализация подсчёта стоимости бургера
-  const totalPrice = React.useMemo(() =>
-    ingredients.reduce((acc, cur) => cur.type === "bun" ? acc + cur.price * 2 : acc + cur.price, 0), [ingredients]
-  );
+  const totalPrice = useSelector((state) => state.ingredientReducer.totalPrice);
 
   //Реализация получения номера заказа
   const orderNumber = useSelector(store => store.orderReducer.orderDetails);
 
   const createOrder = () => {
     const ingredientsId = [...ingredients.map((item) => item._id), bun._id];
-    dispatch(getOrderData(ingredientsId))
+    dispatch(getOrderData(ingredientsId));
+  };
+
+  //Реализация удаления ингредиента
+  const handleDeleteIngredient = (item) => {
+    dispatch(deleteIngredient(item));
+    dispatch(countTotalPrice());
   };
 
   //Реализация drag and drop
@@ -38,22 +40,19 @@ const BurgerConstructor = () => {
       item.type === 'bun'
         ? dispatch(addBun(item))
         : dispatch(addIngredient(item));
+        dispatch(countTotalPrice());
     },
     collect: (monitor) => ({
       isHover: monitor.isOver()
     })
   }));
 
-  const borderColor = isHover ? '#5147F8' : 'transparent';
+  const borderColor = isHover ? '#9400d3' : 'transparent';
 
   const checkIngredient = ingredients.length > 0;
   const checkBun = !!bun.type;
 
-  console.log(bun);
-
-  console.log(ingredients);
-  
-  return (
+   return (
     <section className={`${styles.container} mt-20 pt-5 pb-5 pl-4`} ref={dropRef} style={{borderColor}}>
 
       {checkBun && 
@@ -66,7 +65,7 @@ const BurgerConstructor = () => {
           checkIngredient && 
             (<li className={styles.item} key={item._id}>
               <DragIcon type="primary" />
-              <ConstructorElement text={item.name} price={item.price} thumbnail={item.image} />
+              <ConstructorElement text={item.name} price={item.price} thumbnail={item.image} handleClose={() => {handleDeleteIngredient(item);}} />
             </li>)
         ))}
 
@@ -84,7 +83,7 @@ const BurgerConstructor = () => {
 
       {orderNumber && 
         (<Modal handleClose={() => dispatch(deleteOrder())}>
-          <OrderDetails orderNumber={orderNumber.orderDetails} />
+          <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}
 
