@@ -33,7 +33,7 @@ const BurgerConstructor = () => {
 
   //Реализация drag and drop
   const [{ isHover }, dropRef] = useDrop(() => ({
-    accept: 'item',
+    accept: 'ingredient',
     drop: (item) => {
       item.type === 'bun'
         ? dispatch(addBun(item))
