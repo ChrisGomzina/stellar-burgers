@@ -35,6 +35,7 @@ export const ingredientReducer = (state = initialState, action) => {
     case GET_INGREDIENTS_FAILED: {
       return {
         ...state,
+        ingredients: [],
         ingredientsRequest: false,
         ingredientsFailed: true
       }
