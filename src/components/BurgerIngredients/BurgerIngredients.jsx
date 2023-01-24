@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { InView } from 'react-intersection-observer';
+import { Waypoint } from 'react-waypoint';
 
 import styles from './BurgerIngredients.module.css';
 
@@ -49,7 +49,7 @@ const BurgerIngredients = () => {
 
       <div className={styles.scrollbar}>
 
-      <InView as="div" onChange={(inView, entry) => setCurrent('bun')}>
+      <Waypoint onEnter={() => setCurrent('bun')} bottomOffset="90%" />
       <h2 className={`text text_type_main-medium mt-10 mb-6`} ref={refBun}>Булки</h2>
         <ul className={`${styles.list} ml-4`}>
 
@@ -60,9 +60,8 @@ const BurgerIngredients = () => {
           </li>))}
 
         </ul>
-        </InView>
 
-        <InView as="div" onChange={(inView, entry) => setCurrent('sauce')}>
+        <Waypoint onEnter={() => setCurrent('sauce')} bottomOffset="90%" />
         <h2 className={`text text_type_main-medium mt-10 mb-6`} ref={refSauce}>Соусы</h2>
         <ul className={`${styles.list} ml-4`}>
 
@@ -73,9 +72,8 @@ const BurgerIngredients = () => {
           </li>))}
 
         </ul>
-        </InView>
 
-        <InView as="div" onChange={(inView, entry) => setCurrent('main')}>
+        <Waypoint onEnter={() => setCurrent('main')} bottomOffset="90%" />
         <h2 className={`text text_type_main-medium mt-10 mb-6`} ref={refMain}>Начинки</h2>
         <ul className={`${styles.list} ml-4`}>
 
@@ -86,7 +84,6 @@ const BurgerIngredients = () => {
           </li>))}
 
         </ul>
-        </InView>
 
       </div>
       

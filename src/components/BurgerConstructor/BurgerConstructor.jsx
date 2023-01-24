@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import { Reorder } from 'framer-motion';
 
 import styles from './BurgerConstructor.module.css';
 
@@ -11,7 +12,7 @@ import Modal from '../Modal/Modal.jsx';
 import OrderDetails from '../OrderDetails/OrderDetails';
 
 import { getOrderData, deleteOrder } from '../../services/actions/order.js';
-import { addBun, addIngredient, countTotalPrice, deleteIngredient } from '../../services/actions/ingredients.js';
+import { addBun, addIngredient, countTotalPrice, deleteIngredient, sortIngredients } from '../../services/actions/ingredients.js';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -37,9 +38,11 @@ const BurgerConstructor = () => {
   const [{ isHover }, dropRef] = useDrop(() => ({
     accept: 'ingredient',
     drop: (item) => {
-      item.type === 'bun'
-        ? dispatch(addBun(item))
-        : dispatch(addIngredient(item));
+      if (item.type === 'bun') {
+        dispatch(addBun(item));
+      } else {
+        dispatch(addIngredient(item));
+      }
         dispatch(countTotalPrice());
     },
     collect: (monitor) => ({
@@ -59,17 +62,17 @@ const BurgerConstructor = () => {
         (<ConstructorElement extraClass={`ml-8 pr-4`} type='top' isLocked={true} text={`${bun.name} (верх)`} price={bun.price} thumbnail={bun.image} />)
       }
 
-      <ul className={styles.scrollbar}>
+      <Reorder.Group className={styles.scrollbar} axys='y' values={ingredients} onReorder={(items) => dispatch(sortIngredients(items))}>
           
         {ingredients.map((item) => (
           checkIngredient && 
-            (<li className={styles.item} key={item._id}>
+            (<Reorder.Item className={styles.item} key={item.uuidv4} value={item}>
               <DragIcon type="primary" />
               <ConstructorElement text={item.name} price={item.price} thumbnail={item.image} handleClose={() => {handleDeleteIngredient(item);}} />
-            </li>)
+            </Reorder.Item>)
         ))}
 
-      </ul>
+      </Reorder.Group>
       
       {checkBun && 
         (<ConstructorElement extraClass={`ml-8 pr-4`} type='bottom' isLocked={true} text={`${bun.name} (низ)`} price={bun.price} thumbnail={bun.image} />)
