@@ -26,6 +26,8 @@ const Ingredient = ({ data }) => {
   });
 
   //Реализация счетчика ингредиентов.
+  //ingredientsCounter переопределяется при добавлении нескольких ингредиентов одного типа
+  //Если let заменить на const консоль выдает ошибку "Uncaught TypeError: Assignment to constant variable."
   let ingredientsCounter = 0;
 
   addedIngredients.forEach((ingredient) =>
