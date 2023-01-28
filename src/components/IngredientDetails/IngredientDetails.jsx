@@ -6,6 +6,7 @@ import styles from './IngredientDetails.module.css';
 import ingredientType from '../../utils/types.js';
 
 const IngredientDetails = ({ data }) => {
+
   return (
     <div className={`${styles.container} pt-10 pr-10 pb-15 pl-10`}>
       <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>
