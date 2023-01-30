@@ -2,12 +2,15 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { Routes, Route } from 'react-router-dom';
 
 import styles from './App.module.css';
 
 import AppHeader from '../AppHeader/AppHeader.jsx';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients.jsx';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor.jsx';
+import LoginPage from '../../pages/LoginPage/LoginPage.jsx';
+
 import { getIngredients } from '../../services/actions/ingredients.js';
 
 const App = () => {
@@ -22,6 +25,10 @@ const App = () => {
 
   return (
     <>
+      <Routes>
+        <Route path='/login' element={<LoginPage />}/>
+      </Routes>
+
       <AppHeader />
         <main className={styles.constructor}>
 
