@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import styles from './AppHeader.module.css';
 
@@ -30,9 +31,9 @@ const AppHeader = () => {
         <Logo />
 
         <Button extraClass={`${styles.profileButton} pt-4 pb-4 pl-5`} htmlType="button" type="secondary" size="medium">
-          <a className={styles.link} href="#">
+          <Link className={styles.link} to="/login">
             <ProfileIcon type="secondary" /> Личный кабинет
-          </a>
+          </Link>
         </Button>
 
       </nav>
