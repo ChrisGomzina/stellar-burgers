@@ -11,7 +11,7 @@ const Header = () => {
     <>
       <AppHeader />
       
-      <main className={styles.constructor}>
+      <main className={styles.content}>
         <Outlet />
       </main>
     </>
