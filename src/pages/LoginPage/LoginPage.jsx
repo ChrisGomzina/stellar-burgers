@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import styles from './LoginPage.module.css';
 
@@ -41,10 +42,10 @@ const LoginPage = () => {
       </form>
 
       <p className='text text_type_main-default text_color_inactive'>Вы — новый пользователь? 
-        <Button extraClass={`${styles.link} ml-2 mb-4`} htmlType='button' type='secondary' size='large'>Зарегистрироваться</Button>
+        <Link to='/register' className={`${styles.link} ml-2 mb-4`} htmlType='button' type='secondary' size='large'>Зарегистрироваться</Link>
       </p>
       <p className='text text_type_main-default text_color_inactive'>Забыли пароль? 
-        <Button extraClass={`${styles.link} ml-2`} htmlType='button' type='secondary' size='large'>Восстановить пароль</Button>
+        <Link to='/forgot-password' className={`${styles.link} ml-2`} htmlType='button' type='secondary' size='large'>Восстановить пароль</Link>
       </p>
 
     </div>
