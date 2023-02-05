@@ -7,6 +7,7 @@ import LoginPage from '../../pages/LoginPage/LoginPage.jsx';
 import RegisterPage from '../../pages/RegisterPage/RegisterPage.jsx';
 import ForgotPasswordPage from '../../pages/ForgotPasswordPage/ForgotPasswordPage.jsx';
 import ResetPasswordPage from '../../pages/ResetPasswordPage/ResetPasswordPage.jsx';
+import ProfilePage from '../../pages/ProfilePage/ProfilePage.jsx';
 
 const App = () => {
 
@@ -19,6 +20,7 @@ const App = () => {
           <Route path='/register' element={<RegisterPage />}/>
           <Route path='/forgot-password' element={<ForgotPasswordPage />}/>
           <Route path='/reset-password' element={<ResetPasswordPage />}/>
+          <Route path='/profile' element={<ProfilePage />}/>
 
         </Route>
 
