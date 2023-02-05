@@ -7,13 +7,13 @@ import { EmailInput, Input, Button } from '@ya.praktikum/react-developer-burger-
 
 const LoginPage = () => {
   const [emailValue, setEmailValue] = React.useState('');
-  const [passwordValue, setPasswordValue] = React.useState('');
+  const [visiblePassword, setVisiblePassword] = React.useState(false);
 
-  const inputRef = React.useRef(null);
+  const passwordInputRef = React.useRef(null);
   
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
-    alert('Icon Click Callback');
+  const showPassword = () => {
+    passwordInputRef.current.focus();
+    setVisiblePassword(!visiblePassword);
   };
 
   return (
@@ -24,15 +24,15 @@ const LoginPage = () => {
       <EmailInput extraClass='mb-6' onChange={e => setEmailValue(e.target.emailValue)} value={emailValue} name={'email'} isIcon={false} />
 
       <Input extraClass='mb-6' 
-        type={'password'} 
+        type={visiblePassword ? 'text' : 'password'} 
         placeholder={'Пароль'} 
-        onChange={e => setPasswordValue(e.target.passwordValue)}
-        icon={'ShowIcon'}
-        value={passwordValue}
+        onChange={e => setVisiblePassword(e.target.visiblePassword)}
+        icon={visiblePassword ? 'HideIcon' : 'ShowIcon'}
+        value={visiblePassword}
         name={'password'}
         error={false}
-        ref={inputRef}
-        onIconClick={onIconClick}
+        ref={passwordInputRef}
+        onIconClick={showPassword}
         errorText={'Ошибка'}
         size={'default'}
       />

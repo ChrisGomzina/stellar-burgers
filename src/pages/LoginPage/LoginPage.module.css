@@ -17,4 +17,9 @@
   display: inline-block;
   color: #4C4CFF;
   text-decoration: none;
+  transition: color 0.2s linear 0.2s;
+}
+
+.link:hover {
+  color: #FFFFFF;
 }
