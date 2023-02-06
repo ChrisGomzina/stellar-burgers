@@ -32,6 +32,7 @@
   gap: 8px;
   text-decoration: none;
   color: #8585AD;
+  transition: color 0.2s linear 0.2s;
 }
 
 .link:hover {
@@ -39,6 +40,10 @@
 }
 
 .link_active {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
   color: #F2F2F3;
 }
 

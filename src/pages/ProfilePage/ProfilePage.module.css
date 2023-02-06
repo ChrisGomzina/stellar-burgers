@@ -25,7 +25,23 @@
   transition: color 0.2s linear 0.2s;
 }
 
+.link_active {
+  color: #F2F2F3;
+  text-decoration: none;
+}
+
 .link:hover {
+  color: #F2F2F3;
+}
+
+.button {
+  border: none;
+  color: #8585AD;
+  background-color: inherit;
+  cursor: pointer;
+}
+
+.button:hover {
   color: #F2F2F3;
 }
 

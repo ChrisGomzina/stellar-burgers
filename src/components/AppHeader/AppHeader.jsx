@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import styles from './AppHeader.module.css';
 
@@ -14,16 +14,16 @@ const AppHeader = () => {
         <ul className={styles.list}>
           <li>
             <Button extraClass={`pt-4 pr-5 pb-4`} htmlType="button" type="secondary" size="medium">
-              <Link to="/" className={`${styles.link} ${styles.link_active}`} href="#">
+              <NavLink to="/" className={({ isActive }) => isActive ? styles.link_active : styles.link}>
                 <BurgerIcon type="primary" /> Конструктор
-              </Link>
+              </NavLink>
             </Button>
           </li>
           <li>
             <Button extraClass={`pt-4 pr-5 pb-4 pl-5`} htmlType="button" type="secondary" size="medium">
-              <a className={styles.link} href="#">
+              <NavLink to='/not-found' className={({ isActive }) => isActive ? styles.link_active : styles.link}>
                 <ListIcon type="secondary" /> Лента заказов
-              </a>
+              </NavLink>
             </Button>
           </li>
         </ul>
@@ -31,9 +31,9 @@ const AppHeader = () => {
         <Logo />
 
         <Button extraClass={`${styles.profileButton} pt-4 pb-4 pl-5`} htmlType="button" type="secondary" size="medium">
-          <Link className={styles.link} to="/profile">
+          <NavLink to="/profile" className={({ isActive }) => isActive ? styles.link_active : styles.link}>
             <ProfileIcon type="secondary" /> Личный кабинет
-          </Link>
+          </NavLink>
         </Button>
 
       </nav>

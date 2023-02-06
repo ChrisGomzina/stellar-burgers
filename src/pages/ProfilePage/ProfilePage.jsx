@@ -13,6 +13,9 @@ const ProfilePage = () => {
   const nameInputRef = React.useRef(null);
   const passwordInputRef = React.useRef(null);
 
+  const setActiveClass = ({ isActive }) =>
+    `${isActive ? styles.link_active : styles.link} text text_type_main-medium`;
+
 
   return (
     <div className={`${styles.container} mt-30`}>
@@ -20,13 +23,13 @@ const ProfilePage = () => {
       <nav className={styles.nav}>
         <ul className={styles.list}>
           <li className='mt-5'>
-            <NavLink className={`${styles.link} text text_type_main-medium`}>Профиль</NavLink>
+            <NavLink to='/profile' className={setActiveClass}>Профиль</NavLink>
           </li>
           <li>
-            <NavLink className={`${styles.link} text text_type_main-medium`}>История заказов</NavLink>
+            <NavLink to='/profile/orders' className={setActiveClass}>История заказов</NavLink>
           </li>
           <li>
-            <NavLink className={`${styles.link} text text_type_main-medium`}>Выход</NavLink>
+            <button className={`${styles.button} text text_type_main-medium`}>Выход</button>
           </li>
         </ul>
 

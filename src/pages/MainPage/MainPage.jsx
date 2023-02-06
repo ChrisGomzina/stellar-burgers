@@ -5,6 +5,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import BurgerIngredients from '../../components/BurgerIngredients/BurgerIngredients.jsx';
 import BurgerConstructor from '../../components/BurgerConstructor/BurgerConstructor.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
 
 import { getIngredients } from '../../services/actions/ingredients.js';
 
@@ -22,7 +23,7 @@ const MainPage = () => {
     <>
 
       {ingredientsRequest && (
-        <div className={`text text_type_main-medium`}>Бургеры готовятся...</div>)
+        <Loader />)
       }
 
       {ingredientsFailed && (
