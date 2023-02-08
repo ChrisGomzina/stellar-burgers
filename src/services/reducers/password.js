@@ -2,10 +2,10 @@ import { FORGOT_PASSWORD, RESET_PASSWORD} from '../actions/password.js';
 
 const initialState = {
   requestNewPassword: null,
-  resetOldPassword: null
+  resetOldPassword: null,
 };
 
-export const profileReducer = (state = initialState, action) => {
+export const passwordReducer = (state = initialState, action) => {
   switch (action.type) {
     case FORGOT_PASSWORD: {
       return {
@@ -19,7 +19,8 @@ export const profileReducer = (state = initialState, action) => {
         resetOldPassword: action.payload
       }
     }
-    default:
+    default: {
       return state;
+    }
   }
 };
