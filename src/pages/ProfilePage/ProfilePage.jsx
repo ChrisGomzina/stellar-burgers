@@ -26,7 +26,7 @@ const ProfilePage = () => {
             <NavLink to='/profile' className={setActiveClass}>Профиль</NavLink>
           </li>
           <li>
-            <NavLink to='/profile/orders' className={setActiveClass}>История заказов</NavLink>
+            <NavLink to='/not-found' className={setActiveClass}>История заказов</NavLink>
           </li>
           <li>
             <button className={`${styles.button} text text_type_main-medium`}>Выход</button>
