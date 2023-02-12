@@ -3,11 +3,11 @@ import { combineReducers } from 'redux';
 import { ingredientReducer } from './ingredients.js';
 import { orderReducer } from './order.js';
 import { popupReducer } from './popup.js';
-import { passwordReducer } from './password.js';
+import { profileReducer } from './profile.js';
 
 export const rootReducer = combineReducers({
   ingredientReducer,
   orderReducer,
   popupReducer,
-  passwordReducer
+  profileReducer
 });
