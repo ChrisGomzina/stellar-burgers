@@ -1,4 +1,5 @@
-import { RESET_PASSWORD_REQUEST, 
+import { SET_PROFILE,
+  RESET_PASSWORD_REQUEST, 
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILED,
   SET_PASSWORD_REQUEST,
@@ -6,7 +7,10 @@ import { RESET_PASSWORD_REQUEST,
   SET_PASSWORD_FAILED,
   REGISTSTRATION_REQUEST,
   REGISTSTRATION_SUCCESS,
-  REGISTSTRATION_FAILED } from '../actions/profile.js';
+  REGISTSTRATION_FAILED,
+  AUTHORIZATION_REQUEST,
+  AUTHORIZATION_SUCCESS,
+  AUTHORIZATION_FAILED } from '../actions/profile.js';
 
 const initialState = {
   //Данные авторизованного пользователя
@@ -23,10 +27,23 @@ const initialState = {
   registrationAnswer: null,
   registrationRequest: false,
   registrationFailed: false,
+  //состояния для авторизации пользователя
+  authorizationAnswer: null,
+  authorizationRequest: false,
+  authorizationFailed: false,
 };
 
 export const profileReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_PROFILE: {
+      return {
+        ...state,
+        profile: {
+          name: action.payload.name,
+          email: action.payload.email
+        }
+      }
+    }
     case RESET_PASSWORD_REQUEST: {
       return {
         ...state,
@@ -88,6 +105,27 @@ export const profileReducer = (state = initialState, action) => {
         ...state,
         registrationRequest: false,
         registrationAnswer: action.payload
+      }
+    }
+    case AUTHORIZATION_REQUEST: {
+      return {
+        ...state,
+        authorizationRequest: true,
+        authorizationFailed: false
+      }
+    }
+    case AUTHORIZATION_FAILED: {
+      return {
+        ...state,
+        authorizationRequest: false,
+        authorizationFailed: true
+      }
+    }
+    case AUTHORIZATION_SUCCESS: {
+      return {
+        ...state,
+        authorizationRequest: false,
+        authorizationAnswer: action.payload
       }
     }
     default: {

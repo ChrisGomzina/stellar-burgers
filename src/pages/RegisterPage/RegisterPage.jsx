@@ -10,19 +10,16 @@ import { registerOnSite } from '../../services/actions/profile.js';
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
-  //const [profile, setProfile] = React.useState({ email: '', password: '', name: '' });
+
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-
   const [isVisible, setVisible] = React.useState(false);
-
-  //const registrationAnswer = useSelector((state) => state.registrationReducer.registrationAnswer);
 
   const handleRegistration = (e) => {
     e.preventDefault();
     dispatch(registerOnSite(email, password, name));
-  }
+  };
 
   return (
     <div className={styles.container}>

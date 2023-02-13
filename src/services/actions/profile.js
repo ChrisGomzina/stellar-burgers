@@ -1,4 +1,8 @@
-import { resetPassword, setPassword, register } from '../../utils/profileAPI.js';
+import { resetPassword, 
+  setPassword, 
+  register, 
+  authorization } from '../../utils/profileAPI.js';
+
 import { setCookie, splitCookie } from '../../utils/cookie.js';
 
 //Экшен для записи данных пользователя
@@ -18,6 +22,11 @@ export const SET_PASSWORD_FAILED = 'SET_PASSWORD_FAILED';
 export const REGISTSTRATION_REQUEST = 'REGISTSTRATION_REQUEST';
 export const REGISTSTRATION_SUCCESS = 'REGISTSTRATION_SUCCESS';
 export const REGISTSTRATION_FAILED = 'REGISTSTRATION_FAILED';
+
+//Экшены для авторизации
+export const AUTHORIZATION_REQUEST = 'AUTHORIZATION_REQUEST';
+export const AUTHORIZATION_SUCCESS = 'AUTHORIZATION_SUCCESS';
+export const AUTHORIZATION_FAILED = 'AUTHORIZATION_FAILED';
 
 //Сброс пароля
 export const resetOldPassword = (email) => (dispatch) => {
@@ -61,5 +70,22 @@ export const registerOnSite = (email, password, name) => (dispatch) => {
     })
     .catch(() => {
       dispatch({ type: REGISTSTRATION_FAILED })
+    });
+};
+
+//Авторизация
+export const logInToSite = (email, password) => (dispatch) => {
+  dispatch({
+    type: AUTHORIZATION_REQUEST
+  });
+  authorization(email, password)
+    .then((res) => {
+      setCookie('token', splitCookie(res.accessToken));
+      setCookie('refreshToken', res.refreshToken);
+      dispatch({ type: AUTHORIZATION_SUCCESS, payload: res.success });
+      dispatch({ type: SET_PROFILE, payload: res.user });
+    })
+    .catch(() => {
+      dispatch({ type: AUTHORIZATION_FAILED })
     });
 };

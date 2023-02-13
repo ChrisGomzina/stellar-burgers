@@ -27,7 +27,7 @@ const setPassword = (password, code) =>
   .then(res => checkResponse(res));
 
 const register = (email, password, name) => 
-  fetch('https://norma.nomoreparties.space/api/auth/register', {
+  fetch(`${BASE_URL}/auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -40,5 +40,17 @@ const register = (email, password, name) =>
   })
   .then(res => checkResponse(res));
 
+const authorization = (email, password) => 
+fetch(`${BASE_URL}/auth/login`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    'email': email, 
+    'password': password
+  }),
+})
+.then(res => checkResponse(res));
 
-export { resetPassword, setPassword, register };
+export { resetPassword, setPassword, register, authorization };
