@@ -16,11 +16,11 @@ const initialState = {
   //Данные авторизованного пользователя
   profile: null,
   //состояния для сброса пароля на странице /forgot-password
-  resetPassword: null,
+  resetPasswordAnswer: null,
   resetPasswordRequest: false,
   resetPasswordFailed: false,
   //состояния для установки нового пароля на странице /reset-password
-  setPassword: null,
+  setPasswordAnswer: null,
   setPasswordRequest: false,
   setPasswordFailed: false,
   //состояния для регистрации пользователя
@@ -62,7 +62,7 @@ export const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         resetPasswordRequest: false,
-        resetPassword: action.payload
+        resetPasswordAnswer: action.payload
       }
     }
     case SET_PASSWORD_REQUEST: {
@@ -83,7 +83,7 @@ export const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         setPasswordRequest: false,
-        setPassword: action.payload
+        setPasswordAnswer: action.payload
       }
     }
     case REGISTSTRATION_REQUEST: {

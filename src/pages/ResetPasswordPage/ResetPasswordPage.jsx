@@ -1,61 +1,92 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import styles from './ResetPasswordPage.module.css';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const ResetPasswordPage = () => {
-  const [visiblePassword, setVisiblePassword] = React.useState(false);
-  const [codeValue, setCodeValue] = React.useState('');
+import { setNewPassword } from '../../services/actions/profile.js';
+import Loader from '../../components/Loader/Loader.jsx';
 
-  const passwordInputRef = React.useRef(null);
-  
-  const showPassword = () => {
-    passwordInputRef.current.focus();
-    setVisiblePassword(!visiblePassword);
+const ResetPasswordPage = () => {
+  const dispatch = useDispatch();
+
+  const [password, setPassword] = React.useState('');
+  const [code, setCode] = React.useState('');
+
+  const [isVisible, setVisible] = React.useState(false);
+
+  const setPasswordAnswer = useSelector((state) => state.profileReducer.setPasswordAnswer);
+  const setPasswordRequest = useSelector((state) => state.profileReducer.setPasswordRequest);
+  const setPasswordFailed = useSelector((state) => state.profileReducer.setPasswordFailed);
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    dispatch(setNewPassword(password, code));
+  };
+
+  if (setPasswordAnswer) {
+    return <Navigate to={'/'} />;
+  };
+
+  if(!setPasswordAnswer) {
+    return <Navigate to={'/forgot-password'} />;
   };
 
   return (
-    <div className={styles.container}>
-      <h2 className='text text_type_main-medium mb-6'>Восстановление пароля</h2>
+    <>
 
-      <form className={styles.form}>
+      {setPasswordRequest && (
+        <Loader />
+      )}
 
-        <Input extraClass='mb-6' 
-          type={visiblePassword ? 'text' : 'password'} 
-          placeholder={'Введите новый пароль'} 
-          onChange={e => setVisiblePassword(e.target.visiblePassword)}
-          icon={visiblePassword ? 'HideIcon' : 'ShowIcon'}
-          value={visiblePassword}
-          name={'password'}
-          error={false}
-          ref={passwordInputRef}
-          onIconClick={showPassword}
-          errorText={'Ошибка'}
-          size={'default'}
-        />
+      {setPasswordFailed && (
+        <span className={`text text_type_main-medium`}>Ошибка загрузки ¯\_(ツ)_/¯</span>
+      )}
 
-        <Input extraClass='mb-6'
-          type={'text'}
-          placeholder={'Введите код из письма'}
-          onChange={e => setCodeValue(e.target.codeValue)}
-          value={codeValue}
-          name={'code'}
-          error={false}
-          errorText={'Ошибка'}
-          size={'default'}
-        />
+      {!setPasswordRequest && !setPasswordFailed && (
+        <div className={styles.container}>
+          <h2 className='text text_type_main-medium mb-6'>Восстановление пароля</h2>
 
-        <Button extraClass='mb-20' htmlType='button' type='primary' size='medium'>Сохранить</Button>
+          <form className={styles.form}>
 
-      </form>
+            <Input extraClass='mb-6' 
+              type={isVisible ? 'text' : 'password'} 
+              placeholder={'Введите новый пароль'} 
+              onChange={e => setPassword(e.target.value)}
+              icon={isVisible ? 'HideIcon' : 'ShowIcon'}
+              value={password}
+              name={'password'}
+              error={false}
+              onIconClick={() => setVisible(!isVisible)}
+              errorText={'Ошибка'}
+              size={'default'}
+            />
 
-      <p className='text text_type_main-default text_color_inactive'>Вспомнили пароль? 
-        <Link to='/login' className={`${styles.link} ml-2 mb-4`} htmlType='button' type='secondary' size='large'>Войти</Link>
-      </p>
+            <Input extraClass='mb-6'
+              type={'text'}
+              placeholder={'Введите код из письма'}
+              onChange={e => setCode(e.target.value)}
+              value={code}
+              name={'code'}
+              error={false}
+              errorText={'Ошибка'}
+              size={'default'}
+            />
 
-    </div>
+            <Button extraClass='mb-20' onClick={(e) => handleSave(e)} htmlType='button' type='primary' size='medium'>Сохранить</Button>
+
+          </form>
+
+          <p className='text text_type_main-default text_color_inactive'>Вспомнили пароль? 
+            <Link to='/login' className={`${styles.link} ml-2 mb-4`} htmlType='button' type='secondary' size='large'>Войти</Link>
+          </p>
+
+        </div>
+      )}
+
+    </>
   );
 };
 

@@ -1,3 +1,5 @@
+import { useLocation, useNavigate } from 'react-router-dom';
+
 import { resetPassword, 
   setPassword, 
   register, 
@@ -57,7 +59,7 @@ export const setNewPassword = (password, code) => (dispatch) => {
 };
 
 //Регистрация
-export const registerOnSite = (email, password, name) => (dispatch) => {
+export const registerOnSite = (email, password, name, forwarding) => (dispatch) => {
   dispatch({
     type: REGISTSTRATION_REQUEST
   });
@@ -67,6 +69,7 @@ export const registerOnSite = (email, password, name) => (dispatch) => {
       setCookie('refreshToken', res.refreshToken);
       dispatch({ type: REGISTSTRATION_SUCCESS, payload: res.success });
       dispatch({ type: SET_PROFILE, payload: res.user });
+      forwarding();
     })
     .catch(() => {
       dispatch({ type: REGISTSTRATION_FAILED })
@@ -74,7 +77,7 @@ export const registerOnSite = (email, password, name) => (dispatch) => {
 };
 
 //Авторизация
-export const logInToSite = (email, password) => (dispatch) => {
+export const logInToSite = (email, password, forwarding) => (dispatch) => {
   dispatch({
     type: AUTHORIZATION_REQUEST
   });
@@ -84,6 +87,7 @@ export const logInToSite = (email, password) => (dispatch) => {
       setCookie('refreshToken', res.refreshToken);
       dispatch({ type: AUTHORIZATION_SUCCESS, payload: res.success });
       dispatch({ type: SET_PROFILE, payload: res.user });
+      forwarding();
     })
     .catch(() => {
       dispatch({ type: AUTHORIZATION_FAILED })
