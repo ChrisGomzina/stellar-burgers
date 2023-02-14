@@ -10,7 +10,19 @@ import { SET_PROFILE,
   REGISTSTRATION_FAILED,
   AUTHORIZATION_REQUEST,
   AUTHORIZATION_SUCCESS,
-  AUTHORIZATION_FAILED } from '../actions/profile.js';
+  AUTHORIZATION_FAILED,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILED,
+  GET_PROFILE_DATA_REQUEST,
+  GET_PROFILE_DATA_SUCCESS,
+  GET_PROFILE_DATA_FAILED,
+  SEND_PROFILE_DATA_REQUES,
+  SEND_PROFILE_DATA_SUCCESS,
+  SEND_PROFILE_DATA_FAILED,
+  REFRESH_TOKEN_REQUEST,
+  REFRESH_TOKEN_SUCCESS,
+  REFRESH_TOKEN_FAILED } from '../actions/profile.js';
 
 const initialState = {
   //Данные авторизованного пользователя
@@ -31,6 +43,16 @@ const initialState = {
   authorizationAnswer: null,
   authorizationRequest: false,
   authorizationFailed: false,
+  //состояния для выхода из профиля
+  logOutAnswer: null,
+  logOutRequest: false,
+  logOutFailed: false,
+  //состояния для обновления токена
+
+  //состояния для редактирования данных
+
+  //состояния для отправки отредактированных данных на сервер 
+  
 };
 
 export const profileReducer = (state = initialState, action) => {

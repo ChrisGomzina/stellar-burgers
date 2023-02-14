@@ -53,4 +53,56 @@ fetch(`${BASE_URL}/auth/login`, {
 })
 .then(res => checkResponse(res));
 
-export { resetPassword, setPassword, register, authorization };
+const refreshToken = (refreshToken) => {
+  return fetch(`${BASE_URL}/auth/token`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      'token': refreshToken
+    }),
+  })
+  .then(res => checkResponse(res));
+};
+  
+
+const logOut = (refreshToken) => {
+  return fetch(`${BASE_URL}/logout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      'token': refreshToken
+    }),
+  })
+  .then(res => checkResponse(res));
+};
+
+const getProfileData = (accessToken) => 
+  fetch(`${BASE_URL}/auth/user`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'authorization': `Bearer ${accessToken}`,
+    },
+  })
+.then(res => checkResponse(res));
+
+const sendProfileData = (accessToken, email, name, password) => 
+  fetch(`${BASE_URL}/auth/user`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'authorization': `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({
+      'email': email,
+      'name': name,
+      'password': password
+    }),
+  })
+.then(res => checkResponse(res));
+
+export { resetPassword, setPassword, register, authorization, refreshToken, logOut, getProfileData, sendProfileData };

@@ -1,11 +1,13 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-
 import { resetPassword, 
   setPassword, 
   register, 
-  authorization } from '../../utils/profileAPI.js';
+  authorization, 
+  refreshToken, 
+  logOut, 
+  getProfileData, 
+  sendProfileData } from '../../utils/profileAPI.js';
 
-import { setCookie, splitCookie } from '../../utils/cookie.js';
+import { setCookie, splitCookie, deleteCookie, getCookie } from '../../utils/cookie.js';
 
 //Экшен для записи данных пользователя
 export const SET_PROFILE = 'SET_PROFILE';
@@ -29,6 +31,26 @@ export const REGISTSTRATION_FAILED = 'REGISTSTRATION_FAILED';
 export const AUTHORIZATION_REQUEST = 'AUTHORIZATION_REQUEST';
 export const AUTHORIZATION_SUCCESS = 'AUTHORIZATION_SUCCESS';
 export const AUTHORIZATION_FAILED = 'AUTHORIZATION_FAILED';
+
+//Экшены для выхода из профиля
+export const LOGOUT_REQUEST = 'LOGOUT_REQOUEST';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAILED = 'LOGOUT_FAILED';
+
+//Экшены для получения данных о пользователе
+export const GET_PROFILE_DATA_REQUEST = 'GET_PROFILE_DATA_REQUEST';
+export const GET_PROFILE_DATA_SUCCESS = 'GET_PROFILE_DATA_SUCCESS';
+export const GET_PROFILE_DATA_FAILED = 'GET_PROFILE_DATA_FAILED';
+
+//Экшены для редактирования данных пользователя 
+export const SEND_PROFILE_DATA_REQUEST = 'SEND_PROFILE_DATA_REQUEST';
+export const SEND_PROFILE_DATA_SUCCESS = 'SEND_PROFILE_DATA_SUCCESS';
+export const SEND_PROFILE_DATA_FAILED = 'SEND_PROFILE_DATA_FAILED';
+
+//Экшены для обновления токена
+export const REFRESH_TOKEN_REQUEST = 'REFRESH_TOKEN_REQUEST';
+export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN_SUCCESS';
+export const REFRESH_TOKEN_FAILED = 'REFRESH_TOKEN_FAILED';
 
 //Сброс пароля
 export const resetOldPassword = (email) => (dispatch) => {
@@ -91,5 +113,76 @@ export const logInToSite = (email, password, forwarding) => (dispatch) => {
     })
     .catch(() => {
       dispatch({ type: AUTHORIZATION_FAILED })
+    });
+};
+
+//Выход из профиля
+export const logOutSite = (refreshToken, forwarding) => (dispatch) => {
+  dispatch({
+    type: LOGOUT_REQUEST
+  });
+  logOut(refreshToken, forwarding)
+    .then((res) => {
+      dispatch({ type: LOGOUT_SUCCESS, payload: res.success });
+      deleteCookie('token');
+      deleteCookie('refreshToken');
+      forwarding();
+    })
+    .catch(() => {
+      dispatch({ type: LOGOUT_FAILED })
+    });
+};
+
+
+//Обновление токена
+export const updateToken = (refreshToken) => (dispatch) => {
+  dispatch({
+    type: REFRESH_TOKEN_REQUEST
+  });
+  refreshToken(refreshToken)
+    .then((res) => {
+      setCookie('token', splitCookie(res.accessToken));
+      setCookie('refreshToken', res.refreshToken);
+      dispatch({ type: REFRESH_TOKEN_SUCCESS, payload: res.success });
+    })
+    .catch(() => {
+      dispatch({ type: REFRESH_TOKEN_FAILED })
+    });
+};
+
+//Получение данных пользователя
+export const getProfileInfo = (accessToken) => (dispatch) => {
+  dispatch({
+    type: GET_PROFILE_DATA_REQUEST
+  });
+  getProfileData(accessToken)
+    .then((res) => {
+      dispatch({ type: GET_PROFILE_DATA_SUCCESS, payload: res.success });
+      dispatch({ type: SET_PROFILE, payload: res.profile });
+      dispatch({ type: REFRESH_TOKEN_REQUEST, payload: null });
+    })
+    .catch((err) => {
+      if (err.message === 'jwt malformed' || err.message === 'jwt expired') {
+        dispatch(refreshToken(getCookie('refreshToken')));
+        dispatch({ type: GET_PROFILE_DATA_FAILED })
+      }
+    });
+};
+
+//Отправка отредактированных данных
+export const sendProfileInfo = (email, password, name, accessToken) => (dispatch) => {
+  dispatch({
+    type: SEND_PROFILE_DATA_REQUEST
+  });
+  sendProfileData(email, password, name, accessToken)
+    .then((res) => {
+      dispatch({ type: SET_PROFILE, payload: res.profile });
+      dispatch({ type: SEND_PROFILE_DATA_SUCCESS, payload: res.success });
+    })
+    .catch((err) => {
+      if (err.message === 'jwt malformed' || err.message === 'jwt expired') {
+        dispatch(refreshToken(getCookie('refreshToken')));
+        dispatch({ type: SEND_PROFILE_DATA_FAILED })
+      }
     });
 };
