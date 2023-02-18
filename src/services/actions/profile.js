@@ -133,7 +133,6 @@ export const logOutSite = (refreshToken, forwarding) => (dispatch) => {
     });
 };
 
-
 //Обновление токена
 export const updateToken = (refreshToken) => (dispatch) => {
   dispatch({

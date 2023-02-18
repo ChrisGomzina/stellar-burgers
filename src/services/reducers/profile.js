@@ -17,7 +17,7 @@ import { SET_PROFILE,
   GET_PROFILE_DATA_REQUEST,
   GET_PROFILE_DATA_SUCCESS,
   GET_PROFILE_DATA_FAILED,
-  SEND_PROFILE_DATA_REQUES,
+  SEND_PROFILE_DATA_REQUEST,
   SEND_PROFILE_DATA_SUCCESS,
   SEND_PROFILE_DATA_FAILED,
   REFRESH_TOKEN_REQUEST,
@@ -48,11 +48,17 @@ const initialState = {
   logOutRequest: false,
   logOutFailed: false,
   //состояния для обновления токена
-
-  //состояния для редактирования данных
-
+  refreshTokenAnswer: null,
+  refreshTokenRequest: false,
+  refreshTokenFaild: false,
+  //состояния для получения данных
+  getProfileDataAnswer: null,
+  getProfileDataRequest: false,
+  getProfileDataFaild: false,
   //состояния для отправки отредактированных данных на сервер 
-  
+  sendProfileDataAnswer: null,
+  sendProfileDataRequest: false,
+  sendProfileDataFaild: false
 };
 
 export const profileReducer = (state = initialState, action) => {
@@ -148,6 +154,90 @@ export const profileReducer = (state = initialState, action) => {
         ...state,
         authorizationRequest: false,
         authorizationAnswer: action.payload
+      }
+    }
+    case LOGOUT_REQUEST: {
+      return {
+        ...state,
+        logOutRequest: true,
+        logOutFailed: false
+      }
+    }
+    case LOGOUT_FAILED: {
+      return {
+        ...state,
+        logOutRequest: false,
+        logOutFailed: true
+      }
+    }
+    case LOGOUT_SUCCESS: {
+      return {
+        ...state,
+        logOutRequest: false,
+        logOutAnswer: action.payload
+      }
+    }
+    case REFRESH_TOKEN_REQUEST: {
+      return {
+        ...state,
+        refreshTokenRequest: true,
+        refreshTokenFaild: false
+      }
+    }
+    case REFRESH_TOKEN_FAILED: {
+      return {
+        ...state,
+        refreshTokenRequest: false,
+        refreshTokenFaild: true
+      }
+    }
+    case REFRESH_TOKEN_SUCCESS: {
+      return {
+        ...state,
+        refreshTokenRequest: false,
+        refreshTokenAnswer: action.payload
+      }
+    }
+    case GET_PROFILE_DATA_REQUEST: {
+      return {
+        ...state,
+        getProfileDataAnswer: true,
+        getProfileDataFaild: false
+      }
+    }
+    case GET_PROFILE_DATA_FAILED: {
+      return {
+        ...state,
+        getProfileDataAnswer: false,
+        getProfileDataFaild: true
+      }
+    }
+    case GET_PROFILE_DATA_SUCCESS: {
+      return {
+        ...state,
+        getProfileDataAnswer: false,
+        getProfileDataAnswer: action.payload
+      }
+    }
+    case SEND_PROFILE_DATA_REQUEST: {
+      return {
+        ...state,
+        sendProfileDataRequest: true,
+        sendProfileDataFaild: false
+      }
+    }
+    case SEND_PROFILE_DATA_FAILED: {
+      return {
+        ...state,
+        sendProfileDataRequest: false,
+        sendProfileDataFaild: true
+      }
+    }
+    case SEND_PROFILE_DATA_SUCCESS: {
+      return {
+        ...state,
+        sendProfileDataRequest: false,
+        sendProfileDataAnswer: action.payload
       }
     }
     default: {

@@ -60,7 +60,7 @@ const refreshToken = (refreshToken) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      'token': refreshToken
+      'token': refreshToken,
     }),
   })
   .then(res => checkResponse(res));
@@ -68,13 +68,13 @@ const refreshToken = (refreshToken) => {
   
 
 const logOut = (refreshToken) => {
-  return fetch(`${BASE_URL}/logout`, {
+  return fetch(`${BASE_URL}/auth/logout`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      'token': refreshToken
+      'token': refreshToken,
     }),
   })
   .then(res => checkResponse(res));

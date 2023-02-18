@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import styles from './LoginPage.module.css';
@@ -25,6 +25,17 @@ const LoginPage = () => {
     e.preventDefault();
     dispatch(logInToSite(email, password, () => navigate(location?.state?.previousLocation ? location.state.previousLocation : '/')));
   };
+
+  //Защита маршрута от авторизованного пользователя
+  // const profile = useSelector((state) => state.profileReducer.profile);
+  
+  // console.log(profile.user);
+
+  // useEffect(() => {
+  //   if (profile.user) {
+  //     return (<Navigate to='/' replace />)
+  //   }
+  // }, [profile]);
   
   return (
     <>

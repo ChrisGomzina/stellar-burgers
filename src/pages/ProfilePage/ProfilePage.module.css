@@ -51,3 +51,8 @@
   color: #8585AD;
   opacity: 0.4;
 }
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
