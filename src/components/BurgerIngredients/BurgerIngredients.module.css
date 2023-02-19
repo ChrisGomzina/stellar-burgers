@@ -17,6 +17,11 @@
   list-style-type: none;
 }
 
+.link {
+  color: #F2F2F3;
+  text-decoration: none;
+}
+
 .scrollbar {
   max-height: 716px;
   overflow-y: scroll;

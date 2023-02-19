@@ -1,11 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import styles from './IngredientDetails.module.css';
 
-import ingredientType from '../../utils/types.js';
+const IngredientDetails = () => {
+  const { id } = useParams();
 
-const IngredientDetails = ({ data }) => {
+  const ingredients = useSelector((state) => state.ingredientReducer.ingredients);
+  console.log(ingredients);
+
+  const data = ingredients.find((ingredient) => ingredient._id === id);
 
   return (
     <div className={`${styles.container} pt-10 pr-10 pb-15 pl-10`}>
@@ -27,7 +32,3 @@ const IngredientDetails = ({ data }) => {
 };
 
 export default IngredientDetails;
-
-IngredientDetails.propTypes = {
-  data: ingredientType.isRequired
-};
