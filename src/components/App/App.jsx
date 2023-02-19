@@ -6,6 +6,7 @@ import { getCookie } from '../../utils/cookie.js';
 import { getProfileInfo } from '../../services/actions/profile.js';
 
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement.jsx';
+import RouteUnauthorizedUser from '../RouteUnauthorizedUser/RouteUnauthorizedUser.jsx';
 
 import Header from '../../pages/Header/Header.jsx';
 import MainPage from '../../pages/MainPage/MainPage.jsx';
@@ -30,13 +31,13 @@ const App = () => {
     <>
       <Routes location={location.state?.previousLocation || location}>
         <Route path='/' element={<Header />}>
-          //Маршруты для неавторизованных пользователей
-          <Route index element={<MainPage />}  />
-          <Route path='/login' element={<LoginPage />}/>
-          <Route path='/register' element={<RegisterPage />}/>
-          <Route path='/forgot-password' element={<ForgotPasswordPage />}/>
-          <Route path='/reset-password' element={<ResetPasswordPage />}/>
+          <Route index element={<MainPage />} />
           <Route path='/not-found' element={<NotFoundPage />}/>
+          //Маршруты для неавторизованных пользователей
+          <Route path='/login' element={<RouteUnauthorizedUser element={<LoginPage />}/>}/>
+          <Route path='/register' element={<RouteUnauthorizedUser element={<RegisterPage />}/>}/>
+          <Route path='/forgot-password' element={<RouteUnauthorizedUser element={<ForgotPasswordPage />}/>}/>
+          <Route path='/reset-password' element={<RouteUnauthorizedUser element={<ResetPasswordPage />}/>}/>
           //Маршруты для авторизованных пользователей
           <Route path='/profile' element={<ProtectedRouteElement element={<ProfilePage />}/>}/>
 

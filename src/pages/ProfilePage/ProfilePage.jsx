@@ -8,14 +8,25 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 
 import { getCookie } from '../../utils/cookie.js';
 import { logOutSite, sendProfileInfo } from '../../services/actions/profile.js';
+import Loader from '../../components/Loader/Loader.jsx';
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [newName, setNewName] = React.useState('');
-  const [newEmail, setNewEmail] = React.useState('');
+  const profile = useSelector((state) => state.profileReducer.profile);
+  const sendProfileDataRequest = useSelector((state) => state.profileReducer.sendProfileDataRequest);
+  const sendProfileDataFaild = useSelector((state) => state.profileReducer.sendProfileDataFaild);
+  const refreshTokenAnswer = useSelector((state) => state.profileReducer.refreshTokenAnswer);
+  const refreshTokenFaild = useSelector((state) => state.profileReducer.refreshTokenFaild);
+
+  const accessToken = getCookie('token');
+  const refreshToken = getCookie('refreshToken');
+
+  const [newName, setNewName] = React.useState(profile.name);
+  const [newEmail, setNewEmail] = React.useState(profile.email);
   const [newPassword, setNewPassword] = React.useState('');
+  const [isDataChanged, setIsDataChanged] = React.useState(false);
 
   const nameRef = React.useRef(null);
   const emailRef = React.useRef(null);
@@ -27,24 +38,26 @@ const ProfilePage = () => {
 
   const setActiveClass = ({ isActive }) => `${isActive ? styles.link_active : styles.link} text text_type_main-medium`;
 
-  const profile = useSelector((state) => state.profileReducer.profile);
-  const sendProfileDataAnswer = useSelector((state) => state.profileReducer.sendProfileDataAnswer);
-  const sendProfileDataRequest = useSelector((state) => state.profileReducer.sendProfileDataRequest);
-  const sendProfileDataFaild = useSelector((state) => state.profileReducer.sendProfileDataFaild);
-  const refreshTokenAnswer = useSelector((state) => state.profileReducer.refreshTokenAnswer);
-  const refreshTokenRequest = useSelector((state) => state.profileReducer.refreshTokenRequest);
-  const refreshTokenFaild = useSelector((state) => state.profileReducer.refreshTokenFaild);
+  const isNameChanged = (e) => {
+    setNewName(e.target.value);
+    e.target.value === profile.name ? setIsDataChanged(false) : setIsDataChanged(true);
+  };
 
-  const accessToken = getCookie('token');
-  const refreshToken = getCookie('refreshToken');
+  const isEmailChanged = (e) => {
+    setNewEmail(e.target.value);
+    e.target.value === profile.email ? setIsDataChanged(false) : setIsDataChanged(true);
+  };
+
+  const isPasswordChanged = (e) => {
+    setNewPassword(e.target.value);
+    e.target.value === profile.password ? setIsDataChanged(false) : setIsDataChanged(true);
+  };
 
   useEffect(() => {
-    if (profile) {
-      setNewName(profile.name);
-      setNewEmail(profile.email);
-      setNewPassword('');
+    if (refreshTokenFaild) {
+      dispatch(sendProfileInfo(accessToken, newEmail, newName, newPassword));
     }
-  }, [profile]);
+  }, [refreshTokenAnswer]);
 
   const handleLogOut = () => {
     dispatch(logOutSite(refreshToken, () => navigate('/', { replace: true })));
@@ -52,7 +65,7 @@ const ProfilePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(sendProfileInfo(newEmail, newPassword, newName, accessToken));
+    dispatch(sendProfileInfo(accessToken, newEmail, newName, newPassword));
   };
 
   const cancelEditing = () => {
@@ -60,7 +73,6 @@ const ProfilePage = () => {
     setNewEmail(profile.email);
     setNewPassword('');
   };
-
 
   return (
     <div className={`${styles.container} mt-30`}>
@@ -81,62 +93,74 @@ const ProfilePage = () => {
         <span className={`${styles.span} text text_type_main-default`}>В этом разделе вы можете<br></br>изменить свои персональные данные</span>
       </nav>
 
-      <form>
+      {sendProfileDataRequest && (
+        <Loader />
+      )}
 
-        <Input extraClass='mb-6' 
-          type={'text'} 
-          placeholder={'Имя'} 
-          onChange={e => setNewName(e.target.value)}
-          icon={'EditIcon'}
-          value={newName}
-          name={'name'}
-          error={false}
-          ref={nameRef}
-          onIconClick={onNameClick}
-          errorText={'Ошибка'}
-          size={'default'}
-        />
+      {sendProfileDataFaild && (
+        <span className={`text text_type_main-medium`}>Ошибка загрузки ¯\_(ツ)_/¯</span>
+      )}
 
-        <Input 
-          extraClass='mb-6' 
-          type={'email'} 
-          placeholder={'Логин'}
-          onChange={e => setNewEmail(e.target.value)} 
-          value={newEmail} 
-          name={'email'} 
-          icon={'EditIcon'}
-          ref={emailRef}
-          onIconClick={onEmailClick}
-          error={false}
-          errorText={'Ошибка'}
-          size={'default'}
-        />
+      {!sendProfileDataRequest && !sendProfileDataFaild && (
+        <form>
 
-        <Input extraClass='mb-6' 
-          type={'password'} 
-          placeholder={'Пароль'} 
-          onChange={e => setNewPassword(e.target.value)}
-          icon={'EditIcon'}
-          value={newPassword}
-          name={'password'}
-          error={false}
-          ref={passwordRef}
-          onIconClick={onPasswordClick}
-          errorText={'Ошибка'}
-          size={'default'}
-        />
+          <Input extraClass='mb-6' 
+            type={'text'} 
+            placeholder={'Имя'} 
+            onChange={isNameChanged}
+            icon={'EditIcon'}
+            value={newName}
+            name={'name'}
+            error={false}
+            ref={nameRef}
+            onIconClick={onNameClick}
+            errorText={'Ошибка'}
+            size={'default'}
+          />
 
-        <div className={styles.buttons}>
-          <Button htmlType='button' type='secondary' size='medium' onClick={cancelEditing}>
-            Отмена
-          </Button>
-       
-          <Button htmlType='submit' type='primary' size='medium' onClick={handleSubmit}>
-            Сохранить
-          </Button>
-        </div>
+          <Input 
+            extraClass='mb-6' 
+            type={'email'} 
+            placeholder={'Логин'}
+            onChange={isEmailChanged} 
+            value={newEmail} 
+            name={'email'} 
+            icon={'EditIcon'}
+            ref={emailRef}
+            onIconClick={onEmailClick}
+            error={false}
+            errorText={'Ошибка'}
+            size={'default'}
+          />
 
-      </form>
+          <Input extraClass='mb-6' 
+            type={'password'} 
+            placeholder={'Пароль'} 
+            onChange={isPasswordChanged}
+            icon={'EditIcon'}
+            value={newPassword}
+            name={'password'}
+            error={false}
+            ref={passwordRef}
+            onIconClick={onPasswordClick}
+            errorText={'Ошибка'}
+            size={'default'}
+          />
+
+        {isDataChanged && (
+          <div className={styles.buttons}>
+            <Button htmlType='button' type='secondary' size='medium' onClick={cancelEditing}>
+              Отмена
+            </Button>
+
+            <Button htmlType='submit' type='primary' size='medium' onClick={handleSubmit}>
+              Сохранить
+            </Button>
+          </div>
+        )}
+
+        </form>
+      )}
 
     </div>
   );

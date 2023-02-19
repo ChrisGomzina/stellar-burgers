@@ -121,7 +121,7 @@ export const logOutSite = (refreshToken, forwarding) => (dispatch) => {
   dispatch({
     type: LOGOUT_REQUEST
   });
-  logOut(refreshToken, forwarding)
+  logOut(refreshToken)
     .then((res) => {
       dispatch({ type: LOGOUT_SUCCESS, payload: res.success });
       deleteCookie('token');
@@ -157,30 +157,30 @@ export const getProfileInfo = (accessToken) => (dispatch) => {
   getProfileData(accessToken)
     .then((res) => {
       dispatch({ type: GET_PROFILE_DATA_SUCCESS, payload: res.success });
-      dispatch({ type: SET_PROFILE, payload: res.profile });
+      dispatch({ type: SET_PROFILE, payload: res.user });
       dispatch({ type: REFRESH_TOKEN_REQUEST, payload: null });
     })
     .catch((err) => {
       if (err.message === 'jwt malformed' || err.message === 'jwt expired') {
-        dispatch(refreshToken(getCookie('refreshToken')));
+        dispatch(updateToken(getCookie('refreshToken')));
         dispatch({ type: GET_PROFILE_DATA_FAILED })
       }
     });
 };
 
 //Отправка отредактированных данных
-export const sendProfileInfo = (email, password, name, accessToken) => (dispatch) => {
+export const sendProfileInfo = (accessToken, email, name, password) => (dispatch) => {
   dispatch({
     type: SEND_PROFILE_DATA_REQUEST
   });
-  sendProfileData(email, password, name, accessToken)
+  sendProfileData(accessToken, email, name, password)
     .then((res) => {
-      dispatch({ type: SET_PROFILE, payload: res.profile });
+      dispatch({ type: SET_PROFILE, payload: res.user });
       dispatch({ type: SEND_PROFILE_DATA_SUCCESS, payload: res.success });
     })
     .catch((err) => {
       if (err.message === 'jwt malformed' || err.message === 'jwt expired') {
-        dispatch(refreshToken(getCookie('refreshToken')));
+        dispatch(updateToken(getCookie('refreshToken')));
         dispatch({ type: SEND_PROFILE_DATA_FAILED })
       }
     });

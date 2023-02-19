@@ -173,6 +173,7 @@ export const profileReducer = (state = initialState, action) => {
     case LOGOUT_SUCCESS: {
       return {
         ...state,
+        profile: null,
         logOutRequest: false,
         logOutAnswer: action.payload
       }
