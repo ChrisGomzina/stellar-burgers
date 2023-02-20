@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { getCookie } from '../../utils/cookie.js';
 import { getProfileInfo } from '../../services/actions/profile.js';
+import { getIngredients } from '../../services/actions/ingredients.js';
 import { closeIngredientDetailsPopup } from '../../services/actions/popup.js';
 
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement.jsx';
@@ -28,6 +29,7 @@ const App = () => {
   const refreshTokenAnswer = useSelector((state) => state.profileReducer.refreshTokenAnswer);
 
   useEffect(() => {
+    dispatch(getIngredients());
     dispatch(getProfileInfo(accessToken));
   }, [refreshTokenAnswer]);
 

@@ -9,12 +9,12 @@ import { getIngredients } from '../../services/actions/ingredients.js';
 const IngredientPage = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const ingredients = useSelector((state) => state.ingredientReducer.ingredients);
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
+  const ingredients = useSelector((state) => state.ingredientReducer.ingredients);
   const data = ingredients.find((ingredient) => ingredient._id === id);
 
   return (
