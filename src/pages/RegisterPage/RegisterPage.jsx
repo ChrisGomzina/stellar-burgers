@@ -43,7 +43,7 @@ const RegisterPage = () => {
         <div className={styles.container}>
           <h2 className='text text_type_main-medium mb-6'>Регистрация</h2>
   
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={(e) => handleRegistration(e)}>
             <Input extraClass='mb-6'
               type={'text'}
               placeholder={'Имя'}
@@ -75,7 +75,7 @@ const RegisterPage = () => {
               size={'default'}
             />
   
-            <Button extraClass='mb-20' onClick={(e) => handleRegistration(e)} htmlType='button' type='primary' size='medium'>Зарегистрироваться</Button>
+            <Button extraClass='mb-20' htmlType='submit' type='primary' size='medium'>Зарегистрироваться</Button>
   
           </form>
   

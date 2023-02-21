@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, Link } from 'react-router-dom';
 
 import styles from './AppHeader.module.css';
 
@@ -30,7 +30,9 @@ const AppHeader = () => {
           </li>
         </ul>
 
-        <Logo />
+        <Link to='/'>
+          <Logo />
+        </Link>
 
         <Button extraClass={`${styles.profileButton} pt-4 pb-4 pl-5`} htmlType="button" type="secondary" size="medium">
           <NavLink to="/profile" className={({ isActive }) => isActive ? styles.link_active : styles.link}>

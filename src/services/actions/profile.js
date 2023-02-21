@@ -2,7 +2,7 @@ import { resetPassword,
   setPassword, 
   register, 
   authorization, 
-  refreshToken, 
+  refreshTokenApi, 
   logOut, 
   getProfileData, 
   sendProfileData } from '../../utils/profileAPI.js';
@@ -138,7 +138,7 @@ export const updateToken = (refreshToken) => (dispatch) => {
   dispatch({
     type: REFRESH_TOKEN_REQUEST
   });
-  refreshToken(refreshToken)
+  refreshTokenApi(refreshToken)
     .then((res) => {
       setCookie('token', splitCookie(res.accessToken));
       setCookie('refreshToken', res.refreshToken);
@@ -158,7 +158,7 @@ export const getProfileInfo = (accessToken) => (dispatch) => {
     .then((res) => {
       dispatch({ type: GET_PROFILE_DATA_SUCCESS, payload: res.success });
       dispatch({ type: SET_PROFILE, payload: res.user });
-      dispatch({ type: REFRESH_TOKEN_REQUEST, payload: null });
+      dispatch({ type: REFRESH_TOKEN_SUCCESS, payload: null });
     })
     .catch((err) => {
       if (err.message === 'jwt malformed' || err.message === 'jwt expired') {

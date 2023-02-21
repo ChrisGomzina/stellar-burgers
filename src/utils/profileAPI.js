@@ -53,7 +53,7 @@ fetch(`${BASE_URL}/auth/login`, {
 })
 .then(res => checkResponse(res));
 
-const refreshToken = (refreshToken) => {
+const refreshTokenApi = (refreshToken) => {
   return fetch(`${BASE_URL}/auth/token`, {
     method: 'POST',
     headers: {
@@ -105,4 +105,4 @@ const sendProfileData = (accessToken, email, name, password) =>
   })
 .then(res => checkResponse(res));
 
-export { resetPassword, setPassword, register, authorization, refreshToken, logOut, getProfileData, sendProfileData };
+export { resetPassword, setPassword, register, authorization, refreshTokenApi, logOut, getProfileData, sendProfileData };

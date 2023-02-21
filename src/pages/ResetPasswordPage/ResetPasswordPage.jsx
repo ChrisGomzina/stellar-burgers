@@ -21,6 +21,8 @@ const ResetPasswordPage = () => {
   const setPasswordRequest = useSelector((state) => state.profileReducer.setPasswordRequest);
   const setPasswordFailed = useSelector((state) => state.profileReducer.setPasswordFailed);
 
+  const resetPasswordFailed = useSelector((state) => state.profileReducer.resetPasswordFailed);
+
   const handleSave = (e) => {
     e.preventDefault();
     dispatch(setNewPassword(password, code));
@@ -30,7 +32,7 @@ const ResetPasswordPage = () => {
     return <Navigate to={'/'} />;
   };
 
-  if(!setPasswordAnswer) {
+  if(resetPasswordFailed) {
     return <Navigate to={'/forgot-password'} />;
   };
 
@@ -49,7 +51,7 @@ const ResetPasswordPage = () => {
         <div className={styles.container}>
           <h2 className='text text_type_main-medium mb-6'>Восстановление пароля</h2>
 
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={(e) => handleSave(e)}>
 
             <Input extraClass='mb-6' 
               type={isVisible ? 'text' : 'password'} 
@@ -75,7 +77,7 @@ const ResetPasswordPage = () => {
               size={'default'}
             />
 
-            <Button extraClass='mb-20' onClick={(e) => handleSave(e)} htmlType='button' type='primary' size='medium'>Сохранить</Button>
+            <Button extraClass='mb-20' htmlType='submit' type='primary' size='medium'>Сохранить</Button>
 
           </form>
 

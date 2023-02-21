@@ -102,7 +102,7 @@ const ProfilePage = () => {
       )}
 
       {!sendProfileDataRequest && !sendProfileDataFaild && (
-        <form>
+        <form onSubmit={handleSubmit}>
 
           <Input extraClass='mb-6' 
             type={'text'} 
@@ -147,13 +147,14 @@ const ProfilePage = () => {
             size={'default'}
           />
 
+        {/* Кнопки "Отмена" и "Сохранить" появляются, только если isDataChanged === true */}
         {isDataChanged && (
           <div className={styles.buttons}>
             <Button htmlType='button' type='secondary' size='medium' onClick={cancelEditing}>
               Отмена
             </Button>
 
-            <Button htmlType='submit' type='primary' size='medium' onClick={handleSubmit}>
+            <Button htmlType='submit' type='primary' size='medium'>
               Сохранить
             </Button>
           </div>

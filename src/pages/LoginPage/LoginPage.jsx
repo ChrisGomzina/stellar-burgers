@@ -41,7 +41,7 @@ const LoginPage = () => {
         <div className={styles.container}>
           <h2 className='text text_type_main-medium mb-6'>Вход</h2>
   
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={(e) => handleAuthorization(e)}>
             <EmailInput extraClass='mb-6' 
               onChange={e => setEmail(e.target.value)} 
               value={email} 
@@ -62,7 +62,7 @@ const LoginPage = () => {
               size={'default'}
             />
   
-            <Button extraClass='mb-20' onClick={(e) => handleAuthorization(e)} htmlType='button' type='primary' size='medium'>Войти</Button>
+            <Button extraClass='mb-20' htmlType='submit' type='primary' size='medium'>Войти</Button>
           </form>
   
           <p className='text text_type_main-default text_color_inactive'>Вы — новый пользователь? 

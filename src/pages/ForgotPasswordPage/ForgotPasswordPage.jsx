@@ -44,7 +44,7 @@ const ForgotPasswordPage = () => {
         <div className={styles.container}>
           <h2 className='text text_type_main-medium mb-6'>Восстановление пароля</h2>
 
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={(e) => handleResetPassword(e)}>
             <EmailInput extraClass='mb-6' 
               onChange={e => setEmail(e.target.value)} 
               value={email} 
@@ -53,7 +53,7 @@ const ForgotPasswordPage = () => {
               isIcon={false} 
             />
 
-            <Button extraClass='mb-20' htmlType='submit' type='primary' size='medium' onClick={(e) => handleResetPassword(e)}>Восстановить</Button>
+            <Button extraClass='mb-20' htmlType='submit' type='primary' size='medium'>Восстановить</Button>
           </form>
 
           <p className='text text_type_main-default text_color_inactive'>Вспомнили пароль? 

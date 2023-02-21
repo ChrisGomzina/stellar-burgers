@@ -30,8 +30,13 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getIngredients());
+  }, []);
+
+  useEffect(() => {
     dispatch(getProfileInfo(accessToken));
-  }, [refreshTokenAnswer]);
+    console.log(refreshTokenAnswer);
+    console.log(accessToken);
+  }, [refreshTokenAnswer])
 
   return (
     <>
@@ -39,12 +44,12 @@ const App = () => {
         <Route path='/' element={<Header />}>
           <Route index element={<MainPage />} />
           <Route path='/not-found' element={<NotFoundPage />}/>
-          <Route path='/reset-password' element={<ResetPasswordPage />}/>
           <Route path='ingredients/:id' element={<IngredientPage />} />
           //Маршруты для неавторизованных пользователей
           <Route path='/login' element={<RouteUnauthorizedUser element={<LoginPage />}/>}/>
           <Route path='/register' element={<RouteUnauthorizedUser element={<RegisterPage />}/>}/>
           <Route path='/forgot-password' element={<RouteUnauthorizedUser element={<ForgotPasswordPage />}/>}/>
+          <Route path='/reset-password' element={<RouteUnauthorizedUser element={<ResetPasswordPage />}/>}/>
           //Маршруты для авторизованных пользователей
           <Route path='/profile' element={<ProtectedRouteElement element={<ProfilePage />}/>}/>
         </Route>
