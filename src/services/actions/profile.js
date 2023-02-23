@@ -156,14 +156,14 @@ export const getProfileInfo = (accessToken) => (dispatch) => {
   });
   getProfileData(accessToken)
     .then((res) => {
-      dispatch({ type: GET_PROFILE_DATA_SUCCESS, payload: res.success });
       dispatch({ type: SET_PROFILE, payload: res.user });
       dispatch({ type: REFRESH_TOKEN_SUCCESS, payload: null });
+      dispatch({ type: GET_PROFILE_DATA_SUCCESS, payload: res.success });
     })
     .catch((err) => {
       if (err.message === 'jwt malformed' || err.message === 'jwt expired') {
         dispatch(updateToken(getCookie('refreshToken')));
-        dispatch({ type: GET_PROFILE_DATA_FAILED })
+        return getProfileData(getCookie('token'));
       }
     });
 };

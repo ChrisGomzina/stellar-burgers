@@ -26,6 +26,7 @@ const App = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const accessToken = getCookie('token');
+  const refreshToken = getCookie('refreshToken');
   const refreshTokenAnswer = useSelector((state) => state.profileReducer.refreshTokenAnswer);
 
   useEffect(() => {
@@ -34,8 +35,6 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getProfileInfo(accessToken));
-    console.log(refreshTokenAnswer);
-    console.log(accessToken);
   }, [refreshTokenAnswer])
 
   return (
