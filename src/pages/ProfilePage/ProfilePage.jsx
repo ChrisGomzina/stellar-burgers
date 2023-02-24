@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -18,7 +18,6 @@ const ProfilePage = () => {
   const sendProfileDataRequest = useSelector((state) => state.profileReducer.sendProfileDataRequest);
   const sendProfileDataFaild = useSelector((state) => state.profileReducer.sendProfileDataFaild);
   const refreshTokenAnswer = useSelector((state) => state.profileReducer.refreshTokenAnswer);
-  const refreshTokenFaild = useSelector((state) => state.profileReducer.refreshTokenFaild);
 
   const accessToken = getCookie('token');
   const refreshToken = getCookie('refreshToken');
@@ -40,33 +39,35 @@ const ProfilePage = () => {
 
   const isNameChanged = (e) => {
     setNewName(e.target.value);
-    e.target.value === profile.name ? setIsDataChanged(false) : setIsDataChanged(true);
+    setIsDataChanged(true);
   };
 
   const isEmailChanged = (e) => {
     setNewEmail(e.target.value);
-    e.target.value === profile.email ? setIsDataChanged(false) : setIsDataChanged(true);
+    setIsDataChanged(true);
   };
 
   const isPasswordChanged = (e) => {
     setNewPassword(e.target.value);
-    e.target.value === profile.password ? setIsDataChanged(false) : setIsDataChanged(true);
+    setIsDataChanged(true);
   };
-
-  useEffect(() => {
-    if (refreshTokenFaild) {
-      dispatch(sendProfileInfo(accessToken, newEmail, newName, newPassword));
-    }
-  }, [refreshTokenAnswer]);
 
   const handleLogOut = () => {
     dispatch(logOutSite(refreshToken, () => navigate('/', { replace: true })));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(sendProfileInfo(accessToken, newEmail, newName, newPassword));
-  };
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(sendProfileInfo(accessToken, newEmail, newName, newPassword));
+    }, [dispatch, accessToken, newEmail, newName, newPassword]
+  );
+
+  useEffect(() => {
+    if (sendProfileDataFaild) {
+      dispatch(sendProfileInfo(accessToken, newEmail, newName, newPassword));
+    }
+  }, [refreshTokenAnswer]);
 
   const cancelEditing = () => {
     setNewName(profile.name);
@@ -147,7 +148,6 @@ const ProfilePage = () => {
             size={'default'}
           />
 
-        {/* Кнопки "Отмена" и "Сохранить" появляются, только если isDataChanged === true */}
         {isDataChanged && (
           <div className={styles.buttons}>
             <Button htmlType='button' type='secondary' size='medium' onClick={cancelEditing}>

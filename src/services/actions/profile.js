@@ -163,7 +163,6 @@ export const getProfileInfo = (accessToken) => (dispatch) => {
     .catch((err) => {
       if (err.message === 'jwt malformed' || err.message === 'jwt expired') {
         dispatch(updateToken(getCookie('refreshToken')));
-        return getProfileData(getCookie('token'));
       }
     });
 };

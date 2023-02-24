@@ -22,11 +22,10 @@ import ProfilePage from '../../pages/ProfilePage/ProfilePage.jsx';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage.jsx';
 import IngredientPage from '../../pages/IngredientPage/IngredientPage.jsx';
 
-const App = () => {
+const App = React.memo(() => {
   const dispatch = useDispatch();
   const location = useLocation();
   const accessToken = getCookie('token');
-  const refreshToken = getCookie('refreshToken');
   const refreshTokenAnswer = useSelector((state) => state.profileReducer.refreshTokenAnswer);
 
   useEffect(() => {
@@ -35,7 +34,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getProfileInfo(accessToken));
-  }, [refreshTokenAnswer])
+  }, [accessToken]);
 
   return (
     <>
@@ -65,6 +64,6 @@ const App = () => {
 
     </>
   );
-}
+});
 
 export default App;
