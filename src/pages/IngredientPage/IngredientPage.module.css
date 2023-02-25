@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  line-height: 64px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.headers {
+  display: grid;
+  grid-template-columns: 120px 112px 112px 112px;
+  gap: 20px;
+}
+
+.data {
+  display: grid;
+  grid-template-columns: 120px 112px 112px 112px;
+  gap: 20px;
+  text-align: center;
+}

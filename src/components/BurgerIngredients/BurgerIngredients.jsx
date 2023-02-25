@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import { Waypoint } from 'react-waypoint';
 
 import styles from './BurgerIngredients.module.css';
@@ -7,14 +8,12 @@ import styles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import Ingredient from '../Ingredient/Ingredient.jsx';
-import Modal from '../Modal/Modal.jsx';
-import IngredientDetails from '../IngredientDetails/IngredientDetails.jsx';
-import { openIngredientDetailsPopup, closeIngredientDetailsPopup } from '../../services/actions/popup.js';
+import { openIngredientDetailsPopup } from '../../services/actions/popup.js';
 
 const BurgerIngredients = () => {
   const data = useSelector((state) => state.ingredientReducer.ingredients);
-  const selectedIngrediend = useSelector((state) => state.popupReducer.selectedIngrediend);
   const dispatch = useDispatch();
+  const location = useLocation();
 
   //Реализация скролла
   const [current, setCurrent] = React.useState('');
@@ -56,7 +55,9 @@ const BurgerIngredients = () => {
           {/* Сортировка по булочкам */}
           {data.map((item) => ( item.type === 'bun' &&
           <li key={item._id} onClick={() => dispatch(openIngredientDetailsPopup(item))}>
-            <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
+            <Link className={styles.link} to={`/ingredients/${item._id}`} state={{ previousLocation: location }}>
+              <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
+            </Link>
           </li>))}
 
         </ul>
@@ -68,7 +69,9 @@ const BurgerIngredients = () => {
           {/* Сортировка по соусам */}
           {data.map((item) => ( item.type === 'sauce' &&
           <li key={item._id} onClick={() => dispatch(openIngredientDetailsPopup(item))}>
-            <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
+            <Link className={styles.link} to={`/ingredients/${item._id}`} state={{ previousLocation: location }}>
+              <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
+            </Link>
           </li>))}
 
         </ul>
@@ -80,19 +83,14 @@ const BurgerIngredients = () => {
           {/* Сортировка по начинкам */}
           {data.map((item) => ( item.type === 'main' &&
           <li key={item._id} onClick={() => dispatch(openIngredientDetailsPopup(item))}>
-            <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
+            <Link className={styles.link} to={`/ingredients/${item._id}`} state={{ previousLocation: location }}>
+              <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
+            </Link>
           </li>))}
 
         </ul>
 
       </div>
-      
-
-      {selectedIngrediend && 
-        (<Modal handleClose={() => dispatch(closeIngredientDetailsPopup())}>
-          <IngredientDetails data={selectedIngrediend} />
-        </Modal>
-      )}
       
     </section>
   )

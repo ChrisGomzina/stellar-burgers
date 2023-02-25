@@ -1,9 +1,3 @@
-const checkResponse = (res) => {
-  if (res.ok) {
-    return res.json();
-  } else {
-    return Promise.reject(`Ошибка: ${res.status}`);
-  }
-};
+const checkResponse = (res) => res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 
 export { checkResponse };

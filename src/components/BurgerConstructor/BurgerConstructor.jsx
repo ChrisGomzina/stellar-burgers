@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import { Reorder } from 'framer-motion';
 
@@ -16,16 +17,22 @@ import { addBun, addIngredient, countTotalPrice, deleteIngredient, sortIngredien
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const bun = useSelector((state) => state.ingredientReducer.addedBun);
   const ingredients = useSelector((state) => state.ingredientReducer.addedIngredients);
   const totalPrice = useSelector((state) => state.ingredientReducer.totalPrice);
+  const profile = useSelector((state) => state.profileReducer.profile);
 
   //Реализация получения номера заказа
   const orderNumber = useSelector(store => store.orderReducer.orderDetails);
 
   const createOrder = () => {
     const ingredientsId = [...ingredients.map((item) => item._id), bun._id];
-    dispatch(getOrderData(ingredientsId));
+    if (profile) {
+      dispatch(getOrderData(ingredientsId));
+        } else {
+      navigate('/login');
+    }
   };
 
   //Реализация удаления ингредиента

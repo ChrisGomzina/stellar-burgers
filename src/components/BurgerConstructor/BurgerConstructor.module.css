@@ -1,6 +1,7 @@
 .container {
   max-width: 600px;
   width: 100%;
+  align-self: flex-start;
   box-sizing: border-box;
   border: 2px dashed transparent;
   border-radius: 8px;

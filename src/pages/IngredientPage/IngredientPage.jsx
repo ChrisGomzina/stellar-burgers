@@ -1,21 +1,26 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import styles from './IngredientDetails.module.css';
+import styles from './IngredientPage.module.css';
 
-const IngredientDetails = () => {
+import { getIngredients } from '../../services/actions/ingredients.js';
+
+const IngredientPage = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
 
-  const ingredients = useSelector((state) => state.ingredientReducer.ingredients);
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
+  const ingredients = useSelector((state) => state.ingredientReducer.ingredients);
   const data = ingredients.find((ingredient) => ingredient._id === id);
 
   return (
     <>
       {data && (
         <div className={`${styles.container} pt-10 pr-10 pb-15 pl-10`}>
-
           <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>
           <img className={`mb-4`} src={data.image_large} alt={data.name} />
           <p className={`text text_type_main-medium mb-8`}>{data.name}</p>
@@ -28,12 +33,10 @@ const IngredientDetails = () => {
               <tr className={`${styles.data} text text_type_digits-default`}><td>{data.calories}</td><td>{data.proteins}</td><td>{data.fat}</td><td>{data.carbohydrates}</td></tr>
             </tbody>
           </table>
-
         </div>
-
       )}
     </>
   )
 };
 
-export default IngredientDetails;
+export default IngredientPage;

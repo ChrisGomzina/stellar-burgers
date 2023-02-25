@@ -1,7 +1,7 @@
 .container {
   max-width: 600px;
   width: 100%;
-  
+  align-self: self-start;
 }
 
 .tabs {
@@ -15,6 +15,11 @@
   column-gap: 24px;
   row-gap: 32px;
   list-style-type: none;
+}
+
+.link {
+  color: #F2F2F3;
+  text-decoration: none;
 }
 
 .scrollbar {
