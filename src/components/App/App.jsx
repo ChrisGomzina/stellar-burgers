@@ -21,12 +21,12 @@ import ResetPasswordPage from '../../pages/ResetPasswordPage/ResetPasswordPage.j
 import ProfilePage from '../../pages/ProfilePage/ProfilePage.jsx';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage.jsx';
 import IngredientPage from '../../pages/IngredientPage/IngredientPage.jsx';
+import FeedPage from '../../pages/FeedPage/FeedPage.jsx';
 
 const App = React.memo(() => {
   const dispatch = useDispatch();
   const location = useLocation();
   const accessToken = getCookie('token');
-  const refreshTokenAnswer = useSelector((state) => state.profileReducer.refreshTokenAnswer);
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -43,6 +43,7 @@ const App = React.memo(() => {
           <Route index element={<MainPage />} />
           <Route path='/not-found' element={<NotFoundPage />}/>
           <Route path='ingredients/:id' element={<IngredientPage />} />
+          <Route path='/feed' element={<FeedPage />} />
           //Маршруты для неавторизованных пользователей
           <Route path='/login' element={<RouteUnauthorizedUser element={<LoginPage />}/>}/>
           <Route path='/register' element={<RouteUnauthorizedUser element={<RegisterPage />}/>}/>
