@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { getCookie } from '../../utils/cookie.js';
 import { getProfileInfo } from '../../services/actions/profile.js';
@@ -22,6 +22,8 @@ import ProfilePage from '../../pages/ProfilePage/ProfilePage.jsx';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage.jsx';
 import IngredientPage from '../../pages/IngredientPage/IngredientPage.jsx';
 import FeedPage from '../../pages/FeedPage/FeedPage.jsx';
+import OrdersPage from '../../pages/OrdersPage/OrdersPage.jsx';
+import OrderInfoPage from '../../pages/OrderInfoPage/OrderInfoPage.jsx';
 
 const App = React.memo(() => {
   const dispatch = useDispatch();
@@ -50,7 +52,10 @@ const App = React.memo(() => {
           <Route path='/forgot-password' element={<RouteUnauthorizedUser element={<ForgotPasswordPage />}/>}/>
           <Route path='/reset-password' element={<RouteUnauthorizedUser element={<ResetPasswordPage />}/>}/>
           //Маршруты для авторизованных пользователей
-          <Route path='/profile' element={<ProtectedRouteElement element={<ProfilePage />}/>}/>
+          <Route path='/profile/' element={<ProtectedRouteElement element={<ProfilePage />}/>}>
+            <Route path='orders' element={<OrdersPage />} />
+          </Route>
+          <Route path='profile/orders/:id' element={<ProtectedRouteElement element={<OrderInfoPage />}/>}/>
         </Route>
       </Routes>
 

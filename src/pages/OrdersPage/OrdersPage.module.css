@@ -1,0 +1,30 @@
+.container {
+  width: 860px;
+}
+
+.scrollbar {
+  max-height: 716px;
+  overflow-y: scroll;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  margin-bottom: 52px;
+  background-color: #2F2F37;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  width: 100%;
+  height: 492px;
+  background-color: #8585AD;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  padding-right: 8px;
+  list-style-type: none;
+}

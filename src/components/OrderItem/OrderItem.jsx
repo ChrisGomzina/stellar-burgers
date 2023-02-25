@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './OrderItem.module.css';
 
@@ -20,7 +20,7 @@ const OrderItem = () => {
 
         <h2 className='text text_type_main-medium'>Death Star Starship Main бургер</h2>
 
-        {/* <p className='text text_type_main-default mt-2'>Создан</p> */}
+        <p className='text text_type_main-default mt-2'>Создан</p>
 
         <div className={`${styles.items_container} mt-6`}>
           <ul className={styles.list}>

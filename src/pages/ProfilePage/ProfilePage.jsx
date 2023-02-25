@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import styles from './ProfilePage.module.css';
@@ -13,6 +13,7 @@ import Loader from '../../components/Loader/Loader.jsx';
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const profile = useSelector((state) => state.profileReducer.profile);
   const sendProfileDataRequest = useSelector((state) => state.profileReducer.sendProfileDataRequest);
@@ -76,15 +77,15 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className={`${styles.container} mt-30`}>
+    <div className={`${styles.container} mt-10`}>
 
       <nav className={styles.nav}>
         <ul className={styles.list}>
-          <li className='mt-5'>
+          <li className='mt-25'>
             <NavLink to='/profile' className={setActiveClass}>Профиль</NavLink>
           </li>
           <li>
-            <NavLink to='/profile/orders' className={setActiveClass}>История заказов</NavLink>
+            <NavLink to='/profile/orders' className={setActiveClass} state={{ orders: true }}>История заказов</NavLink>
           </li>
           <li>
             <button className={`${styles.button} text text_type_main-medium`} onClick={handleLogOut}>Выход</button>
@@ -94,73 +95,79 @@ const ProfilePage = () => {
         <span className={`${styles.span} text text_type_main-default`}>В этом разделе вы можете<br></br>изменить свои персональные данные</span>
       </nav>
 
-      {sendProfileDataRequest && (
-        <Loader />
-      )}
-
-      {sendProfileDataFaild && (
-        <span className={`text text_type_main-medium`}>Ошибка загрузки ¯\_(ツ)_/¯</span>
-      )}
-
-      {!sendProfileDataRequest && !sendProfileDataFaild && (
-        <form onSubmit={handleSubmit}>
-
-          <Input extraClass='mb-6' 
-            type={'text'} 
-            placeholder={'Имя'} 
-            onChange={isNameChanged}
-            icon={'EditIcon'}
-            value={newName}
-            name={'name'}
-            error={false}
-            ref={nameRef}
-            onIconClick={onNameClick}
-            errorText={'Ошибка'}
-            size={'default'}
-          />
-
-          <Input 
-            extraClass='mb-6' 
-            type={'email'} 
-            placeholder={'Логин'}
-            onChange={isEmailChanged} 
-            value={newEmail} 
-            name={'email'} 
-            icon={'EditIcon'}
-            ref={emailRef}
-            onIconClick={onEmailClick}
-            error={false}
-            errorText={'Ошибка'}
-            size={'default'}
-          />
-
-          <Input extraClass='mb-6' 
-            type={'password'} 
-            placeholder={'Пароль'} 
-            onChange={isPasswordChanged}
-            icon={'EditIcon'}
-            value={newPassword}
-            name={'password'}
-            error={false}
-            ref={passwordRef}
-            onIconClick={onPasswordClick}
-            errorText={'Ошибка'}
-            size={'default'}
-          />
-
-        {isDataChanged && (
-          <div className={styles.buttons}>
-            <Button htmlType='button' type='secondary' size='medium' onClick={cancelEditing}>
-              Отмена
-            </Button>
-
-            <Button htmlType='submit' type='primary' size='medium'>
-              Сохранить
-            </Button>
-          </div>
-        )}
-
-        </form>
+      {location.state?.orders || location.pathname === '/profile/orders' ? (
+        <Outlet />
+      ) : (
+        <>
+          {sendProfileDataRequest && (
+            <Loader />
+          )}
+  
+          {sendProfileDataFaild && (
+            <span className={`text text_type_main-medium`}>Ошибка загрузки ¯\_(ツ)_/¯</span>
+          )}
+  
+          {!sendProfileDataRequest && !sendProfileDataFaild && (
+            <form className='mt-20' onSubmit={handleSubmit}>
+  
+              <Input extraClass='mb-6' 
+                type={'text'} 
+                placeholder={'Имя'} 
+                onChange={isNameChanged}
+                icon={'EditIcon'}
+                value={newName}
+                name={'name'}
+                error={false}
+                ref={nameRef}
+                onIconClick={onNameClick}
+                errorText={'Ошибка'}
+                size={'default'}
+              />
+  
+              <Input 
+                extraClass='mb-6' 
+                type={'email'} 
+                placeholder={'Логин'}
+                onChange={isEmailChanged} 
+                value={newEmail} 
+                name={'email'} 
+                icon={'EditIcon'}
+                ref={emailRef}
+                onIconClick={onEmailClick}
+                error={false}
+                errorText={'Ошибка'}
+                size={'default'}
+              />
+  
+              <Input extraClass='mb-6' 
+                type={'password'} 
+                placeholder={'Пароль'} 
+                onChange={isPasswordChanged}
+                icon={'EditIcon'}
+                value={newPassword}
+                name={'password'}
+                error={false}
+                ref={passwordRef}
+                onIconClick={onPasswordClick}
+                errorText={'Ошибка'}
+                size={'default'}
+              />
+  
+              {isDataChanged && (
+                <div className={styles.buttons}>
+                  <Button htmlType='button' type='secondary' size='medium' onClick={cancelEditing}>
+                    Отмена
+                  </Button>
+  
+                  <Button htmlType='submit' type='primary' size='medium'>
+                    Сохранить
+                  </Button>
+               </div>
+              )}
+  
+            </form>
+          )}
+        </>
       )}
 
     </div>
