@@ -6,11 +6,16 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 
 import styles from './OrderItem.module.css';
 
-const OrderItem = () => {
-  const ingredients = useSelector((state) => state.ingredientReducer.ingredients);
+const OrderItem = ({order, isUserOrders = false}) => {
+  const allIngredients = useSelector((state) => state.ingredientReducer.ingredients);
+  const {ingredients, status, name, number, createdAt} = order;
+
+  const findIngredient = (ingredient, ingredients) => {
+    return ingredients.find((foundIngredient) => foundIngredient._id === ingredient)
+  };
 
   return (
-    <li className={`${styles.container} p-6`}>
+    <li className={`${styles.container} p-6 mb-4`}>
       <Link className={styles.link}>
 
         <p className={`${styles.number_container} mb-6`}>

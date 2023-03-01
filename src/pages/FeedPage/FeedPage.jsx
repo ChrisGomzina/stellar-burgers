@@ -18,7 +18,7 @@ const FeedPage = () => {
     return () => {
       dispatch(wsAllOrdersConnectionClosed());
     }
-  });
+  }, []);
 
   return (
     <>

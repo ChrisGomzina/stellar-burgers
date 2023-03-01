@@ -1,10 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import styles from './OrdersList.module.css';
 
 import OrderItem from '../OrderItem/OrderItem.jsx';
+import Loader from '../Loader/Loader.jsx';
 
 const OrdersList = () => {
+  const allOrders = useSelector((state) => state.ordersReducer.allOrders);
 
   return (
     <section className={styles.container}>
@@ -12,10 +15,15 @@ const OrdersList = () => {
 
       <div className={styles.scrollbar}>
         <ul className={styles.list}>
-          
-          {/* Перебрать массив с заказами и вставить в разметку */}
-          <OrderItem />
-          
+
+          {allOrders.length > 0 ? (
+            allOrders?.map((order, index) => (
+              <OrderItem oreder={order} key={index} isUserOrders={false} />
+            ))            
+          ) : (
+            <Loader />
+          )}
+
         </ul>
       </div>
 
