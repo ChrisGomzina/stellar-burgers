@@ -8,7 +8,7 @@ import styles from './OrderItem.module.css';
 
 import { orderStatus, statusStyles } from '../../utils/ordersStatus.js';
 
-const OrderItem = ({order, isUserOrders = false}) => {
+const OrderItem = ({order, isUserOrders}) => {
   const {ingredients, status, name, number, createdAt} = order;
   const allIngredients = useSelector((state) => state.ingredientReducer.ingredients);
 
@@ -67,7 +67,7 @@ const OrderItem = ({order, isUserOrders = false}) => {
                   </li>
                 )
               } else {
-                return null
+                return null;
               }
             })}
 

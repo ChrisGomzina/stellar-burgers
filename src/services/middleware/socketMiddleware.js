@@ -12,12 +12,13 @@ export const socketMiddleware = (wsUrl, wsActions) => {
 
       const { profile } = getState().profileReducer;
       const accessToken = getCookie('token');
+      const refreshToken = getCookie('refreshToken');
 
       if (type === wsInit && profile) {
-       socket = new WebSocket(`${wsUrl}?token=${getCookie(accessToken)}`);
+       socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
       };
       if (type === onClose) {
-        socket && socket.close(1000, 'CLOSE_NORMAL')
+        socket && socket.close(1000, 'CLOSE_NORMAL');
       };
       if (socket) {
         socket.onopen = event => {
@@ -33,7 +34,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
           success && dispatch({ type: onMessage, payload: restParsedData });
           if (restParsedData.message === 'Invalid or missing token') {
             dispatch({ type: wsFailed });
-            dispatch(updateToken(getCookie('refreshToken')));
+            dispatch(updateToken(refreshToken));
           }
         };
         socket.onclose = (event) => {

@@ -15,7 +15,9 @@ import { WS_All_ORDERS_CONNECTION_SUCCESS,
     wsAllOrdersConnectFailed: false,
     userOrders: [],
     wsUserOrdersConnectSuccess: false,
-    wsUserOrdersConnectFailed: false
+    wsUserOrdersConnectFailed: false,
+    total: null,
+    totalToday: null
   };
 
 export const ordersReducer = (state = initialState, action) => {
@@ -29,7 +31,9 @@ export const ordersReducer = (state = initialState, action) => {
     case WS_ALL_ORDERS_GET_MESSAGE: { 
       return {
         ...state,
-        allOrders: action.payload.orders
+        allOrders: action.payload.orders,
+        total: action.payload.total,
+        totalToday: action.payload.totalToday
       }
     }
     case WS_All_ORDERS_CONNECTION_FAILED: {

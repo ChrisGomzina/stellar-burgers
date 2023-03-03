@@ -3,7 +3,7 @@
   min-width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 58px;
 }
 
 .container_done_and_cooking {
@@ -16,7 +16,7 @@
 }
 
 .done_list, .cooking_list {
-  height: 152px;
+  height: 156px;
   margin: 0;
   padding: 0;
   display: flex;
