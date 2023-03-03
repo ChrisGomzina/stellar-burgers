@@ -18,7 +18,7 @@ const OrdersList = () => {
 
           {allOrders.length > 0 ? (
             allOrders?.map((order, index) => (
-              <OrderItem oreder={order} key={index} isUserOrders={false} />
+              <OrderItem order={order} key={index} isUserOrders={false} />
             ))            
           ) : (
             <Loader />
