@@ -5,7 +5,8 @@ import { GET_INGREDIENTS_REQUEST,
   ADD_INGREDIENT,
   DELETE_INGREDIENT,
   COUNT_TOTAL_PRICE,
-  SORT_INGREDIENTS } from '../actions/ingredients.js';
+  SORT_INGREDIENTS,
+  RESET_INGREDIENTS } from '../actions/ingredients.js';
 
 const initialState = {
   ingredients: [],
@@ -77,6 +78,14 @@ export const ingredientReducer = (state = initialState, action) => {
       return {
         ...state,
         addedIngredients: action.payload
+      }
+    }
+    case RESET_INGREDIENTS: {
+      return {
+        ...state,
+        addedBun: [],
+        addedIngredients: [],
+        totalPrice: 0
       }
     }
     default: {

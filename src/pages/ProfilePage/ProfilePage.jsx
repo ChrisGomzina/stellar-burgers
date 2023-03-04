@@ -82,10 +82,10 @@ const ProfilePage = () => {
       <nav className={styles.nav}>
         <ul className={styles.list}>
           <li className='mt-25'>
-            <NavLink to='/profile' className={setActiveClass}>Профиль</NavLink>
+            <NavLink to='/profile' className={setActiveClass} end>Профиль</NavLink>
           </li>
           <li>
-            <NavLink to='/profile/orders' className={setActiveClass} state={{ orders: true }}>История заказов</NavLink>
+            <NavLink to='/profile/orders' className={setActiveClass} state={{ orders: true }} end>История заказов</NavLink>
           </li>
           <li>
             <button className={`${styles.button} text text_type_main-medium`} onClick={handleLogOut}>Выход</button>

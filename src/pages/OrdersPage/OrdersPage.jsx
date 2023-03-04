@@ -21,22 +21,20 @@ const OrdersPage = () => {
 
   return (
     <section className={styles.container}>
-      
-      {userOrders ? (
-        <div className={styles.scrollbar}>
-          <ul className={styles.list}>
 
-            {userOrders.map((order, index) => {
+      <div className={styles.scrollbar}>
+        <ul className={styles.list}>
+      
+          {userOrders.length > 0 ? (
+            userOrders?.map((order, index) => (
               <OrderItem order={order} key={index} isUserOrders={true} />
-             })
-            }
+            ))
+          ) : (
+            <Loader />
+          )}
 
-          </ul>
-        </div>
-      ) : (
-        <Loader />
-      )}
-      
+        </ul>
+      </div>
     </section>
   )
 };

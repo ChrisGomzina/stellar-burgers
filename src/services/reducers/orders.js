@@ -3,11 +3,13 @@ import { WS_All_ORDERS_CONNECTION_SUCCESS,
   WS_ALL_ORDERS_GET_MESSAGE,
   WS_ALL_ORDERS_CONNECTION_ERROR,
   WS_ALL_ORDERS_CONNECTION_CLOSED,
+  WS_ALL_ORDERS_RESET_MESSAGE,
   WS_USER_ORDERS_CONNECTION_SUCCESS,
   WS_USER_ORDERS_CONNECTION_FAILED,
   WS_USER_ORDERS_GET_MESSAGE,
   WS_USER_ORDERS_CONNECTION_ERROR,
-  WS_USER_ORDERS_CONNECTION_CLOSED } from '../actions/orders.js';
+  WS_USER_ORDERS_CONNECTION_CLOSED,
+  WS_USER_ORDERS_RESET_MESSAGE } from '../actions/orders.js';
 
   const initialState = {
     allOrders: [],
@@ -55,6 +57,12 @@ export const ordersReducer = (state = initialState, action) => {
         allOrders: []
       }
     }
+    case WS_ALL_ORDERS_RESET_MESSAGE: {
+      return {
+        ...state,
+        allOrders: []
+      }
+    }
     case WS_USER_ORDERS_CONNECTION_SUCCESS: {
       return {
         ...state,
@@ -83,6 +91,12 @@ export const ordersReducer = (state = initialState, action) => {
       return {
         ...state,
         wsUserOrdersConnectSuccess: false,
+        userOrders: []
+      }
+    }
+    case WS_USER_ORDERS_RESET_MESSAGE: {
+      return {
+        ...state,
         userOrders: []
       }
     }
