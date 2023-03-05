@@ -69,7 +69,7 @@ const BurgerIngredients = () => {
           {/* Сортировка по соусам */}
           {data.map((item) => ( item.type === 'sauce' &&
           <li key={item._id} onClick={() => dispatch(openIngredientDetailsPopup(item))}>
-            <Link className={styles.link} to={`/ingredients/${item._id}`} state={{ previousLocation: location }}>
+            <Link className={styles.link} to={`/ingredients/${item._id}`} state={{ previousLocationConstructor: location }}>
               <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
             </Link>
           </li>))}
@@ -83,7 +83,7 @@ const BurgerIngredients = () => {
           {/* Сортировка по начинкам */}
           {data.map((item) => ( item.type === 'main' &&
           <li key={item._id} onClick={() => dispatch(openIngredientDetailsPopup(item))}>
-            <Link className={styles.link} to={`/ingredients/${item._id}`} state={{ previousLocation: location }}>
+            <Link className={styles.link} to={`/ingredients/${item._id}`} state={{ previousLocationConstructor: location }}>
               <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
             </Link>
           </li>))}

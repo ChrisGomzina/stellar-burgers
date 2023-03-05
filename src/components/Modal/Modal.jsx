@@ -22,7 +22,6 @@ const Modal = ({ handleClose, children }) => {
     const escClose = (e) => {
        if (e.key === "Escape") {
          handleClose();
-         navigate(-1);
        }
     };
     document.addEventListener('keyup', escClose);

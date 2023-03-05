@@ -51,8 +51,9 @@ const App = React.memo(() => {
           <Route index element={<MainPage />} />
           <Route path='/not-found' element={<NotFoundPage />}/>
           <Route path='ingredients/:id' element={<IngredientPage />} />
-          <Route path='/feed' element={<FeedPage />} />
-          <Route path='/feed/:id' element={<OrderInfoPage isUserOrder={false} />}/>
+          <Route path='/feed' element={<FeedPage />} >
+            <Route path='/feed/:id' element={<OrderInfoPage isUserOrder={false} />}/>
+          </Route>
           //Маршруты для неавторизованных пользователей
           <Route path='/login' element={<RouteUnauthorizedUser element={<LoginPage />}/>}/>
           <Route path='/register' element={<RouteUnauthorizedUser element={<RegisterPage />}/>}/>
@@ -60,9 +61,9 @@ const App = React.memo(() => {
           <Route path='/reset-password' element={<RouteUnauthorizedUser element={<ResetPasswordPage />}/>}/>
           //Маршруты для авторизованных пользователей
           <Route path='/profile/' element={<ProtectedRouteElement element={<ProfilePage />}/>}>
-            <Route path='orders' element={<OrdersPage />} />
+            <Route path='orders/' element={<OrdersPage />} />
+            <Route path=':id' element={<OrderInfoPage isUserOrder={true} />}/>
           </Route>
-          <Route path='profile/orders/:id' element={<ProtectedRouteElement element={<OrderInfoPage isUserOrder={true} />}/>}/>
         </Route>
       </Routes>
 

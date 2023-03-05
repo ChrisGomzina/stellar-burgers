@@ -7,8 +7,6 @@ import styles from './OrdersPage.module.css';
 import OrderItem from '../../components/OrderItem/OrderItem.jsx';
 import Loader from '../../components/Loader/Loader.jsx';
 import { wsUserOrdersConnectionStart, wsUserOrdersConnectionClosed } from '../../services/actions/orders.js';
-import { getCookie } from '../../utils/cookie.js';
-import { getProfileInfo } from '../../services/actions/profile.js';
 
 const OrdersPage = () => {
   const dispatch = useDispatch();
@@ -35,7 +33,7 @@ const OrdersPage = () => {
           {userOrders.length > 0 ? (
             userOrders?.map((order, index) => (
               <Link className={styles.link} to={`${order._id}`} key={index} state={{ previousLocationOrders: location }}>
-                <OrderItem order={order} key={index} isUserOrders={true} />
+                <OrderItem order={order} isUserOrders={true} />
               </Link>
             ))
           ) : (

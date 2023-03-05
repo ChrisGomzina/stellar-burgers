@@ -20,23 +20,19 @@ const OrderInfoPage = ({ isUserOrder }) => {
   const { id } = useParams();
   const profile = useSelector((state) => state.profileReducer.profile);
 
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (isUserOrder) {
-      dispatch(wsUserOrdersConnectionStart());
-      return () => {
-        dispatch(wsUserOrdersConnectionClosed());
-      }
-    }  else {
-      dispatch(wsAllOrdersConnectionStart());
-      return () => {
-        dispatch(wsAllOrdersConnectionClosed());
-      }
-    }
-  }, [profile]);
+  // useEffect(() => {
+  //   if (isUserOrder) {
+  //     dispatch(wsUserOrdersConnectionStart());
+  //     return () => {
+  //       dispatch(wsUserOrdersConnectionClosed());
+  //     }
+  //   }  else {
+  //     dispatch(wsAllOrdersConnectionStart());
+  //     return () => {
+  //       dispatch(wsAllOrdersConnectionClosed());
+  //     }
+  //   }
+  // }, [profile]);
 
   const allOrders = useSelector((state) => state.ordersReducer.allOrders);
   const userOrders = useSelector((state) => state.ordersReducer.userOrders);
