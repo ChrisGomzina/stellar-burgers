@@ -8,15 +8,24 @@ export const socketMiddleware = (wsUrl, wsActions) => {
     return next => action => {
       const { dispatch, getState } = store;
       const { type } = action;
-      const { wsInit, wsFailed, onOpen, onMessage, onClose, onError } = wsActions;
+      const { wsInitAllOrders, 
+        wsInitUserOrders, 
+        wsFailed, 
+        onOpen, 
+        onMessage, 
+        onClose, 
+        onError } = wsActions;
 
       const { profile } = getState().profileReducer;
       const accessToken = getCookie('token');
       const refreshToken = getCookie('refreshToken');
 
-      if (type === wsInit && profile) {
+      if (type === wsInitUserOrders && profile) {
        socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
       };
+      if (type === wsInitAllOrders) {
+        socket = new WebSocket(`${wsUrl}`);
+      }
       if (type === onClose) {
         socket && socket.close(1000, 'CLOSE_NORMAL');
       };

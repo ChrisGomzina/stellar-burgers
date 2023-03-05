@@ -42,9 +42,6 @@ const OrderInfoPage = ({ isUserOrder }) => {
   const userOrders = useSelector((state) => state.ordersReducer.userOrders);
   const allIngredients = useSelector((state) => state.ingredientReducer.ingredients);
 
-  console.log(allOrders);
-  console.log(allIngredients);
-
   const findOrder = (allOrders, id) => {
     return allOrders.find((item) => item._id === id);
   };

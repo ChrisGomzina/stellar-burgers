@@ -18,7 +18,7 @@ import { WS_All_ORDERS_CONNECTION_START,
   WS_USER_ORDERS_CONNECTION_CLOSED } from '../services/actions/orders.js';
 
 const wsAllOrdersActions = {
-  wsInit: WS_All_ORDERS_CONNECTION_START,
+  wsInitAllOrders: WS_All_ORDERS_CONNECTION_START,
   wsFailed: WS_All_ORDERS_CONNECTION_FAILED,
   onOpen: WS_All_ORDERS_CONNECTION_SUCCESS,
   onMessage: WS_ALL_ORDERS_GET_MESSAGE,
@@ -27,7 +27,7 @@ const wsAllOrdersActions = {
 };
   
 const wsUserOrdersActions = {
-  wsInit: WS_USER_ORDERS_CONNECTION_START,
+  wsInitUserOrders: WS_USER_ORDERS_CONNECTION_START,
   wsFailed: WS_USER_ORDERS_CONNECTION_FAILED,
   onOpen: WS_USER_ORDERS_CONNECTION_SUCCESS,
   onMessage: WS_USER_ORDERS_GET_MESSAGE,
