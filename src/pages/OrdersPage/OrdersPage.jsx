@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 
 import styles from './OrdersPage.module.css';
 
@@ -9,6 +10,7 @@ import { wsUserOrdersConnectionStart, wsUserOrdersConnectionClosed } from '../..
 
 const OrdersPage = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const userOrders = useSelector((state) => state.ordersReducer.userOrders);
   
   useEffect(() => {
@@ -27,7 +29,9 @@ const OrdersPage = () => {
       
           {userOrders.length > 0 ? (
             userOrders?.map((order, index) => (
-              <OrderItem order={order} key={index} isUserOrders={true} />
+              <Link className={styles.link} to={`${order._id}`} key={index} state={{ previousLocationOrders: location }}>
+                <OrderItem order={order} key={index} isUserOrders={true} />
+              </Link>
             ))
           ) : (
             <Loader />

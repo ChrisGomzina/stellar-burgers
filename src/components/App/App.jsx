@@ -52,7 +52,7 @@ const App = React.memo(() => {
           <Route path='/not-found' element={<NotFoundPage />}/>
           <Route path='ingredients/:id' element={<IngredientPage />} />
           <Route path='/feed' element={<FeedPage />} />
-          <Route path='/feed/:id' element={<OrderInfoPage />}/>
+          <Route path='/feed/:id' element={<OrderInfoPage isUserOrder={false} />}/>
           //Маршруты для неавторизованных пользователей
           <Route path='/login' element={<RouteUnauthorizedUser element={<LoginPage />}/>}/>
           <Route path='/register' element={<RouteUnauthorizedUser element={<RegisterPage />}/>}/>
@@ -62,7 +62,7 @@ const App = React.memo(() => {
           <Route path='/profile/' element={<ProtectedRouteElement element={<ProfilePage />}/>}>
             <Route path='orders' element={<OrdersPage />} />
           </Route>
-          <Route path='profile/orders/:id' element={<ProtectedRouteElement element={<OrderInfoPage />}/>}/>
+          <Route path='profile/orders/:id' element={<ProtectedRouteElement element={<OrderInfoPage isUserOrder={true} />}/>}/>
         </Route>
       </Routes>
 
@@ -79,7 +79,7 @@ const App = React.memo(() => {
         <Routes>
           <Route path='/feed/:id' element={
               <Modal handleClose={() => dispatch(closeIngredientDetailsPopup())}>
-                <OrderInfoPage />
+                <OrderInfoPage isUserOrder={false} />
               </Modal>} />
         </Routes>
       )}
@@ -88,7 +88,7 @@ const App = React.memo(() => {
         <Routes>
           <Route path='profile/orders/:id' element={
               <Modal handleClose={() => dispatch(closeIngredientDetailsPopup())}>
-                <OrderInfoPage />
+                <OrderInfoPage isUserOrder={true} />
               </Modal>} />
         </Routes>
       )}
