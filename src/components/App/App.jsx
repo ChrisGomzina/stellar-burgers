@@ -38,14 +38,21 @@ const App = React.memo(() => {
     dispatch(getProfileInfo(accessToken));
   }, [accessToken]);
 
+  const previousLocation =
+    location.state?.previousLocationConstructor ||
+    location.state?.previousLocationFeed ||
+    location.state?.previousLocationOrders ||
+    location;
+
   return (
     <>
-      <Routes location={location.state?.previousLocation || location}>
+      <Routes location={previousLocation}>
         <Route path='/' element={<Header />}>
           <Route index element={<MainPage />} />
           <Route path='/not-found' element={<NotFoundPage />}/>
           <Route path='ingredients/:id' element={<IngredientPage />} />
           <Route path='/feed' element={<FeedPage />} />
+          <Route path='/feed/:id' element={<OrderInfoPage />}/>
           //Маршруты для неавторизованных пользователей
           <Route path='/login' element={<RouteUnauthorizedUser element={<LoginPage />}/>}/>
           <Route path='/register' element={<RouteUnauthorizedUser element={<RegisterPage />}/>}/>
@@ -59,12 +66,30 @@ const App = React.memo(() => {
         </Route>
       </Routes>
 
-      {location.state?.previousLocation && (
+      {location.state?.previousLocationConstructor && (
         <Routes>
           <Route path='/ingredients/:id' element={
             <Modal handleClose={() => dispatch(closeIngredientDetailsPopup())}>
               <IngredientDetails />
             </Modal>} />
+        </Routes>
+      )}
+
+      {location.state?.previousLocationFeed && (
+        <Routes>
+          <Route path='/feed/:id' element={
+              <Modal handleClose={() => dispatch(closeIngredientDetailsPopup())}>
+                <OrderInfoPage />
+              </Modal>} />
+        </Routes>
+      )}
+
+      {location.state?.previousLocationOrders && (
+        <Routes>
+          <Route path='profile/orders/:id' element={
+              <Modal handleClose={() => dispatch(closeIngredientDetailsPopup())}>
+                <OrderInfoPage />
+              </Modal>} />
         </Routes>
       )}
 

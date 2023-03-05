@@ -1,6 +1,5 @@
 .container {
   max-width: 640px;
-  margin-top: 122px;
   align-self: flex-start;
   display: flex;
   flex-direction: column;

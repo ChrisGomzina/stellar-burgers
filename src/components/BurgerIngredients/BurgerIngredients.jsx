@@ -55,7 +55,7 @@ const BurgerIngredients = () => {
           {/* Сортировка по булочкам */}
           {data.map((item) => ( item.type === 'bun' &&
           <li key={item._id} onClick={() => dispatch(openIngredientDetailsPopup(item))}>
-            <Link className={styles.link} to={`/ingredients/${item._id}`} state={{ previousLocation: location }}>
+            <Link className={styles.link} to={`/ingredients/${item._id}`} state={{ previousLocationConstructor: location }}>
               <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
             </Link>
           </li>))}

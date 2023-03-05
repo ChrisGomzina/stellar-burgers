@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 
 import styles from './OrdersList.module.css';
 
@@ -7,6 +8,7 @@ import OrderItem from '../OrderItem/OrderItem.jsx';
 import Loader from '../Loader/Loader.jsx';
 
 const OrdersList = () => {
+  const location = useLocation();
   const allOrders = useSelector((state) => state.ordersReducer.allOrders);
 
   return (
@@ -18,7 +20,9 @@ const OrdersList = () => {
 
           {allOrders.length > 0 ? (
             allOrders?.map((order, index) => (
-              <OrderItem order={order} key={index} isUserOrders={false} />
+              <Link className={styles.link} to={`/feed/${order._id}`} key={index} state={{ previousLocationFeed: location }}>
+                <OrderItem order={order} isUserOrders={false} />
+              </Link>
             ))            
           ) : (
             <Loader />

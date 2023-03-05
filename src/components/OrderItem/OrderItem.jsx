@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -29,7 +28,6 @@ const OrderItem = ({order, isUserOrders}) => {
 
   return (
     <li className={`${styles.container} p-6 mb-4`}>
-      <Link className={styles.link}>
 
         <div className={`${styles.number_container} mb-6`}>
           <span className='text text_type_digits-default'>{`#${number}`}</span>
@@ -53,13 +51,13 @@ const OrderItem = ({order, isUserOrders}) => {
               const ingredient = findIngredient(item, allIngredients);
               if (index < 5) {
                 return (
-                  <li className={styles.item} key={index} style={{zIndex: 1000 - index}}>
+                  <li className={styles.item} key={index} style={{zIndex: 99 - index}}>
                     <img className={styles.image} src={ingredient?.image} alt={ingredient?.name}></img>
                   </li>
                 )
               } else if (index === 6) {
                 return (
-                  <li className={`${styles.item} ${styles.item_last}`} key={index} style={{zIndex: 1000 - index}}>
+                  <li className={`${styles.item} ${styles.item_last}`} key={index} style={{zIndex: 99 - index}}>
                     <img className={styles.image} src={ingredient?.image} alt={ingredient?.name}></img>
                     <div className={styles.counter}>
                       <span className='text text_type_main-default'>+{ingredients.length - 5}</span>
@@ -79,7 +77,6 @@ const OrderItem = ({order, isUserOrders}) => {
 
         </div>
 
-      </Link>
     </li>
   )
 };
