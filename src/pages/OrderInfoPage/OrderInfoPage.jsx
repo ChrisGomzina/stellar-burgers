@@ -1,5 +1,5 @@
 import React, { useEffect} from 'react'; 
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import styles from './OrderInfoPage.module.css';
@@ -7,33 +7,12 @@ import styles from './OrderInfoPage.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { orderStatus, statusStyles } from '../../utils/ordersStatus.js';
-import { getIngredients } from '../../services/actions/ingredients.js';
-import { wsAllOrdersConnectionStart, 
-  wsUserOrdersConnectionStart,
-  wsAllOrdersConnectionClosed,
-  wsUserOrdersConnectionClosed } from '../../services/actions/orders.js';
-
 import Loader from '../../components/Loader/Loader.jsx';
 
 const OrderInfoPage = ({ isUserOrder }) => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const { id } = useParams();
-  const profile = useSelector((state) => state.profileReducer.profile);
-
-  // useEffect(() => {
-  //   if (isUserOrder) {
-  //     dispatch(wsUserOrdersConnectionStart());
-  //     return () => {
-  //       dispatch(wsUserOrdersConnectionClosed());
-  //     }
-  //   }  else {
-  //     dispatch(wsAllOrdersConnectionStart());
-  //     return () => {
-  //       dispatch(wsAllOrdersConnectionClosed());
-  //     }
-  //   }
-  // }, [profile]);
-
   const allOrders = useSelector((state) => state.ordersReducer.allOrders);
   const userOrders = useSelector((state) => state.ordersReducer.userOrders);
   const allIngredients = useSelector((state) => state.ingredientReducer.ingredients);

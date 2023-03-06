@@ -32,7 +32,7 @@ const OrdersPage = () => {
       
           {userOrders.length > 0 ? (
             userOrders?.map((order, index) => (
-              <Link className={styles.link} to={`${order._id}`} key={index} state={{ previousLocationOrders: location }}>
+              <Link className={styles.link} to={`/profile/orders/${order._id}`} key={index} state={{ previousLocationOrders: location }}>
                 <OrderItem order={order} isUserOrders={true} />
               </Link>
             ))

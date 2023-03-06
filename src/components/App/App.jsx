@@ -61,8 +61,9 @@ const App = React.memo(() => {
           <Route path='/reset-password' element={<RouteUnauthorizedUser element={<ResetPasswordPage />}/>}/>
           //Маршруты для авторизованных пользователей
           <Route path='/profile/' element={<ProtectedRouteElement element={<ProfilePage />}/>}>
-            <Route path='orders/' element={<OrdersPage />} />
-            <Route path=':id' element={<OrderInfoPage isUserOrder={true} />}/>
+            <Route path='orders/' element={<OrdersPage />} >
+              <Route path=':id' element={<OrderInfoPage isUserOrder={true}/>}/>
+            </Route>
           </Route>
         </Route>
       </Routes>

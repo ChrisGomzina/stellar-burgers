@@ -8,8 +8,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
     return next => action => {
       const { dispatch, getState } = store;
       const { type } = action;
-      const { wsInitAllOrders, 
-        wsInitUserOrders, 
+      const { wsInit, 
         wsFailed, 
         onOpen, 
         onMessage, 
@@ -20,10 +19,10 @@ export const socketMiddleware = (wsUrl, wsActions) => {
       const accessToken = getCookie('token');
       const refreshToken = getCookie('refreshToken');
 
-      if (type === wsInitUserOrders && profile) {
+      if (type === wsInit && profile) {
        socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
       };
-      if (type === wsInitAllOrders) {
+      if (type === wsInit && !profile) {
         socket = new WebSocket(`${wsUrl}`);
       }
       if (type === onClose) {
