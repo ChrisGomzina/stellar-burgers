@@ -22,6 +22,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
 
       if (type === wsInit && profile) {
        socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
+       console.log('connect'); 
       };
       if (type === wsInit && !profile) {
         socket = new WebSocket(`${wsUrl}`);
@@ -47,6 +48,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
           if (restParsedData.message === 'Invalid or missing token') {
             dispatch({ type: wsFailed });
             dispatch(updateToken(refreshToken));
+            socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
           }
         };
         socket.onclose = (event) => {

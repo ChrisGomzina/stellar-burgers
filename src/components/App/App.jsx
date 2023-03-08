@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { getCookie } from '../../utils/cookie.js';
 import { getProfileInfo } from '../../services/actions/profile.js';

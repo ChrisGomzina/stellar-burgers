@@ -1,5 +1,5 @@
 import React, { useEffect} from 'react'; 
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import styles from './OrderInfoPage.module.css';
@@ -15,28 +15,24 @@ import Loader from '../../components/Loader/Loader.jsx';
 
 const OrderInfoPage = ({ isUserOrder }) => {
   const dispatch = useDispatch();
-  const location = useLocation();
   const { id } = useParams();
   const allOrders = useSelector((state) => state.ordersReducer.allOrders);
   const userOrders = useSelector((state) => state.ordersReducer.userOrders);
   const allIngredients = useSelector((state) => state.ingredientReducer.ingredients);
-  const profile = useSelector((state) => state.profileReducer.profile);
   
-  console.log(allOrders);
+  console.log(userOrders);
 
   useEffect(() => {
-    if(allOrders.length === 0) {
-      if(isUserOrder) {
-        dispatch(wsUserOrdersConnectionStart());
-        return () => {
-          dispatch(wsUserOrdersConnectionDisconnect());
-        }
-      } else {
+    if (isUserOrder && userOrders.length === 0) {
+      dispatch(wsUserOrdersConnectionStart());
+      return () => {
+        dispatch(wsUserOrdersConnectionDisconnect());
+      }
+    } else if (!isUserOrder && allOrders.length === 0) {
         dispatch(wsAllOrdersConnectionStart());
         return () => {
-        dispatch(wsAllOrdersConnectionDisconnect());
+          dispatch(wsAllOrdersConnectionDisconnect());
         }
-      }
     }
   }, []);
 
