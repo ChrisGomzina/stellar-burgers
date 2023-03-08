@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
@@ -20,6 +20,7 @@ import { addBun,
   deleteIngredient, 
   sortIngredients, 
   resetIngredients } from '../../services/actions/ingredients.js';
+import { changeOrderDetailsPopupState } from '../../services/actions/popup.js';
 import { getCookie } from '../../utils/cookie.js';
 
 const BurgerConstructor = () => {
@@ -56,6 +57,12 @@ const BurgerConstructor = () => {
   const handleDeleteIngredient = (item) => {
     dispatch(deleteIngredient(item));
     dispatch(countTotalPrice());
+  };
+
+  const handleOrderDetailsPopupClose = () => {
+    dispatch(changeOrderDetailsPopupState(false));
+    dispatch(deleteOrder()); 
+    dispatch(resetIngredients());
   };
 
   //Реализация drag and drop
@@ -115,11 +122,7 @@ const BurgerConstructor = () => {
       )}
 
       {orderNumber &&  
-        (<Modal 
-          handleClose={() => {
-            dispatch(deleteOrder()); 
-            dispatch(resetIngredients());
-          }}>
+        (<Modal handleClose={() => {handleOrderDetailsPopupClose()}}>
           <OrderDetails orderNumber={orderNumber} />
         </Modal>
       )}

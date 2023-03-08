@@ -19,6 +19,12 @@ const ProtectedRouteElement = ({ element }) => {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
   return <Loader/>;
+
+
+  // if (!profile) {
+  //   return <Navigate to="/login" replace state={{ from: location }} />;
+  // }
+  // return element;
 };
 
 export default ProtectedRouteElement;

@@ -7,6 +7,10 @@ import styles from './OrderInfoPage.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { orderStatus, statusStyles } from '../../utils/ordersStatus.js';
+import { wsAllOrdersConnectionStart, 
+  wsUserOrdersConnectionStart,
+  wsAllOrdersConnectionDisconnect,
+  wsUserOrdersConnectionDisconnect } from '../../services/actions/orders.js';
 import Loader from '../../components/Loader/Loader.jsx';
 
 const OrderInfoPage = ({ isUserOrder }) => {
@@ -16,6 +20,25 @@ const OrderInfoPage = ({ isUserOrder }) => {
   const allOrders = useSelector((state) => state.ordersReducer.allOrders);
   const userOrders = useSelector((state) => state.ordersReducer.userOrders);
   const allIngredients = useSelector((state) => state.ingredientReducer.ingredients);
+  const profile = useSelector((state) => state.profileReducer.profile);
+  
+  console.log(allOrders);
+
+  useEffect(() => {
+    if(allOrders.length === 0) {
+      if(isUserOrder) {
+        dispatch(wsUserOrdersConnectionStart());
+        return () => {
+          dispatch(wsUserOrdersConnectionDisconnect());
+        }
+      } else {
+        dispatch(wsAllOrdersConnectionStart());
+        return () => {
+        dispatch(wsAllOrdersConnectionDisconnect());
+        }
+      }
+    }
+  }, []);
 
   const findOrder = (allOrders, id) => {
     return allOrders.find((item) => item._id === id);

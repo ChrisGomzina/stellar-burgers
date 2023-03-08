@@ -11,16 +11,16 @@ import { WS_All_ORDERS_CONNECTION_SUCCESS,
   WS_USER_ORDERS_CONNECTION_CLOSED,
   WS_USER_ORDERS_RESET_MESSAGE } from '../actions/orders.js';
 
-  const initialState = {
-    allOrders: [],
-    wsAllOrdersConnectSuccess: false,
-    wsAllOrdersConnectFailed: false,
-    userOrders: [],
-    wsUserOrdersConnectSuccess: false,
-    wsUserOrdersConnectFailed: false,
-    total: null,
-    totalToday: null
-  };
+const initialState = {
+  allOrders: [],
+  wsAllOrdersConnectSuccess: false,
+  wsAllOrdersConnectFailed: false,
+  userOrders: [],
+  wsUserOrdersConnectSuccess: false,
+  wsUserOrdersConnectFailed: false,
+  total: null,
+  totalToday: null
+};
 
 export const ordersReducer = (state = initialState, action) => {
   switch (action.type) {

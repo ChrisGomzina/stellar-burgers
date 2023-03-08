@@ -3,7 +3,7 @@ import { updateToken } from '../actions/profile.js';
 
 export const socketMiddleware = (wsUrl, wsActions) => {
   return store => {
-      let socket = null;
+    let socket = null;
 
     return next => action => {
       const { dispatch, getState } = store;
@@ -13,7 +13,8 @@ export const socketMiddleware = (wsUrl, wsActions) => {
         onOpen, 
         onMessage, 
         onClose, 
-        onError } = wsActions;
+        onError,
+        wsDisconnect } = wsActions;
 
       const { profile } = getState().profileReducer;
       const accessToken = getCookie('token');
@@ -24,10 +25,13 @@ export const socketMiddleware = (wsUrl, wsActions) => {
       };
       if (type === wsInit && !profile) {
         socket = new WebSocket(`${wsUrl}`);
+        console.log('connect'); 
       }
-      if (type === onClose) {
-        socket && socket.close(1000, 'CLOSE_NORMAL');
-      };
+      if (type === wsDisconnect) {
+        socket?.close(1000, "User disconnected");
+        socket = null;
+        console.log('disconnect'); 
+      }
       if (socket) {
         socket.onopen = event => {
           dispatch({ type: onOpen, payload: event });

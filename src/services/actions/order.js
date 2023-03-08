@@ -18,8 +18,8 @@ export const getOrderData = (ingredients, token) => (dispatch) => {
       }
     })
     .catch(() => {
-      dispatch(updateToken(getCookie('refreshToken')));
-      dispatch({ type: GET_ORDER_FAILED })
+      dispatch({ type: GET_ORDER_FAILED });
+      dispatch(updateToken(getCookie('refreshToken')))
     });
 };
 

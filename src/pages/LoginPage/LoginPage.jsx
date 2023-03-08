@@ -66,10 +66,10 @@ const LoginPage = () => {
           </form>
   
           <p className='text text_type_main-default text_color_inactive'>Вы — новый пользователь? 
-            <Link to='/register' className={`${styles.link} ml-2 mb-4`} htmlType='button' type='secondary' size='large'>Зарегистрироваться</Link>
+            <Link to='/register' className={`${styles.link} ml-2 mb-4`}>Зарегистрироваться</Link>
           </p>
           <p className='text text_type_main-default text_color_inactive'>Забыли пароль? 
-            <Link to='/forgot-password' className={`${styles.link} ml-2`} htmlType='button' type='secondary' size='large'>Восстановить пароль</Link>
+            <Link to='/forgot-password' className={`${styles.link} ml-2`}>Восстановить пароль</Link>
           </p>
   
         </div>

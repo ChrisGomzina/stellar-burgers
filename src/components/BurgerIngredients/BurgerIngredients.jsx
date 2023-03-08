@@ -8,7 +8,7 @@ import styles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import Ingredient from '../Ingredient/Ingredient.jsx';
-import { openIngredientDetailsPopup } from '../../services/actions/popup.js';
+import { changeIngredientPopupState } from '../../services/actions/popup.js';
 
 const BurgerIngredients = () => {
   const data = useSelector((state) => state.ingredientReducer.ingredients);
@@ -54,7 +54,7 @@ const BurgerIngredients = () => {
 
           {/* Сортировка по булочкам */}
           {data.map((item) => ( item.type === 'bun' &&
-          <li key={item._id} onClick={() => dispatch(openIngredientDetailsPopup(item))}>
+          <li key={item._id} onClick={() => { dispatch(changeIngredientPopupState(true))}}>
             <Link className={styles.link} to={`/ingredients/${item._id}`} state={{ previousLocationConstructor: location }}>
               <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
             </Link>
@@ -68,7 +68,7 @@ const BurgerIngredients = () => {
 
           {/* Сортировка по соусам */}
           {data.map((item) => ( item.type === 'sauce' &&
-          <li key={item._id} onClick={() => dispatch(openIngredientDetailsPopup(item))}>
+          <li key={item._id} onClick={() => { dispatch(changeIngredientPopupState(true))}}>
             <Link className={styles.link} to={`/ingredients/${item._id}`} state={{ previousLocationConstructor: location }}>
               <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
             </Link>
@@ -82,7 +82,7 @@ const BurgerIngredients = () => {
 
           {/* Сортировка по начинкам */}
           {data.map((item) => ( item.type === 'main' &&
-          <li key={item._id} onClick={() => dispatch(openIngredientDetailsPopup(item))}>
+          <li key={item._id} onClick={() => { dispatch(changeIngredientPopupState(true))}}>
             <Link className={styles.link} to={`/ingredients/${item._id}`} state={{ previousLocationConstructor: location }}>
               <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
             </Link>

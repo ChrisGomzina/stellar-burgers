@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, NavLink } from 'react-router-dom';
 
 import styles from './OrdersList.module.css';
 
@@ -20,9 +20,9 @@ const OrdersList = () => {
 
           {allOrders.length > 0 ? (
             allOrders?.map((order, index) => (
-              <Link className={styles.link} to={`/feed/${order._id}`} key={index} state={{ previousLocationFeed: location }}>
+              <NavLink className={styles.link} to={`/feed/${order._id}`} key={index} state={{ previousLocationFeed: location }}>
                 <OrderItem order={order} isUserOrders={false} />
-              </Link>
+              </NavLink>
             ))            
           ) : (
             <Loader />

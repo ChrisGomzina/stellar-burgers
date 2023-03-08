@@ -7,7 +7,7 @@ import OrdersList from '../../components/OrdersList/OrdersList.jsx';
 import OrdersDashboard from '../../components/OrdersDashboard/OrdersDashboard.jsx';
 import Loader from '../../components/Loader/Loader.jsx';
 
-import { wsAllOrdersConnectionStart, wsAllOrdersConnectionClosed } from '../../services/actions/orders.js';
+import { wsAllOrdersConnectionStart, wsAllOrdersConnectionDisconnect } from '../../services/actions/orders.js';
 
 const FeedPage = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const FeedPage = () => {
   useEffect(() => {
     dispatch(wsAllOrdersConnectionStart());
     return () => {
-      dispatch(wsAllOrdersConnectionClosed());
+      dispatch(wsAllOrdersConnectionDisconnect());
     }
   }, []);
 

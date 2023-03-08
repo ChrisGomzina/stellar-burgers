@@ -14,7 +14,7 @@ const initialState = {
   ingredientsFailed: false,
   addedBun: [],
   addedIngredients: [],
-  totalPrice: 0,
+  totalPrice: 0
 };
 
 export const ingredientReducer = (state = initialState, action) => {
@@ -35,7 +35,7 @@ export const ingredientReducer = (state = initialState, action) => {
     }
     case GET_INGREDIENTS_FAILED: {
       return {
-        ...state,
+        ...state, 
         ingredients: [],
         ingredientsRequest: false,
         ingredientsFailed: true

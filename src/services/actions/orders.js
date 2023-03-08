@@ -4,6 +4,7 @@ export const WS_All_ORDERS_CONNECTION_FAILED = 'WS_All_ORDERS_CONNECTION_FAILED'
 export const WS_ALL_ORDERS_GET_MESSAGE = 'WS_ALL_ORDERS_GET_MESSAGE';
 export const WS_ALL_ORDERS_CONNECTION_ERROR = 'WS_ALL_ORDERS_CONNECTION_ERROR';
 export const WS_ALL_ORDERS_CONNECTION_CLOSED = 'WS_ALL_ORDERS_CONNECTION_CLOSED';
+export const WS_ALL_ORDERS_CONNECTION_DISCONNECT = 'WS_ALL_ORDERS_CONNECTION_DISCONNECT';
 export const WS_ALL_ORDERS_RESET_MESSAGE = 'WS_ALL_ORDERS_RESET_MESSAGE';
 
 export const WS_USER_ORDERS_CONNECTION_START = 'WS_USER_ORDERS_CONNECTION_START';
@@ -12,6 +13,7 @@ export const WS_USER_ORDERS_CONNECTION_FAILED = 'WS_USER_ORDERS_CONNECTION_FAILE
 export const WS_USER_ORDERS_GET_MESSAGE = 'WS_USER_ORDERS_GET_MESSAGE';
 export const WS_USER_ORDERS_CONNECTION_ERROR = 'WS_USER_ORDERS_CONNECTION_ERROR';
 export const WS_USER_ORDERS_CONNECTION_CLOSED = 'WS_USER_ORDERS_CONNECTION_CLOSED';
+export const WS_USER_ORDERS_CONNECTION_DISCONNECT = 'WS_USER_ORDERS_CONNECTION_DISCONNECT';
 export const WS_USER_ORDERS_RESET_MESSAGE = 'WS_USER_ORDERS_RESET_MESSAGE';
 
 export const wsAllOrdersConnectionStart = () => {
@@ -38,6 +40,18 @@ export const wsUserOrdersConnectionClosed = () => {
   }
 };
 
+export const wsAllOrdersConnectionDisconnect = () => {
+  return {
+    type: WS_ALL_ORDERS_CONNECTION_DISCONNECT
+  }
+};
+
+export const wsUserOrdersConnectionDisconnect = () => {
+  return {
+    type: WS_USER_ORDERS_CONNECTION_DISCONNECT
+  }
+};
+
 export const wsAllOrdersResetMessage = () => {
   return {
     type: WS_ALL_ORDERS_RESET_MESSAGE
@@ -49,4 +63,5 @@ export const wsUserOrdersResetMessage = () => {
     type: WS_USER_ORDERS_RESET_MESSAGE
   }
 };
+
 
