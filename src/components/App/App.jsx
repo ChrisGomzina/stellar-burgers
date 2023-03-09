@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { getCookie } from '../../utils/cookie.js';
 import { getProfileInfo } from '../../services/actions/profile.js';
 import { getIngredients } from '../../services/actions/ingredients.js';
-import { closeIngredientDetailsPopup } from '../../services/actions/popup.js';
+import { changeIngredientPopupState, changeOrderPopupState } from '../../services/actions/popup.js';
 
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement.jsx';
 import RouteUnauthorizedUser from '../RouteUnauthorizedUser/RouteUnauthorizedUser.jsx';
@@ -21,12 +22,15 @@ import ResetPasswordPage from '../../pages/ResetPasswordPage/ResetPasswordPage.j
 import ProfilePage from '../../pages/ProfilePage/ProfilePage.jsx';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage.jsx';
 import IngredientPage from '../../pages/IngredientPage/IngredientPage.jsx';
+import FeedPage from '../../pages/FeedPage/FeedPage.jsx';
+import OrdersPage from '../../pages/OrdersPage/OrdersPage.jsx';
+import OrderInfoPage from '../../pages/OrderInfoPage/OrderInfoPage.jsx';
 
 const App = React.memo(() => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   const accessToken = getCookie('token');
-  const refreshTokenAnswer = useSelector((state) => state.profileReducer.refreshTokenAnswer);
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -36,29 +40,69 @@ const App = React.memo(() => {
     dispatch(getProfileInfo(accessToken));
   }, [accessToken]);
 
+  const previousLocation =
+    location.state?.previousLocationConstructor ||
+    location.state?.previousLocationFeed ||
+    location.state?.previousLocationOrders ||
+    location;
+
+  const handleIngredientPopupClose = () => {
+    dispatch(changeIngredientPopupState(false));
+    navigate(-1);
+  };
+
+  const handleOrderPopupClose = () => {
+    dispatch(changeOrderPopupState(false));
+    navigate(-1);
+  };
+
   return (
     <>
-      <Routes location={location.state?.previousLocation || location}>
+      <Routes location={previousLocation}>
         <Route path='/' element={<Header />}>
           <Route index element={<MainPage />} />
           <Route path='/not-found' element={<NotFoundPage />}/>
           <Route path='ingredients/:id' element={<IngredientPage />} />
+          <Route path='/feed' element={<FeedPage />} /> 
+          <Route path='/feed/:id' element={<OrderInfoPage isUserOrder={false} />}/>
           //Маршруты для неавторизованных пользователей
           <Route path='/login' element={<RouteUnauthorizedUser element={<LoginPage />}/>}/>
           <Route path='/register' element={<RouteUnauthorizedUser element={<RegisterPage />}/>}/>
           <Route path='/forgot-password' element={<RouteUnauthorizedUser element={<ForgotPasswordPage />}/>}/>
           <Route path='/reset-password' element={<RouteUnauthorizedUser element={<ResetPasswordPage />}/>}/>
           //Маршруты для авторизованных пользователей
-          <Route path='/profile' element={<ProtectedRouteElement element={<ProfilePage />}/>}/>
+          <Route path='/profile/' element={<ProtectedRouteElement element={<ProfilePage />}/>}>
+            <Route path='orders/' element={<OrdersPage />} >
+            </Route>
+          </Route>
+          <Route path='/profile/orders/:id' element={<OrderInfoPage isUserOrder={true}/>}/>
         </Route>
       </Routes>
 
-      {location.state?.previousLocation && (
+      {location.state?.previousLocationConstructor && (
         <Routes>
           <Route path='/ingredients/:id' element={
-            <Modal handleClose={() => dispatch(closeIngredientDetailsPopup())}>
+            <Modal handleClose={() => handleIngredientPopupClose()}>
               <IngredientDetails />
             </Modal>} />
+        </Routes>
+      )}
+
+      {location.state?.previousLocationFeed && (
+        <Routes>
+          <Route path='/feed/:id' element={
+              <Modal handleClose={() => handleOrderPopupClose()}>
+                <OrderInfoPage isUserOrder={false} />
+              </Modal>} />
+        </Routes>
+      )}
+
+      {location.state?.previousLocationOrders && (
+        <Routes>
+          <Route path='/profile/orders/:id' element={
+              <Modal handleClose={() => handleOrderPopupClose()}>
+                <OrderInfoPage isUserOrder={true} />
+              </Modal>} />
         </Routes>
       )}
 

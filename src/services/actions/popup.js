@@ -1,11 +1,21 @@
-export const OPEN_INGREDIRNT_DETAILS_POPUP = 'OPEN_INGREDIRNT_DETAILS_POPUP';
-export const CLOSE_INGREDIRNT_DETAILS_POPUP = 'CLOSE_INGREDIRNT_DETAILS_POPUP';
+export const CHANGE_INGREDIENT_POPUP_STATE = 'CHANGE_INGREDIENTS_POPUP_STATE';
+export const CHANGE_ORDER_POPUP_STATE = 'CHANGE_ORDER_POPUP_STATE';
+export const CHANGE_ORDER_DETAILS_POPUP_STATE = 'CHANGE_ORDER_DETAILS_POPUP_STATE';
 
-export const openIngredientDetailsPopup = (payload) => ({
-  type: OPEN_INGREDIRNT_DETAILS_POPUP,
-  payload
+export const changeIngredientPopupState = (status) => ({
+  type: CHANGE_INGREDIENT_POPUP_STATE,
+  payload: status
 });
 
-export const closeIngredientDetailsPopup = () => ({
-  type: CLOSE_INGREDIRNT_DETAILS_POPUP
+export const changeOrderPopupState = (status) => ({
+  type: CHANGE_ORDER_POPUP_STATE, 
+  payload: status
 });
+
+export const changeOrderDetailsPopupState = (status) => ({
+  type: CHANGE_ORDER_DETAILS_POPUP_STATE,
+  payload: status
+});
+
+
+

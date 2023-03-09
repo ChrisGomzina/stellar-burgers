@@ -23,8 +23,8 @@ const AppHeader = () => {
           </li>
           <li>
             <Button extraClass={`pt-4 pr-5 pb-4 pl-5`} htmlType="button" type="secondary" size="medium">
-              <NavLink to='/not-found' className={({ isActive }) => isActive ? styles.link_active : styles.link}>
-                <ListIcon type={location.pathname === '/not-found' ? 'primary' : 'secondary'} /> Лента заказов
+              <NavLink to='/feed' className={({ isActive }) => isActive ? styles.link_active : styles.link}>
+                <ListIcon type={location.pathname === '/feed' ? 'primary' : 'secondary'} /> Лента заказов
               </NavLink>
             </Button>
           </li>
@@ -36,7 +36,7 @@ const AppHeader = () => {
 
         <Button extraClass={`${styles.profileButton} pt-4 pb-4 pl-5`} htmlType="button" type="secondary" size="medium">
           <NavLink to="/profile" className={({ isActive }) => isActive ? styles.link_active : styles.link}>
-            <ProfileIcon type={location.pathname === '/profile' ? 'primary' : 'secondary'} /> Личный кабинет
+            <ProfileIcon type={location.pathname === '/profile' || location.pathname === '/profile/orders' ? 'primary' : 'secondary'} /> Личный кабинет
           </NavLink>
         </Button>
 

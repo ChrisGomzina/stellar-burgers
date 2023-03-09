@@ -9,6 +9,7 @@ export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
 export const COUNT_TOTAL_PRICE = 'COUNT_TOTAL_PRICE';
 export const SORT_INGREDIENTS = 'SORT_INGREDIENTS';
+export const RESET_INGREDIENTS = 'RESET_INGREDIENTS';
 
 export const getIngredients = () => (dispatch) => {
   dispatch({
@@ -45,4 +46,8 @@ export const countTotalPrice = () => ({
 export const sortIngredients = (payload) => ({
   type: SORT_INGREDIENTS,
   payload
+});
+
+export const resetIngredients = () => ({
+  type: RESET_INGREDIENTS,
 });

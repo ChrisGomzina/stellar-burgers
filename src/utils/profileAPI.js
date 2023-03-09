@@ -1,4 +1,4 @@
-import { BASE_URL } from './constans.js';
+import { BASE_URL, USER_ORDERS_URL } from './constans.js';
 import { checkResponse } from './utils.js';
 
 const resetPassword = (email) => 

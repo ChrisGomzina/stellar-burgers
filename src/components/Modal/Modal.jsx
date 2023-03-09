@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import styles from './Modal.module.css';
@@ -11,31 +10,23 @@ import ModalOverlay from '../ModalOverlay/ModalOverlay.jsx';
 const root = document.querySelector("#modal");
 
 const Modal = ({ handleClose, children }) => {
-  const navigate = useNavigate();
-
-  const closePopup = () => {
-    navigate(-1);
-    handleClose();
-  };
-  
   useEffect(() => {
     const escClose = (e) => {
-       if (e.key === "Escape") {
-         handleClose();
-         navigate(-1);
-       }
+      if (e.key === "Escape") {
+        handleClose();
+      }
     };
     document.addEventListener('keyup', escClose);
     
     return () => {
       document.removeEventListener('keyup', escClose);
     }
-  }, [handleClose, navigate]);
+  }, [handleClose]);
   
   return createPortal (
-    <ModalOverlay handleClose={closePopup}>
+    <ModalOverlay handleClose={handleClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.button} onClick={closePopup} >
+        <button className={styles.button} onClick={handleClose} >
           <CloseIcon type="primary" />
         </button>
 

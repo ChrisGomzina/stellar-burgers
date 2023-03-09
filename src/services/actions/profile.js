@@ -161,6 +161,7 @@ export const getProfileInfo = (accessToken) => (dispatch) => {
       dispatch({ type: GET_PROFILE_DATA_SUCCESS, payload: res.success });
     })
     .catch((err) => {
+      dispatch({ type: GET_PROFILE_DATA_FAILED });
       if (err.message === 'jwt malformed' || err.message === 'jwt expired') {
         dispatch(updateToken(getCookie('refreshToken')));
       }

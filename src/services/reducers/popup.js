@@ -1,22 +1,31 @@
-import { OPEN_INGREDIRNT_DETAILS_POPUP, 
-  CLOSE_INGREDIRNT_DETAILS_POPUP } from '../actions/popup.js';
+import { CHANGE_INGREDIENT_POPUP_STATE, 
+  CHANGE_ORDER_POPUP_STATE,
+  CHANGE_ORDER_DETAILS_POPUP_STATE } from '../actions/popup.js';
 
 const initialState = {
-  selectedIngrediend: null,
+  isIngredientPopupOpen: false,
+  isOrderPopupOpen: false,
+  isOrderDetailsPopupOpen: false
 };
 
 export const popupReducer = (state = initialState, action) => {
   switch (action.type) {
-    case OPEN_INGREDIRNT_DETAILS_POPUP: {
+    case CHANGE_INGREDIENT_POPUP_STATE: {
       return {
         ...state,
-        selectedIngrediend: action.payload,
+        isIngredientPopupOpen: action.payload
       };
     }
-    case CLOSE_INGREDIRNT_DETAILS_POPUP: {
+    case CHANGE_ORDER_POPUP_STATE: {
       return {
         ...state,
-        selectedIngrediend: null
+        isOrderPopupOpen: action.payload
+      };
+    }
+    case CHANGE_ORDER_DETAILS_POPUP_STATE: {
+      return {
+        ...state,
+        isOrderDetailsPopupOpen: action.payload
       };
     }
     default: {
