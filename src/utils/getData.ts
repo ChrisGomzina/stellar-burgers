@@ -1,5 +1,5 @@
-import { BASE_URL } from './constans.js';
-import { checkResponse } from './utils.js';
+import { BASE_URL } from './constans';
+import { checkResponse } from './utils';
 
 const getData = () => {
   return fetch(`${BASE_URL}/ingredients`)

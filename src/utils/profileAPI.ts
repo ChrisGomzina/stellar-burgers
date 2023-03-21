@@ -1,7 +1,7 @@
-import { BASE_URL, USER_ORDERS_URL } from './constans.js';
-import { checkResponse } from './utils.js';
+import { BASE_URL } from './constans';
+import { checkResponse } from './utils';
 
-const resetPassword = (email) => 
+const resetPassword = (email: string) => 
   fetch(`${BASE_URL}/password-reset`, {
     method: 'POST',
     headers: {
@@ -13,7 +13,7 @@ const resetPassword = (email) =>
   })  
   .then(res => checkResponse(res));
 
-const setPassword = (password, code) => 
+const setPassword = (password: string, code: string) => 
   fetch(`${BASE_URL}/password-reset/reset`, {
     method: 'POST',
     headers: {
@@ -26,7 +26,7 @@ const setPassword = (password, code) =>
   })  
   .then(res => checkResponse(res));
 
-const register = (email, password, name) => 
+const register = (email: string, password: string, name: string) => 
   fetch(`${BASE_URL}/auth/register`, {
     method: 'POST',
     headers: {
@@ -40,7 +40,7 @@ const register = (email, password, name) =>
   })
   .then(res => checkResponse(res));
 
-const authorization = (email, password) => 
+const authorization = (email: string, password: string) => 
 fetch(`${BASE_URL}/auth/login`, {
   method: 'POST',
   headers: {
@@ -53,7 +53,7 @@ fetch(`${BASE_URL}/auth/login`, {
 })
 .then(res => checkResponse(res));
 
-const refreshTokenApi = (refreshToken) => {
+const refreshTokenApi = (refreshToken: string) => {
   return fetch(`${BASE_URL}/auth/token`, {
     method: 'POST',
     headers: {
@@ -67,7 +67,7 @@ const refreshTokenApi = (refreshToken) => {
 };
   
 
-const logOut = (refreshToken) => {
+const logOut = (refreshToken: string) => {
   return fetch(`${BASE_URL}/auth/logout`, {
     method: 'POST',
     headers: {
@@ -80,7 +80,7 @@ const logOut = (refreshToken) => {
   .then(res => checkResponse(res));
 };
 
-const getProfileData = (accessToken) => 
+const getProfileData = (accessToken: string) => 
   fetch(`${BASE_URL}/auth/user`, {
     method: 'GET',
     headers: {
@@ -90,7 +90,7 @@ const getProfileData = (accessToken) =>
   })
 .then(res => checkResponse(res));
 
-const sendProfileData = (accessToken, email, name, password) => 
+const sendProfileData = (accessToken: string, email: string, name: string, password: string) => 
   fetch(`${BASE_URL}/auth/user`, {
     method: 'PATCH',
     headers: {

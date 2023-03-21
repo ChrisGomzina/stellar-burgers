@@ -1,7 +1,7 @@
-import { BASE_URL } from './constans.js';
-import { checkResponse } from './utils.js';
+import { BASE_URL } from './constans';
+import { checkResponse } from './utils';
 
-const getOrder = (ingredients, token) =>
+const getOrder = (ingredients: Array<string>, token: string) =>
   fetch(`${BASE_URL}/orders`, {
     method: 'POST',
     headers: {

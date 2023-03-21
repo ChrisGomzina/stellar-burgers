@@ -1,4 +1,4 @@
-export const orderStatus = (status) => {
+export const orderStatus = (status: string) => {
   if (status === 'done') {
     return 'Выполнен';
   } else if (status === 'created') {
@@ -10,7 +10,7 @@ export const orderStatus = (status) => {
   }
 };
 
-export const statusStyles = (status) => {
+export const statusStyles = (status: string) => {
   if (status === 'done') {
     return { color: '#00CCCC' };
   } else if (status === 'cancel') {
