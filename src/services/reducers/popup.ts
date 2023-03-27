@@ -2,13 +2,21 @@ import { CHANGE_INGREDIENT_POPUP_STATE,
   CHANGE_ORDER_POPUP_STATE,
   CHANGE_ORDER_DETAILS_POPUP_STATE } from '../actions/popup.js';
 
-const initialState = {
+import { TPopupActions } from '../actions/popup';
+
+type TPopupState = {
+  isIngredientPopupOpen: boolean;
+  isOrderPopupOpen: boolean;
+  isOrderDetailsPopupOpen: boolean;
+}
+
+const initialState: TPopupState = {
   isIngredientPopupOpen: false,
   isOrderPopupOpen: false,
-  isOrderDetailsPopupOpen: false
+  isOrderDetailsPopupOpen: false,
 };
 
-export const popupReducer = (state = initialState, action) => {
+export const popupReducer = (state = initialState, action: TPopupActions): TPopupState => {
   switch (action.type) {
     case CHANGE_INGREDIENT_POPUP_STATE: {
       return {

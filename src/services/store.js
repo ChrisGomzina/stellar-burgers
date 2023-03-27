@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import {compose, createStore, applyMiddleware} from 'redux';
 
 import { socketMiddleware } from '../services/middleware/socketMiddleware.js';
-import { ALL_ORDERS_URL, USER_ORDERS_URL } from '../utils/constans.js';
+import { ALL_ORDERS_URL, USER_ORDERS_URL } from '../utils/constans';
 import { WS_All_ORDERS_CONNECTION_START,
   WS_All_ORDERS_CONNECTION_SUCCESS,
   WS_All_ORDERS_CONNECTION_FAILED,

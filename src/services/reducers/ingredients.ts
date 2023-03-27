@@ -8,16 +8,28 @@ import { GET_INGREDIENTS_REQUEST,
   SORT_INGREDIENTS,
   RESET_INGREDIENTS } from '../actions/ingredients.js';
 
-const initialState = {
+  import { TIngredientsActions } from '../actions/ingredients';
+  import { TIngredient } from '../types/types';
+
+type TIngredientsState = {
+  ingredients: Array<TIngredient>;
+  ingredientsRequest: boolean;
+  ingredientsFailed: boolean;
+  addedBun: TIngredient;
+  addedIngredients: Array<TIngredient>;
+  totalPrice: number;
+};
+
+const initialState: TIngredientsState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
   addedBun: [],
   addedIngredients: [],
-  totalPrice: 0
+  totalPrice: 0,
 };
 
-export const ingredientReducer = (state = initialState, action) => {
+export const ingredientReducer = (state = initialState, action: TIngredientsActions): TIngredientsState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {
@@ -47,7 +59,7 @@ export const ingredientReducer = (state = initialState, action) => {
         addedIngredients: [
           ...state.addedIngredients,
           {
-            ...state.ingredients.find((item) => item._id === action.payload.id),
+            ...state.ingredients.find((item) => item._id === action.payload._id),
             uuidv4: action.newId,
           },
         ],
@@ -56,7 +68,7 @@ export const ingredientReducer = (state = initialState, action) => {
     case ADD_BUN: {
       return {
         ...state,
-        addedBun: state.ingredients.find((item) => item._id === action.payload.id),
+        addedBun: state.ingredients.find((item) => item._id === action.payload._id),
       }
     }
     case DELETE_INGREDIENT: {

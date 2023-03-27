@@ -6,7 +6,7 @@ import styles from './ProfilePage.module.css';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { getCookie } from '../../utils/cookie.js';
+import { getCookie } from '../../utils/cookie';
 import { logOutSite, sendProfileInfo } from '../../services/actions/profile.js';
 import Loader from '../../components/Loader/Loader.jsx';
 
@@ -16,7 +16,9 @@ const ProfilePage = () => {
   const location = useLocation();
 
   const profile = useSelector((state) => state.profileReducer.profile);
-  const sendProfileDataRequest = useSelector((state) => state.profileReducer.sendProfileDataRequest);
+  const sendProfileDataRequest = useSelector(
+    (state) => state.profileReducer.sendProfileDataRequest,
+  );
   const sendProfileDataFaild = useSelector((state) => state.profileReducer.sendProfileDataFaild);
   const refreshTokenAnswer = useSelector((state) => state.profileReducer.refreshTokenAnswer);
 
@@ -36,7 +38,8 @@ const ProfilePage = () => {
   const onEmailClick = () => emailRef.current.focus();
   const onPasswordClick = () => passwordRef.current.focus();
 
-  const setActiveClass = ({ isActive }) => `${isActive ? styles.link_active : styles.link} text text_type_main-medium`;
+  const setActiveClass = ({ isActive }) =>
+    `${isActive ? styles.link_active : styles.link} text text_type_main-medium`;
 
   const isNameChanged = (e) => {
     setNewName(e.target.value);
@@ -61,7 +64,8 @@ const ProfilePage = () => {
     (e) => {
       e.preventDefault();
       dispatch(sendProfileInfo(accessToken, newEmail, newName, newPassword));
-    }, [dispatch, accessToken, newEmail, newName, newPassword]
+    },
+    [dispatch, accessToken, newEmail, newName, newPassword],
   );
 
   useEffect(() => {
@@ -78,41 +82,49 @@ const ProfilePage = () => {
 
   return (
     <div className={`${styles.container} mt-10`}>
-
       <nav className={styles.nav}>
         <ul className={styles.list}>
           <li className='mt-25'>
-            <NavLink to='/profile' className={setActiveClass} end>Профиль</NavLink>
+            <NavLink to='/profile' className={setActiveClass} end>
+              Профиль
+            </NavLink>
           </li>
           <li>
-            <NavLink to='/profile/orders' className={setActiveClass} state={{ orders: true }} end>История заказов</NavLink>
+            <NavLink to='/profile/orders' className={setActiveClass} state={{ orders: true }} end>
+              История заказов
+            </NavLink>
           </li>
           <li>
-            <button className={`${styles.button} text text_type_main-medium`} onClick={handleLogOut}>Выход</button>
+            <button
+              className={`${styles.button} text text_type_main-medium`}
+              onClick={handleLogOut}
+            >
+              Выход
+            </button>
           </li>
         </ul>
 
-        <span className={`${styles.span} text text_type_main-default`}>В этом разделе вы можете<br></br>изменить свои персональные данные</span>
+        <span className={`${styles.span} text text_type_main-default`}>
+          В этом разделе вы можете<br></br>изменить свои персональные данные
+        </span>
       </nav>
 
       {location.state?.orders || location.pathname === '/profile/orders' ? (
         <Outlet />
       ) : (
         <>
-          {sendProfileDataRequest && (
-            <Loader />
-          )}
-  
+          {sendProfileDataRequest && <Loader />}
+
           {sendProfileDataFaild && (
             <span className={`text text_type_main-medium`}>Ошибка загрузки ¯\_(ツ)_/¯</span>
           )}
-  
+
           {!sendProfileDataRequest && !sendProfileDataFaild && (
             <form className='mt-20' onSubmit={handleSubmit}>
-  
-              <Input extraClass='mb-6' 
-                type={'text'} 
-                placeholder={'Имя'} 
+              <Input
+                extraClass='mb-6'
+                type={'text'}
+                placeholder={'Имя'}
                 onChange={isNameChanged}
                 icon={'EditIcon'}
                 value={newName}
@@ -123,14 +135,14 @@ const ProfilePage = () => {
                 errorText={'Ошибка'}
                 size={'default'}
               />
-  
-              <Input 
-                extraClass='mb-6' 
-                type={'email'} 
+
+              <Input
+                extraClass='mb-6'
+                type={'email'}
                 placeholder={'Логин'}
-                onChange={isEmailChanged} 
-                value={newEmail} 
-                name={'email'} 
+                onChange={isEmailChanged}
+                value={newEmail}
+                name={'email'}
                 icon={'EditIcon'}
                 ref={emailRef}
                 onIconClick={onEmailClick}
@@ -138,10 +150,11 @@ const ProfilePage = () => {
                 errorText={'Ошибка'}
                 size={'default'}
               />
-  
-              <Input extraClass='mb-6' 
-                type={'password'} 
-                placeholder={'Пароль'} 
+
+              <Input
+                extraClass='mb-6'
+                type={'password'}
+                placeholder={'Пароль'}
                 onChange={isPasswordChanged}
                 icon={'EditIcon'}
                 value={newPassword}
@@ -152,24 +165,22 @@ const ProfilePage = () => {
                 errorText={'Ошибка'}
                 size={'default'}
               />
-  
+
               {isDataChanged && (
                 <div className={styles.buttons}>
                   <Button htmlType='button' type='secondary' size='medium' onClick={cancelEditing}>
                     Отмена
                   </Button>
-  
+
                   <Button htmlType='submit' type='primary' size='medium'>
                     Сохранить
                   </Button>
-               </div>
+                </div>
               )}
-  
             </form>
           )}
         </>
       )}
-
     </div>
   );
 };

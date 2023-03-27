@@ -1,4 +1,4 @@
-import { getCookie } from '../../utils/cookie.js';
+import { getCookie } from '../../utils/cookie';
 import { updateToken } from '../actions/profile.js';
 
 export const socketMiddleware = (wsUrl, wsActions) => {

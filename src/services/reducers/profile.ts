@@ -24,7 +24,38 @@ import { SET_PROFILE,
   REFRESH_TOKEN_SUCCESS,
   REFRESH_TOKEN_FAILED } from '../actions/profile.js';
 
-const initialState = {
+import { TProfileActions } from '../actions/profile';
+import { TUser } from '../types/types';
+
+type TOrdersState = {
+  profile: TUser | null;
+  resetPasswordAnswer: boolean | null;
+  resetPasswordRequest: boolean;
+  resetPasswordFailed: boolean;
+  setPasswordAnswer: boolean | null;
+  setPasswordRequest: boolean;
+  setPasswordFailed: boolean;
+  registrationAnswer: boolean | null;
+  registrationRequest: boolean;
+  registrationFailed: boolean;
+  authorizationAnswer: boolean | null;
+  authorizationRequest: boolean;
+  authorizationFailed: boolean;
+  logOutAnswer: boolean | null;
+  logOutRequest: boolean;
+  logOutFailed: boolean;
+  refreshTokenAnswer: boolean | null;
+  refreshTokenRequest: boolean;
+  refreshTokenFaild: boolean;
+  getProfileDataAnswer: boolean | null;
+  getProfileDataRequest: boolean;
+  getProfileDataFaild: boolean;
+  sendProfileDataAnswer: boolean | null;
+  sendProfileDataRequest: boolean;
+  sendProfileDataFaild: boolean;
+}
+
+const initialState: TOrdersState = {
   //Данные авторизованного пользователя
   profile: null,
   //состояния для сброса пароля на странице /forgot-password
@@ -61,7 +92,7 @@ const initialState = {
   sendProfileDataFaild: false
 };
 
-export const profileReducer = (state = initialState, action) => {
+export const profileReducer = (state = initialState, action: TProfileActions): TOrdersState => {
   switch (action.type) {
     case SET_PROFILE: {
       return {
@@ -216,7 +247,7 @@ export const profileReducer = (state = initialState, action) => {
     case GET_PROFILE_DATA_SUCCESS: {
       return {
         ...state,
-        getProfileDataAnswer: false,
+        getProfileDataRequest: false,
         getProfileDataAnswer: action.payload
       }
     }

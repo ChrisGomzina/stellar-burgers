@@ -1,9 +1,8 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 
-import { getCookie } from '../../utils/cookie.js';
+import { getCookie } from '../../utils/cookie';
 import { getProfileInfo } from '../../services/actions/profile.js';
 import { getIngredients } from '../../services/actions/ingredients.js';
 import { changeIngredientPopupState, changeOrderPopupState } from '../../services/actions/popup.js';
@@ -61,51 +60,67 @@ const App = React.memo(() => {
       <Routes location={previousLocation}>
         <Route path='/' element={<Header />}>
           <Route index element={<MainPage />} />
-          <Route path='/not-found' element={<NotFoundPage />}/>
+          <Route path='/not-found' element={<NotFoundPage />} />
           <Route path='ingredients/:id' element={<IngredientPage />} />
-          <Route path='/feed' element={<FeedPage />} /> 
-          <Route path='/feed/:id' element={<OrderInfoPage isUserOrder={false} />}/>
+          <Route path='/feed' element={<FeedPage />} />
+          <Route path='/feed/:id' element={<OrderInfoPage isUserOrder={false} />} />
           //Маршруты для неавторизованных пользователей
-          <Route path='/login' element={<RouteUnauthorizedUser element={<LoginPage />}/>}/>
-          <Route path='/register' element={<RouteUnauthorizedUser element={<RegisterPage />}/>}/>
-          <Route path='/forgot-password' element={<RouteUnauthorizedUser element={<ForgotPasswordPage />}/>}/>
-          <Route path='/reset-password' element={<RouteUnauthorizedUser element={<ResetPasswordPage />}/>}/>
+          <Route path='/login' element={<RouteUnauthorizedUser element={<LoginPage />} />} />
+          <Route path='/register' element={<RouteUnauthorizedUser element={<RegisterPage />} />} />
+          <Route
+            path='/forgot-password'
+            element={<RouteUnauthorizedUser element={<ForgotPasswordPage />} />}
+          />
+          <Route
+            path='/reset-password'
+            element={<RouteUnauthorizedUser element={<ResetPasswordPage />} />}
+          />
           //Маршруты для авторизованных пользователей
-          <Route path='/profile/' element={<ProtectedRouteElement element={<ProfilePage />}/>}>
-            <Route path='orders/' element={<OrdersPage />} >
-            </Route>
+          <Route path='/profile/' element={<ProtectedRouteElement element={<ProfilePage />} />}>
+            <Route path='orders/' element={<OrdersPage />}></Route>
           </Route>
-          <Route path='/profile/orders/:id' element={<OrderInfoPage isUserOrder={true}/>}/>
+          <Route path='/profile/orders/:id' element={<OrderInfoPage isUserOrder={true} />} />
         </Route>
       </Routes>
 
       {location.state?.previousLocationConstructor && (
         <Routes>
-          <Route path='/ingredients/:id' element={
-            <Modal handleClose={() => handleIngredientPopupClose()}>
-              <IngredientDetails />
-            </Modal>} />
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal handleClose={() => handleIngredientPopupClose()}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
         </Routes>
       )}
 
       {location.state?.previousLocationFeed && (
         <Routes>
-          <Route path='/feed/:id' element={
+          <Route
+            path='/feed/:id'
+            element={
               <Modal handleClose={() => handleOrderPopupClose()}>
                 <OrderInfoPage isUserOrder={false} />
-              </Modal>} />
+              </Modal>
+            }
+          />
         </Routes>
       )}
 
       {location.state?.previousLocationOrders && (
         <Routes>
-          <Route path='/profile/orders/:id' element={
+          <Route
+            path='/profile/orders/:id'
+            element={
               <Modal handleClose={() => handleOrderPopupClose()}>
                 <OrderInfoPage isUserOrder={true} />
-              </Modal>} />
+              </Modal>
+            }
+          />
         </Routes>
       )}
-
     </>
   );
 });

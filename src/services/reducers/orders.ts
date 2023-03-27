@@ -11,7 +11,21 @@ import { WS_All_ORDERS_CONNECTION_SUCCESS,
   WS_USER_ORDERS_CONNECTION_CLOSED,
   WS_USER_ORDERS_RESET_MESSAGE } from '../actions/orders.js';
 
-const initialState = {
+import { TAllOrders, TUserOrders } from '../types/types';
+import { TOrdersActions } from '../actions/orders';
+
+type TOrdersState = {
+  allOrders: TAllOrders;
+  wsAllOrdersConnectSuccess: Boolean;
+  wsAllOrdersConnectFailed: Boolean;
+  userOrders: TUserOrders;
+  wsUserOrdersConnectSuccess: Boolean;
+  wsUserOrdersConnectFailed: Boolean;
+  total: Number | null;
+  totalToday: number | null;
+}
+
+const initialState: TOrdersState = {
   allOrders: [],
   wsAllOrdersConnectSuccess: false,
   wsAllOrdersConnectFailed: false,
@@ -22,7 +36,7 @@ const initialState = {
   totalToday: null
 };
 
-export const ordersReducer = (state = initialState, action) => {
+export const ordersReducer = (state = initialState, action: TOrdersActions): TOrdersState => {
   switch (action.type) {
     case WS_All_ORDERS_CONNECTION_SUCCESS: {
       return {
