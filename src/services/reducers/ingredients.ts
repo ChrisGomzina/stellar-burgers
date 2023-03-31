@@ -15,7 +15,7 @@ type TIngredientsState = {
   ingredients: Array<TIngredient>;
   ingredientsRequest: boolean;
   ingredientsFailed: boolean;
-  addedBun: TIngredient;
+  addedBun: TIngredient | undefined;
   addedIngredients: Array<TIngredient>;
   totalPrice: number;
 };
@@ -24,7 +24,7 @@ const initialState: TIngredientsState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
-  addedBun: [],
+  addedBun: {} as TIngredient,
   addedIngredients: [],
   totalPrice: 0,
 };
@@ -59,16 +59,16 @@ export const ingredientReducer = (state = initialState, action: TIngredientsActi
         addedIngredients: [
           ...state.addedIngredients,
           {
-            ...state.ingredients.find((item) => item._id === action.payload._id),
+            ...state.ingredients.find((item) => item._id === action.payload.id),
             uuidv4: action.newId,
           },
-        ],
+        ] as Array<TIngredient>,
       }
     }
     case ADD_BUN: {
       return {
         ...state,
-        addedBun: state.ingredients.find((item) => item._id === action.payload._id),
+        addedBun: state.ingredients.find((item) => item._id === action.payload.id),
       }
     }
     case DELETE_INGREDIENT: {
@@ -83,7 +83,7 @@ export const ingredientReducer = (state = initialState, action: TIngredientsActi
       return {
         ...state,
         totalPrice:
-          state.addedIngredients.reduce((acc, curr) => acc + curr.price, 0) + state.addedBun.price * 2,
+          state.addedIngredients.reduce((acc, curr) => acc + curr.price, 0) + ((state.addedBun !== undefined) ? state.addedBun.price * 2 : 0),
       }
     }
     case SORT_INGREDIENTS: {
@@ -95,7 +95,7 @@ export const ingredientReducer = (state = initialState, action: TIngredientsActi
     case RESET_INGREDIENTS: {
       return {
         ...state,
-        addedBun: [],
+        addedBun: {} as TIngredient,
         addedIngredients: [],
         totalPrice: 0
       }

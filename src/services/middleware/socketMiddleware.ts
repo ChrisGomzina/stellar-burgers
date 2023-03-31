@@ -1,7 +1,8 @@
+import { Middleware } from 'redux';
 import { getCookie } from '../../utils/cookie';
 import { updateToken } from '../actions/profile.js';
 
-export const socketMiddleware = (wsUrl, wsActions) => {
+export const socketMiddleware = (wsUrl, wsActions): Middleware => {
   return store => {
     let socket = null;
 

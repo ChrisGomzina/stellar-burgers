@@ -14,6 +14,11 @@ export type TIngredient = {
   uuidv4?: string;
 };
 
+export type TAddedIngredient = {
+  readonly id: string;
+  readonly type: string;
+};
+
 export type TGetOrder = Array<string>;
 
 export type TOrder = {

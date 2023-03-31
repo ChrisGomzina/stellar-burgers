@@ -220,7 +220,7 @@ export const setNewPassword = (password: string, code: string) => (dispatch: App
 };
 
 //Регистрация
-export const registerOnSite = (email: string, password: string, name: string, forwarding) => (dispatch: AppDispatch) => {
+export const registerOnSite = (email: string, password: string, name: string, forwarding: () => void) => (dispatch: AppDispatch) => {
   dispatch({
     type: REGISTSTRATION_REQUEST
   });
@@ -238,7 +238,7 @@ export const registerOnSite = (email: string, password: string, name: string, fo
 };
 
 //Авторизация
-export const logInToSite = (email: string, password: string, forwarding) => (dispatch: AppDispatch) => {
+export const logInToSite = (email: string, password: string, forwarding: () => void) => (dispatch: AppDispatch) => {
   dispatch({
     type: AUTHORIZATION_REQUEST
   });
@@ -256,7 +256,7 @@ export const logInToSite = (email: string, password: string, forwarding) => (dis
 };
 
 //Выход из профиля
-export const logOutSite = (refreshToken: string, forwarding) => (dispatch: AppDispatch) => {
+export const logOutSite = (refreshToken: string, forwarding: () => void) => (dispatch: AppDispatch) => {
   dispatch({
     type: LOGOUT_REQUEST
   });

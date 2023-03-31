@@ -1,6 +1,6 @@
 import {v4 as uuidv4} from 'uuid';
 import { getData } from '../../utils/getData';
-import { TIngredient } from '../types/types';
+import { TIngredient, TAddedIngredient } from '../types/types';
 import { AppDispatch } from '../types/index';
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
@@ -28,12 +28,12 @@ export interface IGetIngredientsFailedAction {
 
 export interface IAddBunAction {
   readonly type: typeof ADD_BUN;
-  readonly payload: TIngredient;
+  readonly payload: TAddedIngredient;
 }
 
 export interface IAddIngredientAction {
   readonly type: typeof ADD_INGREDIENT;
-  readonly payload: TIngredient;
+  readonly payload: TAddedIngredient;
   readonly newId: string;
 }
 
@@ -81,9 +81,9 @@ export const getIngredients = () => (dispatch: AppDispatch) => {
     })
 };
 
-export const addBun = (payload: TIngredient): IAddBunAction => ({ type: ADD_BUN, payload });
+export const addBun = (payload: TAddedIngredient): IAddBunAction => ({ type: ADD_BUN, payload });
 
-export const addIngredient = (payload: TIngredient): IAddIngredientAction => ({
+export const addIngredient = (payload: TAddedIngredient): IAddIngredientAction => ({
   type: ADD_INGREDIENT,
   newId: uuidv4(),
   payload,
