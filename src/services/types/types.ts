@@ -19,8 +19,6 @@ export type TAddedIngredient = {
   readonly type: string;
 };
 
-export type TGetOrder = Array<string>;
-
 export type TOrder = {
   createdAt: string;
   ingredients: Array<string>;
@@ -43,6 +41,26 @@ export type TUser = {
   readonly email: string;
   readonly name?: string;
   readonly password?: string;
+};
+
+export type TWsAllOrdersActions = {
+  wsInit: () => {type: string};
+  wsFailed: () => {type: string};
+  onOpen: () => {type: string};
+  onMessage: (payload: TAllOrders)=> {type: string; payload: TAllOrders};
+  onClose: () => {type: string};
+  onError: () => {type: string};
+  wsDisconnect: () => {type: string};
+};
+
+export type TWsUserOrdersActions = {
+  wsInit: () => {type: string};
+  wsFailed: () => {type: string};
+  onOpen: () => {type: string};
+  onMessage: (payload: TUserOrders)=> {type: string; payload: TUserOrders};
+  onClose: () => {type: string};
+  onError: () => {type: string};
+  wsDisconnect: () => {type: string};
 };
 
 export type TIngredientProps = {

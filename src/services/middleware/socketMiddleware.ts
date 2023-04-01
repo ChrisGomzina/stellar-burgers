@@ -1,10 +1,11 @@
 import { Middleware } from 'redux';
 import { getCookie } from '../../utils/cookie';
-import { updateToken } from '../actions/profile.js';
+import { updateToken } from '../actions/profile';
+import { TWsAllOrdersActions, TWsUserOrdersActions } from '../types/types';
 
-export const socketMiddleware = (wsUrl, wsActions): Middleware => {
+export const socketMiddleware = (wsUrl: string, wsActions: TWsAllOrdersActions | TWsUserOrdersActions): Middleware => {
   return store => {
-    let socket = null;
+    let socket: WebSocket | null = null;;
 
     return next => action => {
       const { dispatch, getState } = store;
@@ -48,8 +49,8 @@ export const socketMiddleware = (wsUrl, wsActions): Middleware => {
           success && dispatch({ type: onMessage, payload: restParsedData });
           if (restParsedData.message === 'Invalid or missing token') {
             dispatch({ type: wsFailed });
-            dispatch(updateToken(refreshToken));
-            socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
+            // dispatch(updateToken());
+            // socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
           }
         };
         socket.onclose = (event) => {

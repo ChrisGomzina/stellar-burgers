@@ -22,7 +22,7 @@ import { SET_PROFILE,
   SEND_PROFILE_DATA_FAILED,
   REFRESH_TOKEN_REQUEST,
   REFRESH_TOKEN_SUCCESS,
-  REFRESH_TOKEN_FAILED } from '../actions/profile.js';
+  REFRESH_TOKEN_FAILED } from '../actions/profile';
 
 import { TProfileActions } from '../actions/profile';
 import { TUser } from '../types/types';

@@ -1,7 +1,7 @@
 import { GET_ORDER_REQUEST, 
   GET_ORDER_SUCCESS, 
   GET_ORDER_FAILED, 
-  RESET_ORDER } from '../actions/order.js';
+  RESET_ORDER } from '../actions/order';
 
 import { TOrderActions } from '../actions/order';
 

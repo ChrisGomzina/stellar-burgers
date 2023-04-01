@@ -1,5 +1,6 @@
 import { BASE_URL } from './constans';
 import { checkResponse } from './utils';
+import { getCookie } from '../utils/cookie';
 
 const resetPassword = (email: string) => 
   fetch(`${BASE_URL}/password-reset`, {
@@ -53,14 +54,14 @@ fetch(`${BASE_URL}/auth/login`, {
 })
 .then(res => checkResponse(res));
 
-const refreshTokenApi = (refreshToken: string) => {
+const refreshTokenApi = () => {
   return fetch(`${BASE_URL}/auth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      'token': refreshToken,
+      'token': getCookie('refreshToken'),
     }),
   })
   .then(res => checkResponse(res));

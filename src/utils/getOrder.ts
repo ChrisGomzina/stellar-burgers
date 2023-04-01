@@ -1,11 +1,12 @@
 import { BASE_URL } from './constans';
 import { checkResponse } from './utils';
+import { getCookie } from '../utils/cookie';
 
-const getOrder = (ingredients: Array<string>, token: string) =>
+const getOrder = (ingredients: Array<string>) =>
   fetch(`${BASE_URL}/orders`, {
     method: 'POST',
     headers: {
-      'authorization': `Bearer ${token}`,
+      'authorization': `Bearer ${getCookie('token')}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({

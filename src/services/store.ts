@@ -1,8 +1,8 @@
-import { rootReducer } from './reducers/rootReducer.js';
+import { rootReducer } from './reducers/rootReducer';
 import thunk from 'redux-thunk';
 import {compose, createStore, applyMiddleware} from 'redux';
 
-import { socketMiddleware } from '../services/middleware/socketMiddleware.js';
+import { socketMiddleware } from './middleware/socketMiddleware';
 import { ALL_ORDERS_URL, USER_ORDERS_URL } from '../utils/constans';
 import { WS_All_ORDERS_CONNECTION_START,
   WS_All_ORDERS_CONNECTION_SUCCESS,
@@ -17,7 +17,7 @@ import { WS_All_ORDERS_CONNECTION_START,
   WS_USER_ORDERS_GET_MESSAGE,
   WS_USER_ORDERS_CONNECTION_ERROR,
   WS_USER_ORDERS_CONNECTION_CLOSED,
-  WS_USER_ORDERS_CONNECTION_DISCONNECT } from '../services/actions/orders.js';
+  WS_USER_ORDERS_CONNECTION_DISCONNECT } from './actions/orders';
 
 const wsAllOrdersActions = {
   wsInit: WS_All_ORDERS_CONNECTION_START,
@@ -39,10 +39,14 @@ const wsUserOrdersActions = {
   wsDisconnect: WS_USER_ORDERS_CONNECTION_DISCONNECT
 };
 
-const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+};
+
+export const composeEnhancers =
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const enhancer = composeEnhancers(
   applyMiddleware(thunk, socketMiddleware(ALL_ORDERS_URL, wsAllOrdersActions), socketMiddleware(USER_ORDERS_URL, wsUserOrdersActions))

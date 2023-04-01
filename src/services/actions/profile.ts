@@ -273,11 +273,11 @@ export const logOutSite = (refreshToken: string, forwarding: () => void) => (dis
 };
 
 //Обновление токена
-export const updateToken = (refreshToken: string) => (dispatch: AppDispatch) => {
+export const updateToken = () => (dispatch: AppDispatch) => {
   dispatch({
     type: REFRESH_TOKEN_REQUEST
   });
-  refreshTokenApi(refreshToken)
+  refreshTokenApi()
     .then((res) => {
       setCookie('token', splitCookie(res.accessToken));
       setCookie('refreshToken', res.refreshToken);
@@ -302,7 +302,7 @@ export const getProfileInfo = (accessToken: string) => (dispatch: AppDispatch) =
     .catch((err) => {
       dispatch({ type: GET_PROFILE_DATA_FAILED });
       if (err.message === 'jwt malformed' || err.message === 'jwt expired') {
-        dispatch(updateToken(getCookie('refreshToken')));
+        dispatch(updateToken());
       }
     });
 };
@@ -319,7 +319,7 @@ export const sendProfileInfo = (accessToken: string, email: string, name: string
     })
     .catch((err) => {
       if (err.message === 'jwt malformed' || err.message === 'jwt expired') {
-        dispatch(updateToken(getCookie('refreshToken')));
+        dispatch(updateToken());
         dispatch({ type: SEND_PROFILE_DATA_FAILED })
       }
     });

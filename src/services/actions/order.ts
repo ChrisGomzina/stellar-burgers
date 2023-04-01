@@ -1,7 +1,5 @@
 import { getOrder }  from '../../utils/getOrder';
 import { updateToken } from './profile';
-import { getCookie } from '../../utils/cookie';
-import { TGetOrder } from '../types/types';
 import { AppDispatch } from '../types/index';
 
 export const GET_ORDER_REQUEST: 'GET_ORDER_REQUEST' = 'GET_ORDER_REQUEST';
@@ -32,11 +30,11 @@ export type TOrderActions =
   | IGetOrderFailed
   | IResetOrder;
 
-export const getOrderData = (ingredients: TGetOrder, token: string) => (dispatch: AppDispatch) => {
+export const getOrderData = (ingredients: Array<string>) => (dispatch: AppDispatch) => {
   dispatch({
     type: GET_ORDER_REQUEST
   });
-  getOrder(ingredients, token)
+  getOrder(ingredients)
     .then((res) => {
       if (res) {
         dispatch({ type: GET_ORDER_SUCCESS, payload: res.order.number })
@@ -44,7 +42,7 @@ export const getOrderData = (ingredients: TGetOrder, token: string) => (dispatch
     })
     .catch(() => {
       dispatch({ type: GET_ORDER_FAILED });
-      dispatch(updateToken(getCookie('refreshToken')))
+      dispatch(updateToken());
     });
 };
 

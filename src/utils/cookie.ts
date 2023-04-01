@@ -5,7 +5,10 @@ export function getCookie(name: string) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
-export function setCookie(name: string, value: string, props: any) {
+export function setCookie(
+  name: string, 
+  value: string, 
+  props: { [key: string]: string | number | boolean } & { expires?: any } = {}) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {

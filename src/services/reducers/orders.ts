@@ -9,16 +9,16 @@ import { WS_All_ORDERS_CONNECTION_SUCCESS,
   WS_USER_ORDERS_GET_MESSAGE,
   WS_USER_ORDERS_CONNECTION_ERROR,
   WS_USER_ORDERS_CONNECTION_CLOSED,
-  WS_USER_ORDERS_RESET_MESSAGE } from '../actions/orders.js';
+  WS_USER_ORDERS_RESET_MESSAGE } from '../actions/orders';
 
-import { TAllOrders, TUserOrders } from '../types/types';
+import { TOrder } from '../types/types';
 import { TOrdersActions } from '../actions/orders';
 
 type TOrdersState = {
-  allOrders: TAllOrders;
+  allOrders: Array<TOrder>;
   wsAllOrdersConnectSuccess: Boolean;
   wsAllOrdersConnectFailed: Boolean;
-  userOrders: TUserOrders;
+  userOrders: Array<TOrder>;
   wsUserOrdersConnectSuccess: Boolean;
   wsUserOrdersConnectFailed: Boolean;
   total: Number | null;

@@ -1,6 +1,6 @@
 import { CHANGE_INGREDIENT_POPUP_STATE, 
   CHANGE_ORDER_POPUP_STATE,
-  CHANGE_ORDER_DETAILS_POPUP_STATE } from '../actions/popup.js';
+  CHANGE_ORDER_DETAILS_POPUP_STATE } from '../actions/popup';
 
 import { TPopupActions } from '../actions/popup';
 
