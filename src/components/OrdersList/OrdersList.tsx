@@ -1,13 +1,13 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC } from 'react';
+import { useSelector } from '../../services/types/hooks';
 import { useLocation, NavLink } from 'react-router-dom';
 
 import styles from './OrdersList.module.css';
 
-import OrderItem from '../OrderItem/OrderItem.jsx';
-import Loader from '../Loader/Loader.jsx';
+import OrderItem from '../OrderItem/OrderItem';
+import Loader from '../Loader/Loader';
 
-const OrdersList = () => {
+const OrdersList: FC = () => {
   const location = useLocation();
   const allOrders = useSelector((state) => state.ordersReducer.allOrders);
 

@@ -1,9 +1,9 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC } from 'react';
+import { useSelector } from '../../services/types/hooks';
 
 import styles from './OrdersDashboard.module.css';
 
-const OrdersDashboard = () => {
+const OrdersDashboard: FC = () => {
   const allOrders = useSelector((state) => state.ordersReducer.allOrders);
   const total = useSelector((state) => state.ordersReducer.total);
   const totalToday = useSelector((state) => state.ordersReducer.totalToday);

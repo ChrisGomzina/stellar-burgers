@@ -289,11 +289,11 @@ export const updateToken = () => (dispatch: AppDispatch) => {
 };
 
 //Получение данных пользователя
-export const getProfileInfo = (accessToken: string) => (dispatch: AppDispatch) => {
+export const getProfileInfo = () => (dispatch: AppDispatch) => {
   dispatch({
     type: GET_PROFILE_DATA_REQUEST
   });
-  getProfileData(accessToken)
+  getProfileData()
     .then((res) => {
       dispatch({ type: SET_PROFILE, payload: res.user });
       // dispatch({ type: REFRESH_TOKEN_SUCCESS, payload: null });

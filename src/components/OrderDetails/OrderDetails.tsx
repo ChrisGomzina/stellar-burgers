@@ -1,9 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 
 import styles from './OrderDetails.module.css';
 
-const OrderDetails = ({ orderNumber }) => {
+import { TOrderDetailsProps } from '../../services/types/types';
+
+const OrderDetails: FC<TOrderDetailsProps> = ({ orderNumber }) => {
   return (
     <div className={`${styles.container} pt-30`}>
       <span className={`${styles.number} text text_type_digits-large mb-8`}>{orderNumber}</span>
@@ -16,7 +17,3 @@ const OrderDetails = ({ orderNumber }) => {
 }
 
 export default OrderDetails;
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number.isRequired  
-};

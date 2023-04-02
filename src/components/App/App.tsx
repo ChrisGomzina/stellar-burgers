@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/types/hooks';
 
 import { getCookie } from '../../utils/cookie';
 import { getProfileInfo } from '../../services/actions/profile.js';
 import { getIngredients } from '../../services/actions/ingredients.js';
 import { changeIngredientPopupState, changeOrderPopupState } from '../../services/actions/popup.js';
 
-import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement.jsx';
-import RouteUnauthorizedUser from '../RouteUnauthorizedUser/RouteUnauthorizedUser.jsx';
-import Modal from '../Modal/Modal.jsx';
-import IngredientDetails from '../IngredientDetails/IngredientDetails.jsx';
+import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement.js';
+import RouteUnauthorizedUser from '../RouteUnauthorizedUser/RouteUnauthorizedUser.js';
+import Modal from '../Modal/Modal.js';
+import IngredientDetails from '../IngredientDetails/IngredientDetails.js';
 
 import Header from '../../pages/Header/Header.jsx';
 import MainPage from '../../pages/MainPage/MainPage.jsx';
@@ -36,7 +36,7 @@ const App = React.memo(() => {
   }, []);
 
   useEffect(() => {
-    dispatch(getProfileInfo(accessToken));
+    dispatch(getProfileInfo());
   }, [accessToken]);
 
   const previousLocation =

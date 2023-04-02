@@ -81,12 +81,12 @@ const logOut = (refreshToken: string) => {
   .then(res => checkResponse(res));
 };
 
-const getProfileData = (accessToken: string) => 
+const getProfileData = () => 
   fetch(`${BASE_URL}/auth/user`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'authorization': `Bearer ${accessToken}`,
+      'authorization': `Bearer ${getCookie('token')}`,
     },
   })
 .then(res => checkResponse(res));

@@ -1,24 +1,25 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC } from 'react';
+import { useSelector } from '../../services/types/hooks';
 
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './OrderItem.module.css';
 
 import { orderStatus, statusStyles } from '../../utils/ordersStatus';
+import { TOrderItemProps, TIngredient } from '../../services/types/types';
 
-const OrderItem = ({ order, isUserOrders }) => {
+const OrderItem: FC<TOrderItemProps> = ({ order, isUserOrders }) => {
   const { ingredients, status, name, number, createdAt } = order;
   const allIngredients = useSelector((state) => state.ingredientReducer.ingredients);
 
-  const findIngredient = (ingredient, ingredientsArr) => {
-    return ingredientsArr.find((item) => item._id === ingredient);
+  const findIngredient = (ingredient: string, ingredientsArr: Array<TIngredient>) => {
+    return ingredientsArr.find((item: TIngredient) => item._id === ingredient);
   };
 
   const price = () => {
     let totalPrice = 0;
-    ingredients.forEach((ingredient) => {
-      const findIngredient = allIngredients.find((item) => item._id === ingredient);
+    ingredients?.forEach((ingredient: string) => {
+      const findIngredient = allIngredients.find((item: TIngredient) => item?._id === ingredient);
       if (findIngredient?.price) {
         totalPrice += findIngredient.price;
       }

@@ -1,9 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC } from 'react';
+import { useSelector } from '../../services/types/hooks';
 import { useLocation, Navigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
-const RouteUnauthorizedUser = ({ element }) => {
+import { TRouteProps } from '../../services/types/types';
+
+const RouteUnauthorizedUser: FC<TRouteProps> = ({ element }) => {
   const location = useLocation();
   const profile = useSelector((state) => state.profileReducer.profile);
 
@@ -11,11 +12,7 @@ const RouteUnauthorizedUser = ({ element }) => {
     return <Navigate to={location.state?.from?.pathname || '/'} replace state={{ from: location }} />;
   }
 
-  return element;
+  return <>{element}</>;
 };
 
 export default RouteUnauthorizedUser;
-
-RouteUnauthorizedUser.propTypes = {
-  element: PropTypes.element.isRequired
-};

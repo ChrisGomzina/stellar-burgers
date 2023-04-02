@@ -21,7 +21,7 @@ type TOrdersState = {
   userOrders: Array<TOrder>;
   wsUserOrdersConnectSuccess: Boolean;
   wsUserOrdersConnectFailed: Boolean;
-  total: Number | null;
+  total: number | null;
   totalToday: number | null;
 }
 

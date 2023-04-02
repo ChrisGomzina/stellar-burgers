@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export type TIngredient = {
   calories: number;
   carbohydrates: number;
@@ -56,4 +58,23 @@ export type TWsOrdersActions = {
 export type TIngredientProps = {
   data: TIngredient;
 };
+
+export type TModalProps = {
+  handleClose?: () => void;
+  children: ReactNode;
+};
+
+export type TOrderDetailsProps = {
+  orderNumber: number;
+};
+
+export type TOrderItemProps = {
+  order: TOrder;
+  isUserOrders: boolean;
+};
+
+export type TRouteProps = {
+  element: ReactNode;
+};
+
 
