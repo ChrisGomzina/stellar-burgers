@@ -77,4 +77,8 @@ export type TRouteProps = {
   element: ReactNode;
 };
 
+export type TOrderInfoPageProps = {
+  isUserOrder: boolean;
+};
+
 

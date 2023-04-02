@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { FC, FormEvent } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 
 import styles from './ResetPasswordPage.module.css';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { setNewPassword } from '../../services/actions/profile.js';
-import Loader from '../../components/Loader/Loader.jsx';
+import { setNewPassword } from '../../services/actions/profile';
+import Loader from '../../components/Loader/Loader';
 
-const ResetPasswordPage = () => {
+const ResetPasswordPage: FC = () => {
   const dispatch = useDispatch();
 
   const [password, setPassword] = React.useState('');
@@ -23,7 +23,7 @@ const ResetPasswordPage = () => {
 
   const resetPasswordFailed = useSelector((state) => state.profileReducer.resetPasswordFailed);
 
-  const handleSave = (e) => {
+  const handleSave = (e: FormEvent) => {
     e.preventDefault();
     dispatch(setNewPassword(password, code));
   };

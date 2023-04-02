@@ -256,11 +256,11 @@ export const logInToSite = (email: string, password: string, forwarding: () => v
 };
 
 //Выход из профиля
-export const logOutSite = (refreshToken: string, forwarding: () => void) => (dispatch: AppDispatch) => {
+export const logOutSite = (forwarding: () => void) => (dispatch: AppDispatch) => {
   dispatch({
     type: LOGOUT_REQUEST
   });
-  logOut(refreshToken)
+  logOut()
     .then((res) => {
       dispatch({ type: LOGOUT_SUCCESS, payload: res.success });
       deleteCookie('token');
@@ -308,11 +308,11 @@ export const getProfileInfo = () => (dispatch: AppDispatch) => {
 };
 
 //Отправка отредактированных данных
-export const sendProfileInfo = (accessToken: string, email: string, name: string, password: string) => (dispatch: AppDispatch) => {
+export const sendProfileInfo = (email: string, name: string, password: string) => (dispatch: AppDispatch) => {
   dispatch({
     type: SEND_PROFILE_DATA_REQUEST
   });
-  sendProfileData(accessToken, email, name, password)
+  sendProfileData(email, name, password)
     .then((res) => {
       dispatch({ type: SET_PROFILE, payload: res.user });
       dispatch({ type: SEND_PROFILE_DATA_SUCCESS, payload: res.success });

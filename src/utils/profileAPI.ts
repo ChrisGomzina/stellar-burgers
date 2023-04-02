@@ -68,14 +68,14 @@ const refreshTokenApi = () => {
 };
   
 
-const logOut = (refreshToken: string) => {
+const logOut = () => {
   return fetch(`${BASE_URL}/auth/logout`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      'token': refreshToken,
+      'token': getCookie('refreshToken'),
     }),
   })
   .then(res => checkResponse(res));
@@ -91,12 +91,12 @@ const getProfileData = () =>
   })
 .then(res => checkResponse(res));
 
-const sendProfileData = (accessToken: string, email: string, name: string, password: string) => 
+const sendProfileData = (email: string | undefined, name: string | undefined, password: string) => 
   fetch(`${BASE_URL}/auth/user`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      'authorization': `Bearer ${accessToken}`,
+      'authorization': `Bearer ${getCookie('token')}`,
     },
     body: JSON.stringify({
       'email': email,

@@ -1,15 +1,15 @@
-import React, {useEffect} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, FC, FormEvent } from 'react';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 import { Link, useNavigate } from 'react-router-dom';
 
 import styles from './ForgotPasswordPage.module.css';
 
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { resetOldPassword } from '../../services/actions/profile.js';
-import Loader from '../../components/Loader/Loader.jsx';
+import { resetOldPassword } from '../../services/actions/profile';
+import Loader from '../../components/Loader/Loader';
 
-const ForgotPasswordPage = () => {
+const ForgotPasswordPage: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); 
 
@@ -18,7 +18,7 @@ const ForgotPasswordPage = () => {
   const resetPasswordRequest = useSelector((state) => state.profileReducer.resetPasswordRequest);
   const resetPasswordFailed = useSelector((state) => state.profileReducer.resetPasswordFailed);
 
-  const handleResetPassword = (e) => {
+  const handleResetPassword = (e: FormEvent) => {
     e.preventDefault();
     dispatch(resetOldPassword(email));
   };

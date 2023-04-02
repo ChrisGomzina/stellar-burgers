@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 
 import styles from './OrderInfoPage.module.css';
 
@@ -12,10 +12,11 @@ import {
   wsUserOrdersConnectionStart,
   wsAllOrdersConnectionDisconnect,
   wsUserOrdersConnectionDisconnect,
-} from '../../services/actions/orders.js';
-import Loader from '../../components/Loader/Loader.jsx';
+} from '../../services/actions/orders';
+import Loader from '../../components/Loader/Loader';
+import { TOrderInfoPageProps, TOrder } from '../../services/types/types';
 
-const OrderInfoPage = ({ isUserOrder }) => {
+const OrderInfoPage: FC<TOrderInfoPageProps> = ({ isUserOrder }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const allOrders = useSelector((state) => state.ordersReducer.allOrders);
@@ -38,7 +39,7 @@ const OrderInfoPage = ({ isUserOrder }) => {
     }
   }, []);
 
-  const findOrder = (allOrders, id) => {
+  const findOrder = (allOrders: Array<TOrder>, id: string | undefined) => {
     return allOrders.find((item) => item._id === id);
   };
 
@@ -93,7 +94,7 @@ const OrderInfoPage = ({ isUserOrder }) => {
                         {foundIngredients &&
                           foundIngredients?.filter((item) => item?._id === ingredient?._id).length}
                       </span>
-                      <span>{`x ${ingredient.price}`}</span>
+                      <span>{`x ${ingredient?.price}`}</span>
                     </div>
                     <CurrencyIcon type='primary' />
                   </div>

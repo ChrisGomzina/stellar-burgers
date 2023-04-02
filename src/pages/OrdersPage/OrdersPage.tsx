@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, FC } from 'react';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import styles from './OrdersPage.module.css';
 
-import OrderItem from '../../components/OrderItem/OrderItem.jsx';
-import Loader from '../../components/Loader/Loader.jsx';
-import { wsUserOrdersConnectionStart, wsUserOrdersConnectionDisconnect } from '../../services/actions/orders.js';
+import OrderItem from '../../components/OrderItem/OrderItem';
+import Loader from '../../components/Loader/Loader';
+import { wsUserOrdersConnectionStart, wsUserOrdersConnectionDisconnect } from '../../services/actions/orders';
 
-const OrdersPage = () => {
+const OrdersPage: FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const userOrders = useSelector((state) => state.ordersReducer.userOrders);

@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { FC, FormEvent } from 'react';
 import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 
 import styles from './LoginPage.module.css';
 
 import { EmailInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { logInToSite } from '../../services/actions/profile.js';
-import Loader from '../../components/Loader/Loader.jsx';
+import { logInToSite } from '../../services/actions/profile';
+import Loader from '../../components/Loader/Loader';
 
-const LoginPage = () => {
+const LoginPage: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); 
   const location = useLocation();
@@ -19,9 +19,9 @@ const LoginPage = () => {
   const [isVisible, setVisible] = React.useState(false);
 
   const authorizationRequest = useSelector((state) => state.profileReducer.authorizationRequest);
-  const authorizationFailed = useSelector((state) => state.profileReducer.rauthorizationFailed);
+  const authorizationFailed = useSelector((state) => state.profileReducer.authorizationFailed);
 
-  const handleAuthorization = (e) => {
+  const handleAuthorization = (e: FormEvent) => {
     e.preventDefault();
     dispatch(logInToSite(email, password, () => navigate(location?.state?.previousLocation ? location.state.previousLocation : '/')));
   };

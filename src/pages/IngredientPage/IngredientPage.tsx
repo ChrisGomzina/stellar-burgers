@@ -1,10 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC } from 'react';
+import { useSelector } from '../../services/types/hooks';
 import { useParams } from 'react-router-dom';
 
 import styles from './IngredientPage.module.css';
 
-const IngredientPage = () => {
+const IngredientPage: FC = () => {
   const { id } = useParams();
   const ingredients = useSelector((state) => state.ingredientReducer.ingredients);
   const data = ingredients.find((ingredient) => ingredient._id === id);

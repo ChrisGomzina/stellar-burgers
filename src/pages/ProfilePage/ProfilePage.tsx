@@ -1,16 +1,16 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback, FC, ChangeEvent, FormEvent } from 'react';
 import { NavLink, useNavigate, useLocation, Outlet } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 
 import styles from './ProfilePage.module.css';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { getCookie } from '../../utils/cookie';
-import { logOutSite, sendProfileInfo } from '../../services/actions/profile.js';
-import Loader from '../../components/Loader/Loader.jsx';
+import { logOutSite, sendProfileInfo } from '../../services/actions/profile';
+import Loader from '../../components/Loader/Loader';
 
-const ProfilePage = () => {
+const ProfilePage: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,61 +22,65 @@ const ProfilePage = () => {
   const sendProfileDataFaild = useSelector((state) => state.profileReducer.sendProfileDataFaild);
   const refreshTokenAnswer = useSelector((state) => state.profileReducer.refreshTokenAnswer);
 
-  const accessToken = getCookie('token');
-  const refreshToken = getCookie('refreshToken');
-
-  const [newName, setNewName] = React.useState(profile.name);
-  const [newEmail, setNewEmail] = React.useState(profile.email);
+  const [newName, setNewName] = React.useState('');
+  const [newEmail, setNewEmail] = React.useState('');
   const [newPassword, setNewPassword] = React.useState('');
   const [isDataChanged, setIsDataChanged] = React.useState(false);
 
-  const nameRef = React.useRef(null);
-  const emailRef = React.useRef(null);
-  const passwordRef = React.useRef(null);
+  const nameRef = useRef<HTMLInputElement | null>(null);
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const onNameClick = () => nameRef.current.focus();
-  const onEmailClick = () => emailRef.current.focus();
-  const onPasswordClick = () => passwordRef.current.focus();
+  const onNameClick = () => nameRef.current?.focus();
+  const onEmailClick = () => emailRef.current?.focus();
+  const onPasswordClick = () => passwordRef.current?.focus();
 
-  const setActiveClass = ({ isActive }) =>
+  const setActiveClass = ({ isActive }: { isActive: boolean }) =>
     `${isActive ? styles.link_active : styles.link} text text_type_main-medium`;
 
-  const isNameChanged = (e) => {
+  const isNameChanged = (e: ChangeEvent<HTMLInputElement>) => {
     setNewName(e.target.value);
     setIsDataChanged(true);
   };
 
-  const isEmailChanged = (e) => {
+  const isEmailChanged = (e: ChangeEvent<HTMLInputElement>) => {
     setNewEmail(e.target.value);
     setIsDataChanged(true);
   };
 
-  const isPasswordChanged = (e) => {
+  const isPasswordChanged = (e: ChangeEvent<HTMLInputElement>) => {
     setNewPassword(e.target.value);
     setIsDataChanged(true);
   };
 
   const handleLogOut = () => {
-    dispatch(logOutSite(refreshToken, () => navigate('/', { replace: true })));
+    dispatch(logOutSite(() => navigate('/', { replace: true })));
   };
 
   const handleSubmit = useCallback(
-    (e) => {
+    (e: FormEvent) => {
       e.preventDefault();
-      dispatch(sendProfileInfo(accessToken, newEmail, newName, newPassword));
+      dispatch(sendProfileInfo(newEmail, newName, newPassword));
     },
-    [dispatch, accessToken, newEmail, newName, newPassword],
+    [dispatch, newEmail, newName, newPassword],
   );
 
   useEffect(() => {
+    if(profile !== null) {
+      setNewName(profile.name);
+      setNewEmail(profile.email);
+    }
+  }, [profile]);
+
+  useEffect(() => {
     if (sendProfileDataFaild) {
-      dispatch(sendProfileInfo(accessToken, newEmail, newName, newPassword));
+      dispatch(sendProfileInfo(newEmail, newName, newPassword));
     }
   }, [refreshTokenAnswer]);
 
   const cancelEditing = () => {
-    setNewName(profile.name);
-    setNewEmail(profile.email);
+    setNewName(profile?.name);
+    setNewEmail(profile?.email);
     setNewPassword('');
   };
 

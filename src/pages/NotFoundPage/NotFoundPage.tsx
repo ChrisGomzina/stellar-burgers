@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import styles from './NotFoundPage.module.css';
 
-const NotFoundPage = () => {
+const NotFoundPage: FC = () => {
   return (
     <div>
       <h1 className={`${styles.neon} ${styles.number} text text_type_main-large`}>404</h1>

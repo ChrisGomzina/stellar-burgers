@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { FC, FormEvent } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 
 import styles from './RegisterPage.module.css';
 
 import { EmailInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { registerOnSite } from '../../services/actions/profile.js';
-import Loader from '../../components/Loader/Loader.jsx';
+import { registerOnSite } from '../../services/actions/profile';
+import Loader from '../../components/Loader/Loader';
 
-const RegisterPage = () => {
+const RegisterPage: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); 
   const location = useLocation();
@@ -23,7 +23,7 @@ const RegisterPage = () => {
   const registrationFailed = useSelector((state) => state.profileReducer.registrationFailed);
 
 
-  const handleRegistration = (e) => {
+  const handleRegistration = (e: FormEvent) => {
     e.preventDefault();
     dispatch(registerOnSite(email, password, name, () => navigate(location?.state?.previousLocation ? location.state.previousLocation : '/')));
   };
