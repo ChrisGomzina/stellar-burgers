@@ -1,9 +1,9 @@
 import { Middleware } from 'redux';
 import { getCookie } from '../../utils/cookie';
-import { updateToken } from '../actions/profile';
-import { TWsAllOrdersActions, TWsUserOrdersActions } from '../types/types';
+// import { updateToken } from '../actions/profile';
+import { TWsOrdersActions } from '../types/types';
 
-export const socketMiddleware = (wsUrl: string, wsActions: TWsAllOrdersActions | TWsUserOrdersActions): Middleware => {
+export const socketMiddleware = (wsUrl: string, wsActions: TWsOrdersActions): Middleware => {
   return store => {
     let socket: WebSocket | null = null;;
 
@@ -20,7 +20,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWsAllOrdersActions |
 
       const { profile } = getState().profileReducer;
       const accessToken = getCookie('token');
-      const refreshToken = getCookie('refreshToken');
+      // const refreshToken = getCookie('refreshToken');
 
       if (type === wsInit && profile) {
        socket = new WebSocket(`${wsUrl}?token=${accessToken}`);

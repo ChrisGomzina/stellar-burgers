@@ -43,24 +43,14 @@ export type TUser = {
   readonly password?: string;
 };
 
-export type TWsAllOrdersActions = {
-  wsInit: () => {type: string};
-  wsFailed: () => {type: string};
-  onOpen: () => {type: string};
-  onMessage: (payload: TAllOrders)=> {type: string; payload: TAllOrders};
-  onClose: () => {type: string};
-  onError: () => {type: string};
-  wsDisconnect: () => {type: string};
-};
-
-export type TWsUserOrdersActions = {
-  wsInit: () => {type: string};
-  wsFailed: () => {type: string};
-  onOpen: () => {type: string};
-  onMessage: (payload: TUserOrders)=> {type: string; payload: TUserOrders};
-  onClose: () => {type: string};
-  onError: () => {type: string};
-  wsDisconnect: () => {type: string};
+export type TWsOrdersActions = {
+  wsInit: string;
+  wsFailed: string;
+  onOpen: string;
+  onMessage: string;
+  onClose: string;
+  onError: string;
+  wsDisconnect: string;
 };
 
 export type TIngredientProps = {

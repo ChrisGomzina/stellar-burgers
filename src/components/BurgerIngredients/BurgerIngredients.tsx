@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { FC, MutableRefObject } from 'react';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 import { Link, useLocation } from 'react-router-dom';
 import { Waypoint } from 'react-waypoint';
 
@@ -7,10 +7,10 @@ import styles from './BurgerIngredients.module.css';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import Ingredient from '../Ingredient/Ingredient.jsx';
-import { changeIngredientPopupState } from '../../services/actions/popup.js';
+import Ingredient from '../Ingredient/Ingredient';
+import { changeIngredientPopupState } from '../../services/actions/popup';
 
-const BurgerIngredients = () => {
+const BurgerIngredients: FC = () => {
   const data = useSelector((state) => state.ingredientReducer.ingredients);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -21,11 +21,11 @@ const BurgerIngredients = () => {
   const refSauce = React.useRef(null);
   const refMain = React.useRef(null);
 
-  const scrollTo = (ref) => {
-    ref.current.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  const scrollTo = (ref: MutableRefObject<HTMLHeadingElement | null>) => {
+    ref.current?.scrollIntoView({ block: 'start', behavior: 'smooth' });
   };
 
-  const handleClickTab = (tab) => {
+  const handleClickTab = (tab: string) => {
     setCurrent(tab);
     if (tab === 'bun') {
       scrollTo(refBun);
@@ -56,7 +56,7 @@ const BurgerIngredients = () => {
           {data.map((item) => ( item.type === 'bun' &&
           <li key={item._id} onClick={() => { dispatch(changeIngredientPopupState(true))}}>
             <Link className={styles.link} to={`/ingredients/${item._id}`} state={{ previousLocationConstructor: location }}>
-              <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
+              <Ingredient data={item} />
             </Link>
           </li>))}
 
@@ -70,7 +70,7 @@ const BurgerIngredients = () => {
           {data.map((item) => ( item.type === 'sauce' &&
           <li key={item._id} onClick={() => { dispatch(changeIngredientPopupState(true))}}>
             <Link className={styles.link} to={`/ingredients/${item._id}`} state={{ previousLocationConstructor: location }}>
-              <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
+              <Ingredient data={item} />
             </Link>
           </li>))}
 
@@ -84,7 +84,7 @@ const BurgerIngredients = () => {
           {data.map((item) => ( item.type === 'main' &&
           <li key={item._id} onClick={() => { dispatch(changeIngredientPopupState(true))}}>
             <Link className={styles.link} to={`/ingredients/${item._id}`} state={{ previousLocationConstructor: location }}>
-              <Ingredient data={item} _id={item._id} name={item.name} type={item.type} price={item.price} image={item.image} />
+              <Ingredient data={item} />
             </Link>
           </li>))}
 

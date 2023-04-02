@@ -296,7 +296,7 @@ export const getProfileInfo = (accessToken: string) => (dispatch: AppDispatch) =
   getProfileData(accessToken)
     .then((res) => {
       dispatch({ type: SET_PROFILE, payload: res.user });
-      dispatch({ type: REFRESH_TOKEN_SUCCESS, payload: null });
+      // dispatch({ type: REFRESH_TOKEN_SUCCESS, payload: null });
       dispatch({ type: GET_PROFILE_DATA_SUCCESS, payload: res.success });
     })
     .catch((err) => {

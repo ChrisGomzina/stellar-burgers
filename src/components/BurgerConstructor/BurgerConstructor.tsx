@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, FC } from 'react';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 import { useNavigate } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
 import { Reorder } from 'framer-motion';
@@ -13,11 +13,11 @@ import {
   DragIcon,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import Modal from '../Modal/Modal.jsx';
+import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import Loader from '../Loader/Loader.jsx';
+import Loader from '../Loader/Loader';
 
-import { getOrderData, deleteOrder } from '../../services/actions/order.js';
+import { getOrderData, deleteOrder } from '../../services/actions/order';
 import {
   addBun,
   addIngredient,
@@ -25,11 +25,12 @@ import {
   deleteIngredient,
   sortIngredients,
   resetIngredients,
-} from '../../services/actions/ingredients.js';
-import { changeOrderDetailsPopupState } from '../../services/actions/popup.js';
+} from '../../services/actions/ingredients';
+import { changeOrderDetailsPopupState } from '../../services/actions/popup';
 import { getCookie } from '../../utils/cookie';
+import { TIngredient } from '../../services/types/types';
 
-const BurgerConstructor = () => {
+const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const bun = useSelector((state) => state.ingredientReducer.addedBun);
@@ -44,23 +45,23 @@ const BurgerConstructor = () => {
   const token = getCookie('token');
 
   const createOrder = () => {
-    const ingredientsId = [...ingredients.map((item) => item._id), bun._id];
+    const ingredientsId = [...ingredients.map((item) => item._id), bun?._id];
     if (profile) {
-      dispatch(getOrderData(ingredientsId, token));
+      dispatch(getOrderData(ingredientsId));
     } else {
       navigate('/login');
     }
   };
 
   useEffect(() => {
-    const ingredientsId = [...ingredients.map((item) => item._id), bun._id];
+    const ingredientsId = [...ingredients.map((item) => item._id), bun?._id];
     if (token && orderFailed) {
-      dispatch(getOrderData(ingredientsId, token));
+      dispatch(getOrderData(ingredientsId));
     }
   }, [token, orderFailed]);
 
   //Реализация удаления ингредиента
-  const handleDeleteIngredient = (item) => {
+  const handleDeleteIngredient = (item: TIngredient) => {
     dispatch(deleteIngredient(item));
     dispatch(countTotalPrice());
   };
@@ -74,7 +75,7 @@ const BurgerConstructor = () => {
   //Реализация drag and drop
   const [{ isHover }, dropRef] = useDrop(() => ({
     accept: 'ingredient',
-    drop: (item) => {
+    drop: (item: { id: string; type: string }) => {
       if (item.type === 'bun') {
         dispatch(addBun(item));
       } else {
@@ -90,7 +91,7 @@ const BurgerConstructor = () => {
   const borderColor = isHover ? '#9400d3' : 'transparent';
 
   const checkIngredient = ingredients.length > 0;
-  const checkBun = !!bun.type;
+  const checkBun = !!bun?.type;
 
   return (
     <section
@@ -115,12 +116,11 @@ const BurgerConstructor = () => {
 
           <Reorder.Group
             className={styles.scrollbar}
-            axys='y'
             values={ingredients}
             onReorder={(items) => dispatch(sortIngredients(items))}
           >
             {ingredients.map(
-              (item) =>
+              (item: TIngredient) =>
                 checkIngredient && (
                   <Reorder.Item className={styles.item} key={item.uuidv4} value={item}>
                     <DragIcon type='primary' />

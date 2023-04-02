@@ -30,7 +30,7 @@ export type TOrderActions =
   | IGetOrderFailed
   | IResetOrder;
 
-export const getOrderData = (ingredients: Array<string>) => (dispatch: AppDispatch) => {
+export const getOrderData = (ingredients: Array<string | undefined>) => (dispatch: AppDispatch) => {
   dispatch({
     type: GET_ORDER_REQUEST
   });

@@ -2,7 +2,7 @@ import { BASE_URL } from './constans';
 import { checkResponse } from './utils';
 import { getCookie } from '../utils/cookie';
 
-const getOrder = (ingredients: Array<string>) =>
+const getOrder = (ingredients: Array<string| undefined>) =>
   fetch(`${BASE_URL}/orders`, {
     method: 'POST',
     headers: {

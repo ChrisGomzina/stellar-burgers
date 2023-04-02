@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/types/hooks';
 import { useDrag } from 'react-dnd';
 
 import styles from './Ingredient.module.css';
@@ -31,11 +31,11 @@ const Ingredient: FC<TIngredientProps> = ({ data }) => {
     ingredient._id === id ? (ingredientsCounter += 1) : ingredientsCounter,
   );
 
-  [addedBun].forEach((bun) => (bun._id === id ? (ingredientsCounter += 2) : ingredientsCounter));
+  [addedBun].forEach((bun) => (bun?._id === id ? (ingredientsCounter += 2) : ingredientsCounter));
 
   //Ингредиенты, кроме булочек, будут неактивными, пока не выбрана булочка.
   React.useEffect(() => {
-    if (type !== 'bun' && addedBun.length === 0) {
+    if (type !== 'bun' && addedBun === undefined) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
@@ -53,7 +53,7 @@ const Ingredient: FC<TIngredientProps> = ({ data }) => {
 
       <div className={styles.price}>
         <span className={`text text_type_digits-default`}>{data.price}</span>
-        <CurrencyIcon />
+        <CurrencyIcon type={"secondary"} />
       </div>
 
       <h3 className={`${styles.title} text text_type_main-default`}>{data.name}</h3>

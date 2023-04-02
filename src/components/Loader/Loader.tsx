@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import styles from './Loader.module.css';
 
-const Loader = () => {
+const Loader: FC = () => {
   return (
     <div className={styles.loader}>
       <svg className={styles.circular} viewBox="25 25 50 50">
