@@ -3,27 +3,27 @@ import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from '../../services/types/hooks';
 
 import { getCookie } from '../../utils/cookie';
-import { getProfileInfo } from '../../services/actions/profile.js';
-import { getIngredients } from '../../services/actions/ingredients.js';
-import { changeIngredientPopupState, changeOrderPopupState } from '../../services/actions/popup.js';
+import { getProfileInfo } from '../../services/actions/profile';
+import { getIngredients } from '../../services/actions/ingredients';
+import { changeIngredientPopupState, changeOrderPopupState } from '../../services/actions/popup';
 
-import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement.js';
-import RouteUnauthorizedUser from '../RouteUnauthorizedUser/RouteUnauthorizedUser.js';
-import Modal from '../Modal/Modal.js';
-import IngredientDetails from '../IngredientDetails/IngredientDetails.js';
+import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
+import RouteUnauthorizedUser from '../RouteUnauthorizedUser/RouteUnauthorizedUser';
+import Modal from '../Modal/Modal';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
-import Header from '../../pages/Header/Header.jsx';
-import MainPage from '../../pages/MainPage/MainPage.jsx';
-import LoginPage from '../../pages/LoginPage/LoginPage.jsx';
-import RegisterPage from '../../pages/RegisterPage/RegisterPage.jsx';
-import ForgotPasswordPage from '../../pages/ForgotPasswordPage/ForgotPasswordPage.jsx';
-import ResetPasswordPage from '../../pages/ResetPasswordPage/ResetPasswordPage.jsx';
-import ProfilePage from '../../pages/ProfilePage/ProfilePage.jsx';
-import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage.jsx';
-import IngredientPage from '../../pages/IngredientPage/IngredientPage.jsx';
-import FeedPage from '../../pages/FeedPage/FeedPage.jsx';
-import OrdersPage from '../../pages/OrdersPage/OrdersPage.jsx';
-import OrderInfoPage from '../../pages/OrderInfoPage/OrderInfoPage.jsx';
+import Header from '../../pages/Header/Header';
+import MainPage from '../../pages/MainPage/MainPage';
+import LoginPage from '../../pages/LoginPage/LoginPage';
+import RegisterPage from '../../pages/RegisterPage/RegisterPage';
+import ForgotPasswordPage from '../../pages/ForgotPasswordPage/ForgotPasswordPage';
+import ResetPasswordPage from '../../pages/ResetPasswordPage/ResetPasswordPage';
+import ProfilePage from '../../pages/ProfilePage/ProfilePage';
+import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
+import IngredientPage from '../../pages/IngredientPage/IngredientPage';
+import FeedPage from '../../pages/FeedPage/FeedPage';
+import OrdersPage from '../../pages/OrdersPage/OrdersPage';
+import OrderInfoPage from '../../pages/OrderInfoPage/OrderInfoPage';
 
 const App = React.memo(() => {
   const dispatch = useDispatch();

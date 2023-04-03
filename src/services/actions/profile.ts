@@ -308,7 +308,7 @@ export const getProfileInfo = () => (dispatch: AppDispatch) => {
 };
 
 //Отправка отредактированных данных
-export const sendProfileInfo = (email: string, name: string, password: string) => (dispatch: AppDispatch) => {
+export const sendProfileInfo = (email: string | undefined, name: string | undefined, password: string) => (dispatch: AppDispatch) => {
   dispatch({
     type: SEND_PROFILE_DATA_REQUEST
   });

@@ -23,8 +23,6 @@ const OrderInfoPage: FC<TOrderInfoPageProps> = ({ isUserOrder }) => {
   const userOrders = useSelector((state) => state.ordersReducer.userOrders);
   const allIngredients = useSelector((state) => state.ingredientReducer.ingredients);
 
-  console.log(userOrders);
-
   useEffect(() => {
     if (isUserOrder && userOrders.length === 0) {
       dispatch(wsUserOrdersConnectionStart());

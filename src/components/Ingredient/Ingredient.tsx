@@ -15,7 +15,6 @@ const Ingredient: FC<TIngredientProps> = ({ data }) => {
   const [id] = React.useState(data._id);
   const [type] = React.useState(data.type);
   const [isDisabled, setIsDisabled] = React.useState(true);
-  console.log(data);
 
   const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredient',

@@ -6,7 +6,6 @@ import styles from './ProfilePage.module.css';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { getCookie } from '../../utils/cookie';
 import { logOutSite, sendProfileInfo } from '../../services/actions/profile';
 import Loader from '../../components/Loader/Loader';
 
@@ -66,7 +65,7 @@ const ProfilePage: FC = () => {
   );
 
   useEffect(() => {
-    if(profile !== null) {
+    if(profile !== null && profile.name !== undefined && profile.email !== undefined) {
       setNewName(profile.name);
       setNewEmail(profile.email);
     }
@@ -79,9 +78,11 @@ const ProfilePage: FC = () => {
   }, [refreshTokenAnswer]);
 
   const cancelEditing = () => {
-    setNewName(profile?.name);
-    setNewEmail(profile?.email);
-    setNewPassword('');
+    if(profile !== null && profile.name !== undefined && profile.email !== undefined){
+      setNewName(profile?.name);
+      setNewEmail(profile?.email);
+      setNewPassword('');
+    }
   };
 
   return (

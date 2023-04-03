@@ -6,7 +6,7 @@ import { GET_INGREDIENTS_REQUEST,
   DELETE_INGREDIENT,
   COUNT_TOTAL_PRICE,
   SORT_INGREDIENTS,
-  RESET_INGREDIENTS } from '../actions/ingredients.js';
+  RESET_INGREDIENTS } from '../actions/ingredients';
 
   import { TIngredientsActions } from '../actions/ingredients';
   import { TIngredient } from '../types/types';
